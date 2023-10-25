@@ -24,13 +24,27 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/Client/index.html");
 });
 
-app.post("/signin", (req, res) => {
-    // Connection to the db and redirecting to the home page
-    pool.query('INSERT INTO Users (Login, Password) VALUES (?,?)', [req.body.login,req.body.password]);
+app.post("/signup", (req, res) => {
     console.log(req.body);
-    console.log(`Login: ${req.body.login}`);
-    console.log(`Hasło: ${req.body.password}`);
+    pool.query('INSERT INTO Users (Login, Password) VALUES (?,?)', [req.body.login,req.body.password]);
     res.redirect("/");
+});
+
+app.post("/signin", async (req, res) => {
+    const dbValues = await pool.query(`SELECT *
+    FROM Users
+    WHERE login = ? AND password = ?`, [req.body.login,req.body.password]);
+    if (req.body.login == dbValues[0][0].Login && req.body.password == dbValues[0][0].Password) {
+        res.redirect("/Client/main_page.html");
+    } else {
+        console.log('dane logowania sie nie zgadzaja');
+        res.redirect("/");
+    }
+    
+});
+
+app.get("/Client/main_page.html", (req, res) => {
+    res.sendFile(__dirname + "/Client/main_page.html");
 });
 
 // Express server will start listening on the port in port variable
