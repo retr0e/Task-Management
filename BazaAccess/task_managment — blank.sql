@@ -66,13 +66,9 @@ CREATE TABLE `pracownicy` (
 -- Dumping data for table `pracownicy`
 --
 
-INSERT INTO `pracownicy` (`id`, `imie`, `nazwisko`, `stanowisko`) VALUES
-(1, 'Jan', 'Nowak', 'Programista'),
-(2, 'Dawid', 'Śleziak', 'Programista'),
-(3, 'Marek', 'Kowalski', 'Designer'),
-(4, 'Janina', 'Jureczek', 'Grafik'),
-(5, 'Magdalena', 'Baron', 'Grafik'),
-(6, 'Kamil', 'Buczek', 'Programista');
+--INSERT INTO `pracownicy` (`id`, `imie`, `nazwisko`, `stanowisko`) VALUES
+--(1, 'Jan', 'Nowak', 'Programista'),
+
 
 -- --------------------------------------------------------
 
@@ -82,20 +78,12 @@ INSERT INTO `pracownicy` (`id`, `imie`, `nazwisko`, `stanowisko`) VALUES
 
 CREATE TABLE `priorytety` (
   `id` int(11) NOT NULL ,
-  `priorytet` varchar(255) DEFAULT NULL , 
+  `priorytet` varchar(255) DEFAULT NULL ,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci ;
 
 --
 -- Dumping data for table `priorytety`
 --
-
-INSERT INTO `priorytety` (`id`, `priorytet`) VALUES
-(1, 'Brak'),
-(2, 'Bardzo_Wysoki'),
-(3, 'Wysoki'),
-(4, 'Normalny'),
-(5, 'Niski'),
-(6, 'Bardzo_Niski');
 
 -- --------------------------------------------------------
 
@@ -116,10 +104,6 @@ CREATE TABLE `projekty` (
 -- Dumping data for table `projekty`
 --
 
-INSERT INTO `projekty` (`id`, `nazwa`, `termin`, `zespol`, `priorytet`, `status`, `trial504`) VALUES
-(1, NULL, 0, 1, 1, 8),
-(2, 'Aplikacja_2', 0, 2, 3, 8);
-
 -- --------------------------------------------------------
 
 --
@@ -128,22 +112,8 @@ INSERT INTO `projekty` (`id`, `nazwa`, `termin`, `zespol`, `priorytet`, `status`
 
 CREATE TABLE `status` (
   `id` int(11) NOT NULL ,
-  `nazwa` varchar(255) DEFAULT NULL ,
+  `nazwa` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci ;
-
---
--- Dumping data for table `status`
---
-
-INSERT INTO `status` (`id`, `nazwa`) VALUES
-(1, 'Wstrymany'),
-(2, 'Oczekujacy_Test'),
-(3, 'Oczekujacy_Zatwierdzenie'),
-(4, 'Zatwierdzony'),
-(5, 'Anulowany'),
-(6, 'Zakonczony'),
-(7, 'Zwrot_Do_Naprawy'),
-(8, 'Aktywny');
 
 -- --------------------------------------------------------
 
@@ -154,7 +124,7 @@ INSERT INTO `status` (`id`, `nazwa`) VALUES
 CREATE TABLE `terminy` (
   `id` int(11) NOT NULL ,
   `data_start` datetime DEFAULT NULL ,
-  `data_koniec` datetime DEFAULT NULL ,
+  `data_koniec` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci ;
 
 -- --------------------------------------------------------
@@ -168,20 +138,8 @@ CREATE TABLE `zadania` (
   `nazwa` varchar(255) DEFAULT NULL ,
   `projekt` int(11) DEFAULT 0 ,
   `status` int(11) DEFAULT 0 ,
-  `kto_wykonuje` int(11) DEFAULT 0 ,
+  `kto_wykonuje` int(11) DEFAULT 0 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci ;
-
---
--- Dumping data for table `zadania`
---
-
-INSERT INTO `zadania` (`id`, `nazwa`, `projekt`, `status`, `kto_wykonuje`) VALUES
-(1, 'UI', 1, 6, 3),
-(2, 'Dodawanie Danych', 1, 6, 1),
-(3, 'Usuwanie Danych', 1, 5, 2),
-(4, 'Stworzenie Logo', 2, 3, 5),
-(5, 'Stworzenie Baneru', 2, 3, 4),
-(6, 'Dodawanie Uzytkownikow', 2, 4, 6);
 
 -- --------------------------------------------------------
 
@@ -192,20 +150,8 @@ INSERT INTO `zadania` (`id`, `nazwa`, `projekt`, `status`, `kto_wykonuje`) VALUE
 CREATE TABLE `zespoly` (
   `id` int(11) NOT NULL ,
   `nr_zespołu` int(11) DEFAULT 0 ,
-  `czlonek_zespolu` int(11) DEFAULT 0
+  `czlonek_zespolu` int(11) DEFAULT 0 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci ;
-
---
--- Dumping data for table `zespoly`
---
-
-INSERT INTO `zespoly` (`id`, `nr_zespołu`, `czlonek_zespolu`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 2, 4),
-(5, 2, 5),
-(6, 2, 6);
 
 --
 -- Indexes for dumped tables
