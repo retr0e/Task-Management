@@ -29,7 +29,6 @@ async function checkLogin(providedLogin) {
     for(const element of logins) {
         if (element.Login == providedLogin) {
             // The user with provided login is present in data base
-            console.log('Found!');
             return false;
         }
     };
@@ -38,7 +37,7 @@ async function checkLogin(providedLogin) {
 }
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/Client/index.html");
+    res.sendFile(__dirname + "/Client/login.html");
 });
 
 app.post("/signup", async (req, res) => {
@@ -46,8 +45,6 @@ app.post("/signup", async (req, res) => {
     const duplicationCorrectness = await checkLogin(req.body.login);
     const plainPassword = req.body.password;
 
-    console.log(loginCorrectness);
-    console.log(duplicationCorrectness);
     // Check if the email address is valid and there is no other user with the same e-mail address
     if (loginCorrectness && duplicationCorrectness) {
         bcrypt.hash(plainPassword, 10, function(err, hash) {
@@ -68,9 +65,7 @@ app.post("/signin", async (req, res) => {
     let passwordValid = false;
 
     bcrypt.compare(req.body.password, dbValues[0].Password, function(err, result) {
-        console.log(result);
         if (result) {
-            console.log(result);
             passwordValid = true;
         }
     })
