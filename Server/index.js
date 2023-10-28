@@ -55,26 +55,30 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/signin", async (req, res) => {
-    const dbValues = await pool.query(`SELECT 
-    Login
-    FROM Users
-    WHERE login = ?`, [req.body.login]);
+    const dbValues = await pool.query(`SELECT Login,Password FROM Users WHERE login = ?`, [req.body.login]);
 
-    console.log(dbValues);
+    if (dbValues[0].length === 0) {
+        console.log('User not found!');
+        res.redirect('/');
+        return;
+    }
+
     // Check the authorization
-    let passwordValid = false;
+    const passwordMatch = await new Promise((resolve, reject) => {
+        bcrypt.compare(req.body.password, dbValues[0][0].Password, function(err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
 
-    bcrypt.compare(req.body.password, dbValues[0].Password, function(err, result) {
-        if (result) {
-            passwordValid = true;
-        }
-    })
 
-    console.log(`Login: ${dbValues.Login}`);
-    if (req.body.login == dbValues[0].Login && passwordValid) {
+    if (req.body.login == dbValues[0][0].Login && passwordMatch) {
         res.redirect("/Client/main_page.html");
     } else {
-        console.log('dane logowania sie nie zgadzaja');
+        console.log('Login Data is incorrect!');
         res.redirect("/");
     }
     
@@ -83,6 +87,10 @@ app.post("/signin", async (req, res) => {
 app.get("/Client/main_page.html", (req, res) => {
     res.sendFile(__dirname + "/Client/main_page.html");
 });
+
+app.post("/signout", (req, res) => {
+    res.redirect("/");
+})
 
 // Express server will start listening on the port in port variable
 app.listen(port, () => {
