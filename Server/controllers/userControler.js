@@ -56,7 +56,7 @@ export async function signup(req, res) {
 
 export async function getOverview(req, res) {
   const dbValues = await pool.query(
-    `SELECT Login,Haslo FROM Users WHERE login = ?`,
+    `SELECT Login,Haslo FROM Konta WHERE login = ?`,
     [req.body.login]
   );
 
@@ -65,12 +65,14 @@ export async function getOverview(req, res) {
     res.redirect("/");
     return;
   }
-
+  console.log("Przechodze tu!");
+  console.log(dbValues);
+  console.log(req.body);
   // Check the authorization
   const passwordMatch = await new Promise((resolve, reject) => {
     bcrypt.compare(
       req.body.password,
-      dbValues[0][0].Password,
+      dbValues[0][0].Haslo,
       function (err, result) {
         if (err) {
           reject(err);
