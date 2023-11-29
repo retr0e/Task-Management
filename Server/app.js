@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import userRouter from "./routes/userRoutes.js";
+import overviewRouter from "./routes/overviewRoutes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ if (process.env.NODE_ENV === "development") {
 // ROUTES
 
 app.use("/api/v1/users", userRouter);
+app.use("/overview", overviewRouter);
 
 // START SERVER
 export default app;

@@ -56,7 +56,7 @@ export async function signup(req, res) {
 
 export async function getOverview(req, res) {
   const dbValues = await pool.query(
-    `SELECT Login,Haslo FROM Konta WHERE login = ?`,
+    `SELECT Login,Haslo,Uprawnienia FROM Konta WHERE login = ?`,
     [req.body.login]
   );
 
@@ -65,9 +65,6 @@ export async function getOverview(req, res) {
     res.redirect("/");
     return;
   }
-  console.log("Przechodze tu!");
-  console.log(dbValues);
-  console.log(req.body);
   // Check the authorization
   const passwordMatch = await new Promise((resolve, reject) => {
     bcrypt.compare(
@@ -83,22 +80,14 @@ export async function getOverview(req, res) {
     );
   });
 
+  console.log(dbValues);
   if (req.body.login == dbValues[0][0].Login && passwordMatch) {
-    res.redirect("/api/v1/users/overview");
+    // Login in progress
+    res.redirect(
+      `/overview/usr=${dbValues[0][0].Login}/acs=${dbValues[0][0].Uprawnienia}`
+    );
   } else {
     console.log("Login Data is incorrect!");
     res.redirect(`/api/v1/users`);
   }
 }
-
-export function mainPage(req, res) {
-  res.sendFile(`${__dirname}/Client/main_page.html`);
-}
-
-// app.get("/overview", (req, res) => {
-//   res.sendFile(__dirname + "/Client/main_page.html");
-// });
-
-// app.post("/signout", (req, res) => {
-//   res.redirect("/");
-// });
