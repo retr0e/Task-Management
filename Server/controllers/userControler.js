@@ -19,7 +19,7 @@ const pool = mysql
   .promise();
 
 async function checkLogin(providedLogin) {
-  const dbFetchLogin = await pool.query(`SELECT Login FROM Users`);
+  const dbFetchLogin = await pool.query(`SELECT Login FROM Konta`);
   const logins = dbFetchLogin[0];
 
   for (const element of logins) {
@@ -44,10 +44,10 @@ export async function signup(req, res) {
   // Check if the email address is valid and there is no other user with the same e-mail address
   if (loginCorrectness && duplicationCorrectness) {
     bcrypt.hash(plainPassword, 10, function (err, hash) {
-      pool.query("INSERT INTO Users (Login, Password) VALUES (?,?)", [
-        req.body.login,
-        hash,
-      ]);
+      pool.query(
+        "INSERT INTO Konta (Login, Haslo, Uprawnienia) VALUES (?,?,?)",
+        [req.body.login, hash, 4]
+      );
     });
   }
 
@@ -56,7 +56,7 @@ export async function signup(req, res) {
 
 export async function getOverview(req, res) {
   const dbValues = await pool.query(
-    `SELECT Login,Password FROM Users WHERE login = ?`,
+    `SELECT Login,Haslo FROM Users WHERE login = ?`,
     [req.body.login]
   );
 
