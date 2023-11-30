@@ -84,7 +84,7 @@ export async function getOverview(req, res) {
   if (req.body.login == dbValues[0][0].Login && passwordMatch) {
     // Login in progress
     res.redirect(
-      `/overview/usr=${dbValues[0][0].Login}/acs=${dbValues[0][0].Uprawnienia}`
+      `/overview/${dbValues[0][0].Login}/${dbValues[0][0].Uprawnienia}`
     );
   } else {
     console.log("Login Data is incorrect!");
