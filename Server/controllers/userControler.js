@@ -1,6 +1,8 @@
 import mysql from "mysql2";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import validator from "email-validator";
+import jwt from "jsonwebtoken";
+import { errorHandler } from "../utils/error.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
@@ -32,62 +34,49 @@ async function checkLogin(providedLogin) {
   return true;
 }
 
-export function getLoginPage(req, res) {
-  res.sendFile(`${__dirname}/Client/login.html`);
-}
+export const signup = async (req, res, next) => {
+  const { email, password } = req.body;
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const loginCorrectness = validator.validate(email);
+  const duplicationCorrectness = await checkLogin(email);
 
-export async function signup(req, res) {
-  const loginCorrectness = validator.validate(req.body.login);
-  const duplicationCorrectness = await checkLogin(req.body.login);
-  const plainPassword = req.body.password;
-
-  // Check if the email address is valid and there is no other user with the same e-mail address
   if (loginCorrectness && duplicationCorrectness) {
-    bcrypt.hash(plainPassword, 10, function (err, hash) {
-      pool.query(
+    try {
+      await pool.query(
         "INSERT INTO Konta (Login, Haslo, Uprawnienia) VALUES (?,?,?)",
-        [req.body.login, hash, 4]
+        [email, hashedPassword, 4]
       );
-    });
-  }
-
-  res.redirect(`/api/v1/users`);
-}
-
-export async function getOverview(req, res) {
-  const dbValues = await pool.query(
-    `SELECT Login,Haslo,Uprawnienia FROM Konta WHERE login = ?`,
-    [req.body.login]
-  );
-
-  if (dbValues[0].length === 0) {
-    console.log("User not found!");
-    res.redirect("/");
-    return;
-  }
-  // Check the authorization
-  const passwordMatch = await new Promise((resolve, reject) => {
-    bcrypt.compare(
-      req.body.password,
-      dbValues[0][0].Haslo,
-      function (err, result) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      }
-    );
-  });
-
-  console.log(dbValues);
-  if (req.body.login == dbValues[0][0].Login && passwordMatch) {
-    // Login in progress
-    res.redirect(
-      `/overview/${dbValues[0][0].Login}/${dbValues[0][0].Uprawnienia}`
-    );
+      res.status(201).json("User created successfully!");
+    } catch (err) {
+      // res.status(500).json("Something went wrong! In user creation!");
+      next(err);
+    }
   } else {
-    console.log("Login Data is incorrect!");
-    res.redirect(`/api/v1/users`);
+    res.status(400).json("Bad data!");
   }
-}
+};
+
+export const signin = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const validUserData = await pool.query(
+      `SELECT Id_konta,Login,Haslo,Uprawnienia FROM Konta WHERE login = ?`,
+      [email]
+    );
+    const validUser = validUserData[0][0];
+
+    if (!validUser) return next(errorHandler(404, "User not found!"));
+    const validPassword = bcryptjs.compareSync(password, validUser.Haslo);
+    if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
+    const token = jwt.sign({ id: validUser.Id_konta }, process.env.JWT_SECRET);
+
+    console.log(validUser);
+    const { Haslo: pass, ...rest } = validUser;
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
