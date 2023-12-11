@@ -35,7 +35,7 @@ async function checkLogin(providedLogin) {
 }
 
 export const signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   const hashedPassword = bcryptjs.hashSync(password, 10);
   const loginCorrectness = validator.validate(email);
   const duplicationCorrectness = await checkLogin(email);
@@ -43,8 +43,8 @@ export const signup = async (req, res, next) => {
   if (loginCorrectness && duplicationCorrectness) {
     try {
       await pool.query(
-        "INSERT INTO Konta (Login, Haslo, Uprawnienia) VALUES (?,?,?)",
-        [email, hashedPassword, 4]
+        "INSERT INTO Konta (Nazwa, Login, Haslo, Uprawnienia) VALUES (?,?,?,?)",
+        [username, email, hashedPassword, 4]
       );
       res.status(201).json("User created successfully!");
     } catch (err) {
@@ -70,7 +70,6 @@ export const signin = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
     const token = jwt.sign({ id: validUser.Id_konta }, process.env.JWT_SECRET);
 
-    console.log(validUser);
     const { Haslo: pass, ...rest } = validUser;
     res
       .cookie("access_token", token, { httpOnly: true })

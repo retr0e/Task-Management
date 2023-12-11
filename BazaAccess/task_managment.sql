@@ -76,6 +76,7 @@ CREATE TABLE `PoziomDostepu` (
 
 CREATE TABLE `Konta` (
   `Id_konta` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `Nazwa` VARCHAR(255) NOT NULL,
   `Login` VARCHAR(255) NOT NULL,
   `Haslo` VARCHAR(255) NOT NULL,
   `Uprawnienia` INT NOT NULL
