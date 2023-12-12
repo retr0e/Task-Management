@@ -11,9 +11,10 @@ const ProtectedRoutes = () => {
     return isAuth ? <Outlet/> : <Navigate to="/" />
 }
 
+/* Teporarly USELESS */
 export const RestrictedRoutes = () => {
     const isAuth = useAuth();
-    return isAuth == 0 ? <Outlet/> : <Navigate to="/"/>
+    return isAuth ? <Outlet/> : <Navigate to="/"/>
 }
 
 export default ProtectedRoutes;

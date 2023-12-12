@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoutes            from "./ProtectedRoutes";
 
 /* Pages */
@@ -22,13 +22,13 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/sign-in' element={<SignIn />} />
-        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/create-user-account' element={<SignUp />} />
         <Route element={<ProtectedRoutes/>}>
             <Route path='/about' element={<About />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/projects' element={<Projects />} />
         </Route>
-        <Route path="*" element={<Error/>}/>
+        <Route path="*" element={<Navigate to="/"/>}/>
       </Routes>
     </BrowserRouter>
   );

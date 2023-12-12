@@ -42,42 +42,66 @@ export default function SignUp() {
   console.log(formData);
   return (
     <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>SignUp</h1>
+      <h1 className='text-3xl text-center font-semibold my-7'>Create User Account</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+        <div className="flex flex-row gap-4">
+        <input
+          type='text'
+          placeholder='Name'
+          className='border p-3 rounded-lg w-1/2 order-1'
+          id='Name'
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Surname'
+          className='border p-3 rounded-lg w-1/2 order-2'
+          id='surname'
+          onChange={handleChange}
+        />
+      </div>
+        <input
+          type='text'
+          placeholder='Position'
+          className='border p-3 rounded-lg order-3'
+          id='position'
+          onChange={handleChange}
+        />
+
         <input
           type='text'
           placeholder='username'
-          className='border p-3 rounded-lg'
+          className='border p-3 rounded-lg order-4'
           id='username'
           onChange={handleChange}
         />
         <input
           type='text'
           placeholder='email'
-          className='border p-3 rounded-lg'
+          className='border p-3 rounded-lg order-5'
           id='email'
           onChange={handleChange}
         />
         <input
           type='password'
           placeholder='password'
-          className='border p-3 rounded-lg'
+          className='border p-3 rounded-lg order-6'
           id='password'
           onChange={handleChange}
         />
         <button
           disabled={loading}
-          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          className='bg-slate-700 text-white p-3 rounded-lg uppercase order-7 hover:opacity-95 disabled:opacity-80'
         >
-          {loading ? "Loading..." : "Sign Up"}
+          {loading ? "Loading..." : "Create User Account"}
         </button>
       </form>
-      <div className='flex gap-2 mt-5'>
+      {/* <div className='flex gap-2 mt-5'>
         <p>Have an account?</p>
         <Link to={"/sign-in"}>
-          <span className='text-blue-700'>Sign-in</span>
+          <span className='text-blue-700'>Create User Account</span>
         </Link>
-      </div>
+      </div> */}
       {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
   );
