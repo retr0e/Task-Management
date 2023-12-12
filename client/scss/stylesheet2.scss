@@ -1,0 +1,45 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$color1 : #C5C9FA;
+$color2 : #4A4C5C;
+$color3 : #7278C2;
+$color4 : #1F2033;
+$color5 : #060933;
+
+body{
+    background-color: $color4;
+}
+
+.bg-color1{
+    background-color: $color1;
+}
+
+.bg-color2{
+    background-color: $color2;
+}
+
+.bg-color3{
+    background-color: $color3;
+}
+
+.bg-color4{
+    background-color: $color4;
+}
+
+.bg-color5{
+    background-color: $color5;
+}
+
+.btn{
+    background-color: $color2;
+    color: white;
+}
+
+.btn:hover{
+    background-color: $color4;
+    color: white;
+}
+#root{
+    padding: 0px;
+    background-color: $color5;
+}

@@ -3,37 +3,37 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className='bg-slate-200 shadow-md'>
+    <header className='bg-color4 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to='/'>
-          <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-            <span className='text-slate-500'>Task</span>
-            <span className='text-slate-700'>Menager</span>
+          <h1 className='font-bold text-2xl sm:text-3xl flex flex-wrap'>
+            <span className='text-color1'>Task</span>
+            <span className='text-orange'>Menager</span>
           </h1>
         </Link>
 
-        <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
+        <form className='bg-color2  p-3 rounded-lg flex items-center'>
           <input
             type='text'
             placeholder='Search...'
             className='bg-transparent focus:outline-none w-24 sm:w-64'
           />
-          <FaSearch className='text-slate-600' />
+          <FaSearch className='text-color5' />
         </form>
         <ul className='flex gap-4'>
           <Link to='/'>
             <li className='hidden sm:inline text-slate-700 hover:underline'>
-              Home
+              <span className="text-color1">Home</span>
             </li>
           </Link>
-          <Link to='/about'>
+          <Link to='/projects'>
             <li className='hidden sm:inline text-slate-700 hover:underline'>
-              About
+            <span className="text-color1">Projects</span>
             </li>
           </Link>
           <Link to='/sign-in'>
             <li className='sm:inline text-slate-700 hover:underline'>
-              Sign in
+            <span className="text-color1">Sign In</span>
             </li>
           </Link>
         </ul>

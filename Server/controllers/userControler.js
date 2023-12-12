@@ -44,16 +44,16 @@ export const signup = async (req, res, next) => {
     try {
       await pool.query(
         "INSERT INTO Konta (Nazwa, Login, Haslo, Uprawnienia) VALUES (?,?,?,?)",
-        [username, email, hashedPassword, 4]
+        [username, email, hashedPassword, 0]
       );
       res.status(201).json("User created successfully!");
     } catch (err) {
-      // res.status(500).json("Something went wrong! In user creation!");
+      res.status(500).json("Something went wrong! In user creation!");
       next(err);
     }
   } else {
     res.status(400).json("Bad data!");
-  }
+  } 
 };
 
 export const signin = async (req, res, next) => {
@@ -67,7 +67,7 @@ export const signin = async (req, res, next) => {
 
     if (!validUser) return next(errorHandler(404, "User not found!"));
     const validPassword = bcryptjs.compareSync(password, validUser.Haslo);
-    if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
+    if (!validPassword) return next(errorHandler(401, "Wrong credentials! "));
     const token = jwt.sign({ id: validUser.Id_konta }, process.env.JWT_SECRET);
 
     const { Haslo: pass, ...rest } = validUser;
@@ -79,3 +79,4 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+

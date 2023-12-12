@@ -1,8 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+
+    extend: {    
+      colors: {
+        'color1' : '#C5C9FA',
+        'color2' : '#4A4C5C',
+        'color3' : '#7278C2',
+        'color4' : '#1F2033',
+        'color5' : '#060933',
+        'orange' : '#F53C00',
+      },
+    },
   },
   plugins: [],
 };

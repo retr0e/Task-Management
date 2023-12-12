@@ -1,0 +1,40 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$color1 : #72b1c2;
+$color2 : #71888F;
+$color3 : #60d5f5;
+$color4 : #4A585C;
+$color5 : #1f2f33;
+
+
+
+
+
+img.power-source{
+    height: 200px;
+    width: auto;
+    //animation-name: reactor ;
+    //animation-duration: 1s;
+    //animation-iteration-count: infinite;
+    //animation-timing-function: linear;
+}
+@keyframes reactor {
+    0% {rotate: 0deg;}
+    100% { rotate: 360deg;}
+}
+
+.Font{
+    color: white;
+    border: 2px black;
+}
+
+.tsk-btn{
+    background-color: $color4;
+    color: white;
+}
+
+.tsk-btn:hover{
+    background-color: white;
+    border: 1px solid $color4;
+    color: $color4;
+}
