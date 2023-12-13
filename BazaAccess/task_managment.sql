@@ -1,3 +1,4 @@
+DROP DATABASE PBD;
 CREATE DATABASE PBD;
 
 USE PBD;
@@ -5,7 +6,6 @@ USE PBD;
 CREATE TABLE `Projekty` (
   `ID` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Nazwa` VARCHAR(255) NOT NULL,
-  `Id_termin` INT,
   `Id_zespolu` INT,
   `Id_priorytetu` INT,
   `Id_statusu` INT,
@@ -76,34 +76,70 @@ CREATE TABLE `PoziomDostepu` (
 
 CREATE TABLE `Konta` (
   `Id_konta` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Nazwa` VARCHAR(255) NOT NULL,
   `Login` VARCHAR(255) NOT NULL,
   `Haslo` VARCHAR(255) NOT NULL,
   `Uprawnienia` INT NOT NULL
 );
 
+INSERT INTO `Priorytety` (Priorytety) VALUES
+('Pilny'),
+('Normalny'),
+('Wstrzymany'),
+('Zakończony');
+
+-- Dodaj rekordy do tabeli Zespoly
+INSERT INTO `Zespoly` (Nr_zespolu, Czlonek) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(1, 4),
+(2, 5),
+(3, 6),
+(1, 7),
+(2, 8),
+(3, 9);
+
+-- Dodaj rekordy do tabeli Pracownicy
+INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, Ikonka) VALUES
+('Jan', 'Kowalski', 'Programista', 'icon1.png'),
+('Anna', 'Nowak', 'Analityk', 'icon2.png'),
+('Piotr', 'Wiśniewski', 'Tester', 'icon3.png'),
+('Alicja', 'Dąbrowska', 'Programista', 'icon4.png'),
+('Mateusz', 'Lewandowski', 'Analityk', 'icon5.png'),
+('Karolina', 'Kowalczyk', 'Tester', 'icon6.png'),
+('Marcin', 'Jankowski', 'Programista', 'icon7.png'),
+('Katarzyna', 'Szymańska', 'Analityk', 'icon8.png'),
+('Michał', 'Woźniak', 'Tester', 'icon9.png');
+
+-- Dodaj rekordy do tabeli Status
+INSERT INTO Status (Nazwa) VALUES
+('Nowy'),
+('W trakcie'),
+('Zakończony');
+
+-- Dodaj rekordy do tabeli Projekty
+INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Data_start, Data_koniec) VALUES
+('Projekt A', 1, 1, 1, '2023-01-01', '2023-03-31'),
+('Projekt B', 2, 2, 2, '2023-02-01', '2023-04-30'),
+('Projekt C', 3, 3, 3, '2023-03-01', '2023-05-31'),
+('Projekt D', 4, 1, 1, '2023-04-01', '2023-06-30'),
+('Projekt E', 5, 2, 2, '2023-05-01', '2023-07-31'),
+('Projekt F', 6, 3, 3, '2023-06-01', '2023-08-31'),
+('Projekt G', 7, 1, 1, '2023-07-01', '2023-09-30'),
+('Projekt H', 8, 2, 2, '2023-08-01', '2023-10-31'),
+('Projekt I', 9, 3, 3, '2023-09-01', '2023-11-30');
+
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
-
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
-
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
-
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status` (`Id`);
-
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_zespolu`) REFERENCES `Zespoly` (`Id`);
-
 ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy` (`Id`); 
-
 ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
-
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
-
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_zadania`) REFERENCES `Zadania` (`Id`);
-
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Komentujacy`) REFERENCES `Pracownicy` (`Id`);
-
 ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_event`) REFERENCES `Event` (`Id`);
-
-ALTER TABLE `Pracownicy` ADD FOREIGN KEY (`Id`) REFERENCES `Konta` (`Id_konta`);
-
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
+-- ALTER TABLE `Pracownicy` ADD FOREIGN KEY (`Id`) REFERENCES `Konta` (`Id_konta`);
+ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_konta`) REFERENCES `Pracownicy` (`Id`);
