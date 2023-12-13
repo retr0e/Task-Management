@@ -2,7 +2,16 @@ import React from "react";
 
 export default function Profile() {
   return (
-    <div>Profile</div>
+    <>
+      <div>Profile</div>
+      <div> 
+        Profile options
+        <ChangeName/>
+        <ChangeEmail/>
+        <ChangePassword/>
+        <DeleteAccount/>
+      </div>
+    </>
   );
 }
 
@@ -14,7 +23,7 @@ export function ChangeName(){
       type='text'
       placeholder='New Account Name'
       className='border p-3 rounded-lg'
-      id='email'
+      id='name'
       onChange={handleChange}
     />
     <button
@@ -53,6 +62,32 @@ export function ChangeEmail(){
     </form>
   )
 
+}
+export function ChangePassword(){
+  return(
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+    <input
+      type='text'
+      placeholder='New Password'
+      className='border p-3 rounded-lg'
+      id='password'
+      onChange={handleChange}
+    />
+    <input
+      type='text'
+      placeholder='Confirm New Email'
+      className='border p-3 rounded-lg'
+      id='password'
+      onChange={handleChange}
+    />
+    <button
+      disabled={loading}
+      className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+    >
+      {loading ? "Loading..." : "Change Password"}
+    </button>
+  </form>
+  )
 }
 
 export function DeleteAccount(){

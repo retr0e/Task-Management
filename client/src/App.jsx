@@ -52,15 +52,19 @@ export default function App() {
         )}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/profile' element={<Profile />} />
         <Route
           element={
             <ProtectedRoutes isAuthenticated={isAuthenticated}>
               <Route path='/about' element={<About />} />
-              <Route path='/profile' element={<Profile />} />
+              {/* <Route path='/profile' element={<Profile />} /> */}
               <Route path='/projects' element={<Projects />} />
+
+              {/* Sub-route for detailed project sites */}
               <Route path='/project' element={<Outlet/>}>
                 <Route path=":project_id" element={<Project/>} />
-                </Route>
+              </Route>
+
             </ProtectedRoutes>
           }
         />
