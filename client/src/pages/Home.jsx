@@ -47,11 +47,11 @@ function Card({ project }) {
     >
       <div className='px-6 py-4'>
         <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
+        <p className='text-gray-700 text-base'>{`Nr_zespolu: ${Nr_zespolu}`}</p>
+        <p className='text-gray-700 text-base'>{`Status: ${Status}`}</p>
+        <p className='text-gray-700 text-base'>{`Data_start: ${Data_start}`}</p>
         <p className='text-gray-700 text-base'>
-          {`Nr_zespolu: ${Nr_zespolu}, Priorytet: ${Priorytet}, Status: ${Status}`}
-        </p>
-        <p className='text-gray-700 text-base'>
-          {`Data_start: ${Data_start}, Data_koniec: ${Data_koniec}`}
+          {`Data_koniec: ${Data_koniec}`}
         </p>
       </div>
       <div className='px-6 pt-4 pb-2'>
