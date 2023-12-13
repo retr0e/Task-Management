@@ -44,7 +44,7 @@ export const signup = async (req, res, next) => {
     try {
       await pool.query(
         "INSERT INTO Konta (Nazwa, Login, Haslo, Uprawnienia) VALUES (?,?,?,?)",
-        [username, email, hashedPassword, 0]
+        [username, email, hashedPassword, 4]
       );
       res.status(201).json("User created successfully!");
     } catch (err) {
@@ -53,7 +53,7 @@ export const signup = async (req, res, next) => {
     }
   } else {
     res.status(400).json("Bad data!");
-  } 
+  }
 };
 
 export const signin = async (req, res, next) => {
@@ -68,7 +68,17 @@ export const signin = async (req, res, next) => {
     if (!validUser) return next(errorHandler(404, "User not found!"));
     const validPassword = bcryptjs.compareSync(password, validUser.Haslo);
     if (!validPassword) return next(errorHandler(401, "Wrong credentials! "));
-    const token = jwt.sign({ id: validUser.Id_konta }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      {
+        id: validUser.Id_konta,
+        iss: "task-manager-app",
+        aud: "task-manager-users",
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     const { Haslo: pass, ...rest } = validUser;
     res
@@ -80,3 +90,11 @@ export const signin = async (req, res, next) => {
   }
 };
 
+export const logout = (req, res) => {
+  res.clearCookie("access_token");
+  res.status(200).json({
+    success: true,
+    isAuthenticated: false,
+    message: "Logout successful",
+  });
+};

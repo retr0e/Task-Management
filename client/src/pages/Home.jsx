@@ -1,60 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+function Badge(priorytet) {
+  /* For automatic color and text */
+  let status_Color;
+  let status_Name = "Halted";
 
+  switch (priorytet) {
+    case "Pilny":
+      status_Color = "bg-red-400";
+      status_Name = "Critical";
+      break;
+    case "Normalny":
+      status_Color = "bg-green-400";
+      status_Name = "Normal";
+      break;
+    case "Wstrzymany":
+      status_Color = "bg-yellow-400";
+      status_Name = "On Hold";
+      break;
+    default:
+      status_Color = "bg-gray-400";
+      break;
+  }
 
-export default function Home() {
+  return [status_Color, status_Name];
+}
 
+// Użycie funkcji w komponencie Card
+function Card({ project }) {
+  const {
+    ID,
+    Nazwa_Projektu,
+    Nr_zespolu,
+    Priorytet,
+    Status,
+    Data_start,
+    Data_koniec,
+  } = project;
+
+  const [status_Color, status_Name] = Badge(Priorytet);
 
   return (
-    <> 
-      <div className="p-3">
-        <Card/>
+    <div
+      className='max-w-sm rounded overflow-hidden shadow-lg border-2'
+      key={ID}
+    >
+      <div className='px-6 py-4'>
+        <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
+        <p className='text-gray-700 text-base'>
+          {`Nr_zespolu: ${Nr_zespolu}, Priorytet: ${Priorytet}, Status: ${Status}`}
+        </p>
+        <p className='text-gray-700 text-base'>
+          {`Data_start: ${Data_start}, Data_koniec: ${Data_koniec}`}
+        </p>
       </div>
-    </> 
+      <div className='px-6 pt-4 pb-2'>
+        <span
+          className={`inline-block ${status_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
+        >
+          {status_Name}
+        </span>
+      </div>
+    </div>
   );
 }
 
-function Badge(status){
-  /*For automatic color and text*/
-  const status_Id = badge.status_Id
-  let status_Color
-  let status_Name = "Halted"
-  
-  switch(status_Id){
-    case 0:
-      status_Color = "bg-yellow-400";
-      break;
-    case 1:
-      status_Color = "bg-red-400"
-      break;
-    case 2:
-      status_Color = "bg-green-400"
-    case 4:
-      status_Color = "bg-gray-400"
-  }
+function Home() {
+  const [projects, setProjects] = useState([]);
 
-  return [status_Color,status_Name];
+  useEffect(() => {
+    // Fetch data from the server
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/v1/projects/get_projects");
+        const data = await response.json();
+        setProjects(data.result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  return (
+    <div className='flex flex-wrap'>
+      {projects.map((project) => (
+        <Card key={project.ID} project={project} />
+      ))}
+    </div>
+  );
 }
 
-function Card(){
-  
-
-  return(
-    <>
-      <div class="max-w-sm rounded overflow-hidden shadow-lg border-2">
-        <img class="max-w-sm" src="https://media.tenor.com/fajm0GvKOU4AAAAM/sus.gif" alt="Sunset in the mountains"/>
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2">The Coldest Rock</div>
-          <p class="text-gray-700 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
-        </div>
-        <div class="px-6 pt-4 pb-2">
-          <span class="inline-block bg-yellow-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">WSTRZYMANY</span>
-          <span class="inline-block bg-green-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">PILNE</span>
-        </div>
-      </div>
-    </>
-  )
-}
+export default Home;

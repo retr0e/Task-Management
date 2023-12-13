@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function SignIn() {
+export default function SignIn({ onLogin }) {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -26,12 +27,13 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        setError(data.massage);
+        setError(data.message);
         setLoading(false);
         return;
       }
       setLoading(false);
       setError(null);
+      onLogin(); // Notify the parent component about successful login
       navigate("/");
     } catch (error) {
       setLoading(false);
@@ -67,7 +69,7 @@ export default function SignIn() {
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Dont have an account?</p>
-        <Link to={"/"}>
+        <Link to={"/sign-up"}>
           <span className='text-blue-700'>Ask administrator for account</span>
         </Link>
       </div>

@@ -1,7 +1,7 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ isAuthenticated, handleLogout }) {
   return (
     <header className='bg-color4 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
@@ -21,21 +21,32 @@ export default function Header() {
           <FaSearch className='text-color5' />
         </form>
         <ul className='flex gap-4'>
-          <Link to='/'>
-            <li className='hidden sm:inline text-slate-700 hover:underline'>
-              <span className="text-color1">Home</span>
-            </li>
-          </Link>
-          <Link to='/projects'>
-            <li className='hidden sm:inline text-slate-700 hover:underline'>
-            <span className="text-color1">Projects</span>
-            </li>
-          </Link>
-          <Link to='/sign-in'>
-            <li className='sm:inline text-slate-700 hover:underline'>
-            <span className="text-color1">Sign In</span>
-            </li>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link to='/'>
+                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                  <span className='text-color1'>Home</span>
+                </li>
+              </Link>
+              <Link to='/projects'>
+                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                  <span className='text-color1'>Projects</span>
+                </li>
+              </Link>
+              <li
+                className='sm:inline text-slate-700 hover:underline cursor-pointer'
+                onClick={handleLogout}
+              >
+                <span className='text-color1'>Log Out</span>
+              </li>
+            </>
+          ) : (
+            <Link to='/sign-in'>
+              <li className='sm:inline text-slate-700 hover:underline'>
+                <span className='text-color1'>Sign In</span>
+              </li>
+            </Link>
+          )}
         </ul>
       </div>
     </header>
