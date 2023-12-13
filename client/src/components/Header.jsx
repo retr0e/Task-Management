@@ -33,6 +33,11 @@ export default function Header({ isAuthenticated, handleLogout }) {
                   <span className='text-color1'>Projects</span>
                 </li>
               </Link>
+              <Link to='/account'>
+                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                  <span className='text-color1'>Profile</span>
+                </li>
+              </Link>
               <li
                 className='sm:inline text-slate-700 hover:underline cursor-pointer'
                 onClick={handleLogout}

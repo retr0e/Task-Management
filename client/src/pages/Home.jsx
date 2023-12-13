@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 function Badge(priorytet) {
   /* For automatic color and text */
@@ -44,6 +45,7 @@ function Card({ project }) {
     <div
       className='max-w-sm rounded overflow-hidden shadow-lg border-2'
       key={ID}
+      onClick={<Navigate to='/project/${key}'/>}
     >
       <div className='px-6 py-4'>
         <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
