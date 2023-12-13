@@ -33,7 +33,7 @@ export default function SignIn({ onLogin }) {
       }
       setLoading(false);
       setError(null);
-      onLogin(); // Notify the parent component about successful login
+      onLogin();
       navigate("/");
     } catch (error) {
       setLoading(false);

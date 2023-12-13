@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import userRouter from "./routes/userRoutes.js";
 import overviewRouter from "./routes/overviewRoutes.js";
@@ -11,6 +12,8 @@ const app = express();
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

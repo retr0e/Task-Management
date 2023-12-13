@@ -42,7 +42,6 @@ export const changeProfileName = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
   const cooki = req.rawHeaders[3].split("=")[1];
   const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
-  console.log(userId);
   try {
     await pool.query(`DELETE FROM Konta WHERE Id_konta=${userId};`);
     res.clearCookie("access_token");

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -6,7 +6,6 @@ import {
   Navigate,
   Link,
   Outlet,
-  useNavigate,
 } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -27,6 +26,30 @@ import Taskbar from "./components/Taskbar";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const res = await fetch("/api/v1/users/check_authentication", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Authentication check error:", error);
+      }
+    };
+
+    checkAuthentication();
+  }, []);
 
   const handleLogin = () => {
     setIsAuthenticated(true);

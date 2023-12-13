@@ -98,3 +98,23 @@ export const logout = (req, res) => {
     message: "Logout successful",
   });
 };
+
+export const checkAuthentication = (req, res) => {
+  console.log(req.cookies);
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    res.status(500).json({ success: false });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    res.status(200).json({
+      success: true,
+      userID: decoded.id,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+};

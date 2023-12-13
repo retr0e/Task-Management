@@ -149,15 +149,13 @@ export function DeleteAccount({ handleLogout }) {
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
       <h1>Do you wanna confirm deleting your account?</h1>
-      <Link to='/'>
-        <button
-          disabled={loading}
-          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-          onClick={handleLogout}
-        >
-          {loading ? "Loading..." : "Confirm"}
-        </button>
-      </Link>
+      <button
+        disabled={loading}
+        className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+        onClick={handleLogout}
+      >
+        {loading ? "Loading..." : "Confirm"}
+      </button>
     </form>
   );
 }
