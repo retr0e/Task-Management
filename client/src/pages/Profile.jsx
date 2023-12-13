@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function Profile() {
+export default function Profile({ handleLogout }) {
   return (
     <>
       <div>Profile</div>
@@ -8,8 +9,8 @@ export default function Profile() {
         Profile options
         <ChangeName />
         {/* <ChangeEmail />
-        <ChangePassword />
-        <DeleteAccount /> */}
+        <ChangePassword /> */}
+        <DeleteAccount handleLogout={handleLogout} />
       </div>
     </>
   );
@@ -35,7 +36,14 @@ export function ChangeName() {
         },
         body: JSON.stringify({ newName: name }),
       });
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
+      setError(null);
     } catch (error) {
       setLoading(false);
       setError(error.message);
@@ -115,16 +123,41 @@ export function ChangeName() {
 //   )
 // }
 
-// export function DeleteAccount(){
-//   return(
-//     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-//       <h1>Do you wanna confirm deleting your account?</h1>
-//       <button
-//         disabled={loading}
-//         className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-//       >
-//         {loading ? "Loading..." : "Confirm"}
-//       </button>
-//     </form>
-//   )
-// }
+export function DeleteAccount({ handleLogout }) {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/v1/profile/delete_account", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setLoading(false);
+      setError(null);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+      <h1>Do you wanna confirm deleting your account?</h1>
+      <Link to='/'>
+        <button
+          disabled={loading}
+          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          onClick={handleLogout}
+        >
+          {loading ? "Loading..." : "Confirm"}
+        </button>
+      </Link>
+    </form>
+  );
+}

@@ -26,9 +26,35 @@ export const changeProfileName = async (req, res, next) => {
     await pool.query(
       `UPDATE Konta SET Nazwa="${updatedName}" WHERE Id_konta=${userId};`
     );
-    res.status(202).json("Name Changed!");
+    res.status(202).json({
+      success: true,
+      message: "Update succesful",
+    });
   } catch (err) {
-    res.status(500).json("For some reason server can't change name");
+    res.status(500).json({
+      success: false,
+      message: "Update can not be performed!",
+    });
+    next(err);
+  }
+};
+
+export const deleteUser = async (req, res, next) => {
+  const cooki = req.rawHeaders[3].split("=")[1];
+  const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
+  console.log(userId);
+  try {
+    await pool.query(`DELETE FROM Konta WHERE Id_konta=${userId};`);
+    res.clearCookie("access_token");
+    res.status(204).json({
+      success: true,
+      message: "Update succesful",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Delete account can not be performed!",
+    });
     next(err);
   }
 };

@@ -6,6 +6,7 @@ import {
   Navigate,
   Link,
   Outlet,
+  useNavigate,
 } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -58,7 +59,10 @@ export default function App() {
         )}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/account' element={<Profile />} />
+        <Route
+          path='/account'
+          element={<Profile handleLogout={handleLogout} />}
+        />
         <Route
           element={
             <ProtectedRoutes isAuthenticated={isAuthenticated}>
