@@ -45,15 +45,15 @@ function Card({ project }) {
     <div
       className='max-w-sm rounded overflow-hidden shadow-lg border-2'
       key={ID}
-      onClick={<Navigate to='/project/${key}'/>}
+      onClick={<Navigate to='/project/${key}' />}
     >
       <div className='px-6 py-4'>
         <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
         <p className='text-gray-700 text-base'>{`Nr_zespolu: ${Nr_zespolu}`}</p>
         <p className='text-gray-700 text-base'>{`Status: ${Status}`}</p>
-        <p className='text-gray-700 text-base'>{`Data_start: ${Data_start}`}</p>
+        <p className='text-gray-700 text-base'>{`Rozpoczęcie: ${Data_start}`}</p>
         <p className='text-gray-700 text-base'>
-          {`Data_koniec: ${Data_koniec}`}
+          {`Oczekiwany koniec: ${Data_koniec}`}
         </p>
       </div>
       <div className='px-6 pt-4 pb-2'>
