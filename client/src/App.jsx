@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, Link, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+  Outlet,
+} from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 
 // Pages
-import Home     from "./pages/Home";
-import SignUp   from "./pages/SignUp";
-import About    from "./pages/About";
-import Profile  from "./pages/Profile";
-import SignIn   from "./pages/SignIn";
+import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
+import SignIn from "./pages/SignIn";
 import Projects from "./pages/Projects";
 import Overview from "./pages/Overview";
-import Project  from "./pages/Project";
+import Project from "./pages/Project";
 
 // Components
-import Error    from "./pages/Error";
-import Header   from "./components/Header";
-import Taskbar  from "./components/Taskbar";
-
+import Error from "./pages/Error";
+import Header from "./components/Header";
+import Taskbar from "./components/Taskbar";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,7 +58,7 @@ export default function App() {
         )}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/account' element={<Profile />} />
         <Route
           element={
             <ProtectedRoutes isAuthenticated={isAuthenticated}>
@@ -61,10 +67,9 @@ export default function App() {
               <Route path='/projects' element={<Projects />} />
 
               {/* Sub-route for detailed project sites */}
-              <Route path='/project' element={<Outlet/>}>
-                <Route path=":project_id" element={<Project/>} />
+              <Route path='/project' element={<Outlet />}>
+                <Route path=':project_id' element={<Project />} />
               </Route>
-
             </ProtectedRoutes>
           }
         />
