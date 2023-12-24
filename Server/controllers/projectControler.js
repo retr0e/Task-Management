@@ -24,7 +24,9 @@ export async function getProjects(req, res, next) {
       p.ID,
       p.Nazwa AS Nazwa_Projektu,
       z.Nr_zespolu,
+      p.Id_priorytetu,
       pr.Priorytety AS Priorytet,
+      p.Id_statusu,
       s.Nazwa AS Status,
       DATE_FORMAT(p.Data_start, '%Y-%m-%d') AS Data_start,
       DATE_FORMAT(p.Data_koniec, '%Y-%m-%d') AS Data_koniec
@@ -42,3 +44,20 @@ export async function getProjects(req, res, next) {
     next(err);
   }
 }
+
+
+/* old querry
+    SELECT
+      p.ID,
+      p.Nazwa AS Nazwa_Projektu,
+      z.Nr_zespolu,
+      pr.Priorytety AS Priorytet,
+      s.Nazwa AS Status,
+      DATE_FORMAT(p.Data_start, '%Y-%m-%d') AS Data_start,
+      DATE_FORMAT(p.Data_koniec, '%Y-%m-%d') AS Data_koniec
+    FROM
+      Projekty p
+    JOIN Priorytety pr ON p.Id_priorytetu = pr.Id
+    JOIN Zespoly z ON p.Id_zespolu = z.Id
+    JOIN Status s ON p.Id_statusu = s.Id; 
+*/

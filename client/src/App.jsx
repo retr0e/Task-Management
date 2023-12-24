@@ -23,6 +23,7 @@ import Project from "./pages/Project";
 import Error from "./pages/Error";
 import Header from "./components/Header";
 import Taskbar from "./components/Taskbar";
+import FormButton from "./components/FormButton";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -102,6 +103,7 @@ export default function App() {
         />
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
+      <FormButton/>
     </BrowserRouter>
   );
 }
