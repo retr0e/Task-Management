@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 export default function Profile({ handleLogout }) {
   return (
     <>
-      <div>Profile</div>
-      <div>
-        Profile options
-        <ChangeName />
-        {/* <ChangeEmail />
-        <ChangePassword /> */}
-        <DeleteAccount handleLogout={handleLogout} />
+      <div className="text-white p-3  h-75 w-full flex justify-center items-center">
+        <div className="border-2 rounded-lg p-10">
+          Profile options
+            <ChangeName />
+          {/* <ChangeEmail />
+            <ChangePassword /> */}
+          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+          <DeleteAccount handleLogout={handleLogout} />
+        </div>
       </div>
     </>
   );
@@ -148,13 +150,12 @@ export function DeleteAccount({ handleLogout }) {
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-      <h1>Do you wanna confirm deleting your account?</h1>
       <button
         disabled={loading}
-        className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+        className='bg-red-600 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
         onClick={handleLogout}
       >
-        {loading ? "Loading..." : "Confirm"}
+        {loading ? "Loading..." : "Delete Account"}
       </button>
     </form>
   );
