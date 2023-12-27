@@ -1,0 +1,4 @@
+1.  Unifikacja zarządzaania dostępem do konkretnych ścierzek w Protected 
+    routes z funkcją isAuthenticated z App
+2.  Sforamtowanie odpowiednich styli w postronach
+3.  Zmniejszenie ilości plików po stronie klienta

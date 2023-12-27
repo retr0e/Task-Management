@@ -1,37 +1,33 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 export default function AddingProjects(){
-    const [formData, setFormData] = useState({});
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
-    const handleChange = (e) => {
-      setFormData({
-        ...formData,
-        [e.target.id]: e.target.value,
-      });
-    };
-
-    const handleSubmit = async (e) =>{}
-
     return(
-        <>  
-            <div className="p-5 grid place-items-center w-full bg-color1">
-                <form onSubmit={handleSubmit} className="bg-color2 w-6/12">
-                    <input
-                        type="text"
-                        placeholder="Project Name"
-                        className="border p-3 rounded-lg w-full"
-                        id = "Project_Name"
-                        onChange={handleChange}
-                    />
-                    <div className="p-3 rounded-lg bg-orange">Dropdown</div>
-            
-
-                </form>
-            </div>
-        </>
-    );
+        <div className='main'>
+            <span>Dodawanie Projektu</span>
+            <form  name="" action="">
+                <input type='text' placeholder='ProjectName' required/><br/>
+    
+                {/*<=======================================================>*/}
+                {/* Below are temporal imputs will be replaced by dropdowns */}
+                {/*<=======================================================>*/}
+    
+                <input type='number' placeholder='Priorytet' required/><br/>
+                <input type='number' placeholder='Status'    required/><br/>
+                <input type='number' placeholder='Zespol'    required/><br/>
+                {/*<=======================================================>*/}
+    
+                <textarea placeholder='Description'></textarea><br/>
+    
+                <p>Start Date</p>
+                <input type="date" placeholder='Start Date' required/><br/>
+                <p>End date</p>
+                <input type="date" placeholder='End Date' required/><br/>
+                <button type='submit'>Dodaj Projekt</button>
+    
+            </form>
+        </div>
+      )
+    
 }
