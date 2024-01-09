@@ -3,13 +3,8 @@ import bcryptjs from "bcryptjs";
 import validator from "email-validator";
 import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
-import path from "path";
-import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 dotenv.config({ path: "./config.env" });
-
-let __dirname = path.dirname(fileURLToPath(import.meta.url));
-__dirname = path.join(__dirname + "/..");
 
 const pool = mysql
   .createPool({

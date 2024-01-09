@@ -13,7 +13,7 @@ const pool = mysql
   .promise();
 
 export const getAllProjectsData = async () => {
-  return await pool.query(`
+  const projects = await pool.query(`
     SELECT
       p.ID,
       p.Nazwa AS Nazwa_Projektu,
@@ -29,4 +29,6 @@ export const getAllProjectsData = async () => {
     JOIN Priorytety pr ON p.Id_priorytetu = pr.Id
     JOIN Zespoly z ON p.Id_zespolu = z.Id
     JOIN Status s ON p.Id_statusu = s.Id;`);
+
+  return projects[0];
 };

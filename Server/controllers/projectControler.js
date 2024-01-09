@@ -5,10 +5,10 @@ export async function getProjects(req, res, next) {
     const projects = await getAllProjectsData();
 
     res.status(200).json({
-      result: projects[0],
+      result: projects,
     });
   } catch (err) {
-    res.status(500).json("Unable to reach values from server");
+    res.status(500).json("Unable to reach project values from server");
     next(err);
   }
 }

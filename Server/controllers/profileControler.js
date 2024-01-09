@@ -1,13 +1,9 @@
 import mysql from "mysql2";
-import path from "path";
-import { fileURLToPath } from "url";
 import jwt from "jsonwebtoken";
-
 import dotenv from "dotenv";
-dotenv.config({ path: "./config.env" });
+import cookieParser from "cookie-parser";
 
-let __dirname = path.dirname(fileURLToPath(import.meta.url));
-__dirname = path.join(__dirname + "/..");
+dotenv.config({ path: "./config.env" });
 
 const pool = mysql
   .createPool({
@@ -20,9 +16,9 @@ const pool = mysql
 
 export const changeProfileName = async (req, res, next) => {
   const updatedName = req.body["newName"];
-  
-  const cooki = req.rawHeaders[3].split("=")[1];
+  const cooki = req.cookies["access_token"];
   const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
+
   try {
     await pool.query(
       `UPDATE Konta SET Nazwa="${updatedName}" WHERE Id_konta=${userId};`
@@ -41,7 +37,6 @@ export const changeProfileName = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
-  
   const cooki = req.rawHeaders[5].split("=")[1];
   const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
   try {
