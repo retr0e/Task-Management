@@ -3,7 +3,6 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import userRouter from "./routes/userRoutes.js";
-import overviewRouter from "./routes/overviewRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 
@@ -32,7 +31,6 @@ if (process.env.NODE_ENV === "development") {
 // ROUTES
 
 app.use("/api/v1/users", userRouter);
-app.use("/overview", overviewRouter);
 app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/profile", profileRoutes);
 
