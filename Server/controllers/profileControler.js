@@ -16,35 +16,43 @@ const pool = mysql
 
 export const changeProfileName = async (req, res, next) => {
   const updatedName = req.body["newName"];
-  const cooki = req.cookies["access_token"];
-  const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
+  const cooki = req.cookies["access_toke"];
 
-  try {
-    await pool.query(
-      `UPDATE Konta SET Nazwa="${updatedName}" WHERE Id_konta=${userId};`
-    );
-    res.status(202).json({
-      success: true,
-      message: "Update succesful",
-    });
-  } catch (err) {
+  if (!cooki) {
+    const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
+
+    try {
+      await pool.query(
+        `UPDATE Konta SET Nazwa="${updatedName}" WHERE Id_konta=${userId};`
+      );
+      res.status(202).json({
+        success: true,
+        message: "Update succesful",
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: "Update can not be performed!",
+      });
+      next(err);
+    }
+  } else {
     res.status(500).json({
       success: false,
-      message: "Update can not be performed!",
+      message: "The authentication rejected the update",
     });
-    next(err);
   }
 };
 
 export const deleteUser = async (req, res, next) => {
-  const cooki = req.rawHeaders[5].split("=")[1];
+  const cooki = req.cookies["access_token"];
   const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
   try {
     await pool.query(`DELETE FROM Konta WHERE Id_konta=${userId};`);
     res.clearCookie("access_token");
     res.status(204).json({
       success: true,
-      message: "Update succesful",
+      message: "Deletion succesful",
     });
   } catch (err) {
     res.status(500).json({
