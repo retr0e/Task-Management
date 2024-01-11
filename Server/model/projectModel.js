@@ -32,3 +32,22 @@ export const getAllProjectsData = async () => {
 
   return projects[0];
 };
+
+export const getProjectTasks = async (projectId) => {
+  const project = await pool.query(`
+  SELECT
+    zad.ID,
+    zad.Nazwa AS Opis_Zadania,
+    s.Nazwa AS Status,
+    p.Imie,
+    p.Nazwisko
+  FROM
+    Zadania zad
+  JOIN Status s ON zad.Id_statusu = s.Id
+  JOIN Pracownicy p ON zad.Id_pracownika = p.Id
+  WHERE
+    Id_projektu=${projectId}
+  `);
+
+  return project[0];
+};
