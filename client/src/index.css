@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: rgb(241, 245, 241);
+@layer components{
+  .toolbox-Element{
+    @apply bg-color4 text-color1  sm:inline p-3;
+  }
+  .toolbox-Element:hover{
+    @apply  underline;
+  }
+  vertLine{
+    border-left: 6px solid green;
+    height: 500px;
+  }
+
+  .card{
+    @apply max-w-sm rounded overflow-hidden shadow-lg border-2 min-w-[272px];
+  }
+
+  .center {
+    margin: auto;
+    width: 50%;
+    padding-top: 45%;
+    display: flex;
+    justify-content: center;
+  }
 }
