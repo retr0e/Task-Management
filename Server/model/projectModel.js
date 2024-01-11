@@ -51,3 +51,20 @@ export const getProjectTasks = async (projectId) => {
 
   return project[0];
 };
+
+export const insertProject = async (project) => {
+  await pool.query(`
+    INSERT INTO
+      Projekty
+      (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Data_start, Data_koniec)
+    VALUES
+    (
+      '${project["name"]}',
+      ${parseInt(project["assignedTeam"], 10)},
+      ${parseInt(project["priority"], 10)},
+      ${parseInt(project["state"], 10)},
+      '${project["startDate"]}',
+      '${project["endDate"]}'
+    )
+  `);
+};

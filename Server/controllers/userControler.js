@@ -113,7 +113,6 @@ export const logout = (req, res) => {
 };
 
 export const checkAuthentication = (req, res) => {
-  console.log(req.cookies);
   const token = req.cookies.access_token;
 
   if (!token) {
