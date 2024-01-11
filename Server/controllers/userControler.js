@@ -1,9 +1,10 @@
 import mysql from "mysql2";
 import bcryptjs from "bcryptjs";
 import validator from "email-validator";
-import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+
 dotenv.config({ path: "./config.env" });
 
 const pool = mysql
@@ -63,6 +64,9 @@ export const signin = async (req, res, next) => {
     if (!validUser) return next(errorHandler(404, "User not found!"));
     const validPassword = bcryptjs.compareSync(password, validUser.Haslo);
     if (!validPassword) return next(errorHandler(401, "Wrong credentials! "));
+
+    // Creating necesarry cookies
+    // Login token
     const token = jwt.sign(
       {
         id: validUser.Id_konta,
@@ -75,9 +79,23 @@ export const signin = async (req, res, next) => {
       }
     );
 
+    // Privilege token
+    const privilegeCookie = jwt.sign(
+      {
+        privilege: validUser.Uprawnienia,
+        iss: "task-manager-app",
+        aud: "task-manager-users",
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
     const { Haslo: pass, ...rest } = validUser;
     res
       .cookie("access_token", token, { httpOnly: true })
+      .cookie("privilege", privilegeCookie, { httpOnly: true })
       .status(200)
       .json(rest);
   } catch (error) {
