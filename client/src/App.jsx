@@ -20,7 +20,7 @@ import Overview from "./pages/Overview";
 import Project from "./pages/Project";
 
 // Components
-import Error from "./pages/Error";
+
 import Header from "./components/Header";
 import Taskbar from "./components/Taskbar";
 import FormButton from "./components/FormButton";
@@ -101,9 +101,10 @@ export default function App() {
             </ProtectedRoutes>
           }
         />
-        <Route path='*' element={<Navigate to='/' />} />
+      <Route path='*' element={<Navigate to='/' />} />
       </Routes>
-      {/* <FormButton/> */}
+        {/* <FormButton/> */}
+      
     </BrowserRouter>
   );
 }

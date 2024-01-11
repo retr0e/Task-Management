@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Header({ isAuthenticated, handleLogout }) {
   return (
     <header className='bg-color4 shadow-md'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
+      <div className='flex items-stretch justify-between  max-w-auto mx-3 p-3'>
         <Link to='/'>
           <h1 className='font-bold text-2xl sm:text-3xl flex flex-wrap'>
             <span className='text-color1'>Task</span>
@@ -12,29 +12,22 @@ export default function Header({ isAuthenticated, handleLogout }) {
           </h1>
         </Link>
 
-        <form className='bg-color2  p-3 rounded-lg flex items-center'>
-          <input
-            type='text'
-            placeholder='Search...'
-            className='bg-transparent focus:outline-none w-24 sm:w-64'
-          />
-          <FaSearch className='text-color5' />
-        </form>
+
         <ul className='flex gap-4'>
           {isAuthenticated ? (
             <>
               <Link to='/'>
-                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                <li className='toolbox-Element'>
                   <span className='text-color1'>Home</span>
                 </li>
               </Link>
               <Link to='/projects'>
-                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                <li className='toolbox-Element'>
                   <span className='text-color1'>Projects</span>
                 </li>
               </Link>
               <Link to='/account'>
-                <li className='hidden sm:inline text-slate-700 hover:underline'>
+                <li className='toolbox-Element'>
                   <span className='text-color1'>Profile</span>
                 </li>
               </Link>

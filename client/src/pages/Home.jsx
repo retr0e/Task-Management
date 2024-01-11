@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 function Badge(priorytet) {
   /* For automatic color and text */
@@ -43,37 +44,34 @@ function Card({ project }) {
 
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] =Badge(Id_priorytetu)
+  const handleClick = () =>{window.alert('Jebane routy Dawid zrób coś')}
+
 
   return (
-    <div
-      className='max-w-sm rounded overflow-hidden shadow-lg border-2'
-      key={ID}
-      
-      //on clicking card, user should be redirectet do /project/project-id
-      // where project id id id of project element
-      onClick={<Navigate to="/project/${key}"/>}
-    >
-      <div className='px-6 py-4'>
-        <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
-        <p className='text-gray-700 text-base'>{`Nr_zespolu: ${Nr_zespolu}`}</p>
-        <p className='text-gray-700 text-base'>{`Data_start: ${Data_start}`}</p>
-        <p className='text-gray-700 text-base'>
-          {`Data_koniec: ${Data_koniec}`}
-        </p>
+    <Link to={`/project/${ID}`} onClick={handleClick} >
+      <div className='card'>
+        <div className='px-6 py-4'>
+          <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
+          <p className='text-gray-700 text-base'>{`Nr_zespolu: ${Nr_zespolu}`}</p>
+          <p className='text-gray-700 text-base'>{`Data_start: ${Data_start}`}</p>
+          <p className='text-gray-700 text-base'>
+            {`Data_koniec: ${Data_koniec}`}
+          </p>
+        </div>
+        <div className='px-6 pt-4 pb-2'>
+          <span
+            className={`inline-block ${status_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
+          >
+            {Status}
+          </span>
+          <span
+            className={`inline-block ${priority_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
+          >
+            {Priorytet}
+          </span>
+        </div>
       </div>
-      <div className='px-6 pt-4 pb-2'>
-        <span
-          className={`inline-block ${status_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
-        >
-          {Status}
-        </span>
-        <span
-          className={`inline-block ${priority_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
-        >
-          {Priorytet}
-        </span>
-      </div>
-    </div>
+    </Link>  
   );
 }
 
@@ -96,7 +94,7 @@ function Home() {
   }, []);
 
   return (
-    <div className='flex flex-wrap'>
+    <div className='flex flex-wrap '>
       {projects.map((project) => (
         <Card key={project.ID} project={project} />
       ))}
