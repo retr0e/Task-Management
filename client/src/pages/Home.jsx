@@ -45,7 +45,6 @@ function Card({ project }) {
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] = Badge(Id_priorytetu);
 
-
   return (
     <Link to={`/project/${ID}`}>
       <div className='card'>

@@ -21,7 +21,6 @@ export async function getProjects(req, res, next) {
 }
 
 export const getProjectInformation = async (req, res, next) => {
-  console.log('req.params');
   try {
     const tasks = await getProjectTasks(Number(req.params["id"]));
 
