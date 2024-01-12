@@ -15,7 +15,7 @@ import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
-import Projects from "./pages/Projects";
+
 import Overview from "./pages/Overview";
 import Project from "./pages/Project";
 
@@ -73,35 +73,39 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {/*<==================Always-Displayed-Element======================>*/}
       <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
 
+      {/*<===================Routes-To-Functionalities==================>*/}
       <Routes>
+        {/*<=======================Public-access========================>*/}
+        <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
+
+        {/*<======================Restricted-access=====================>*/}
         {isAuthenticated ? (
           <Route path='/' element={<Home />} />
         ) : (
           <Route path='/' element={<Overview />} />
         )}
-        <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
-        <Route path='/sign-up' element={<SignUp />} />
-        <Route
-          path='/account'
-          element={<Profile handleLogout={handleLogout} />}
-        />
+        
+        
+        {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
         <Route
           element={
             <ProtectedRoutes isAuthenticated={isAuthenticated}>
               <Route path='/about' element={<About />} />
               {/* <Route path='/profile' element={<Profile />} /> */}
-              <Route path='/projects' element={<Projects />} />
+              
 
               {/* Sub-route for detailed project sites */}
               <Route path='/project' element={<Outlet />}>
-                <Route path=':project_id' element={<Project />} />
+                <Route path={':project_id'} element={<Project />} />
               </Route>
             </ProtectedRoutes>
           }
         />
-      <Route path='*' element={<Navigate to='/' />} />
+        {/*Catch all failed links - tempraly disabled due to some problems*/}
+      {/* <Route path='*' element={<Navigate to='/' />} /> */}
       </Routes>
         {/* <FormButton/> */}
       
