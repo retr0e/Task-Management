@@ -1,14 +1,7 @@
 import { useParams } from "react-router-dom";
 
-export default function Project(){
+const Project = () =>{
     const params = useParams();
-
-    return(
-        <>
-            <div>
-                <h1>Profile name</h1>
-                project_id {project_id}
-            </div>
-        </>
-    );
+    window.alert(params.id)
 }
+export default Project;
