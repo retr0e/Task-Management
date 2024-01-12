@@ -113,14 +113,28 @@ export const logout = (req, res) => {
 };
 
 export const checkAuthentication = (req, res) => {
-  const token = req.cookies["access_token"];
-
   try {
+    const token = req.cookies["access_token"];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     res.status(200).json({
       success: true,
       userID: decoded.id,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+};
+
+export const privilegeLevel = (req, res) => {
+  try {
+    const levelOfPrivilege = jwt.verify(
+      req.cookies["privilege"],
+      process.env.JWT_SECRET
+    );
+    res.status(200).json({
+      success: true,
+      userPrivilege: privilegeLevel.privilege,
     });
   } catch (error) {
     res.status(500).json({ success: false });
