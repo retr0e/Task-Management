@@ -53,13 +53,21 @@ export const getProjectTasks = async (projectId) => {
 };
 
 export const insertProject = async (project) => {
+  const projectCheckPresence = await pool.query(
+    `SELECT * FROM Projekty WHERE Nazwa='${project["projectName"]}'`
+  );
+  console.log(projectCheckPresence);
+  // Using object convertion checking if the project exist
+  // if (projectCheckPresence.length > 0 && projectCheckPresence[0]['Data_koniec'].length ) {
+  //   return false;
+  // } else {
   await pool.query(`
     INSERT INTO
       Projekty
       (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Data_start, Data_koniec)
     VALUES
     (
-      '${project["name"]}',
+      '${project["projectName"]}',
       ${parseInt(project["assignedTeam"], 10)},
       ${parseInt(project["priority"], 10)},
       ${parseInt(project["state"], 10)},
@@ -67,4 +75,7 @@ export const insertProject = async (project) => {
       '${project["endDate"]}'
     )
   `);
+
+  return true;
+  // }
 };
