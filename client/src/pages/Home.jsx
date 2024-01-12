@@ -44,12 +44,10 @@ function Card({ project }) {
 
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] = Badge(Id_priorytetu);
-  const handleClick = () => {
-    window.alert("Jebane routy Dawid zrób coś");
-  };
+
 
   return (
-    <Link to={`/project/${ID}`} onClick={handleClick}>
+    <Link to={`/project/${ID}`}>
       <div className='card'>
         <div className='px-6 py-4'>
           <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>

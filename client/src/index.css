@@ -3,8 +3,18 @@
 @tailwind utilities;
 
 @layer components{
+
+  .toolbox{
+    @apply bg-color6 mx-1 py-1 px-4 flex items-stretch ;
+    border-radius: 0px 0px 8px 8px;
+  }
+
+  .toolbox-Badge{
+    @apply inline-block rounded-full px-3 py-1 text-sm;
+  }
+
   .toolbox-Element{
-    @apply bg-color4 text-color1  sm:inline p-3;
+    @apply bg-color4 text-color1  sm:inline p-3 ;
   }
   .toolbox-Element:hover{
     @apply  underline;
@@ -17,6 +27,8 @@
   .card{
     @apply max-w-sm rounded overflow-hidden shadow-lg border-2 min-w-[272px];
   }
+
+  
 
   .center {
     margin: auto;

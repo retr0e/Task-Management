@@ -71,8 +71,8 @@ export default function App() {
           <Route path='/project/:project_id' element={<Project />} />
         </Route>
 
-        {/*Catch all failed links - tempraly disabled due to some problems*/}
-        {/* <Route path='*' element={<Navigate to='/' />} /> */}
+        {/*Catch all failed links */}
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
       {/* <FormButton/> */}
     </BrowserRouter>
