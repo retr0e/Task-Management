@@ -16,11 +16,10 @@ const pool = mysql
 
 export const changeProfileName = async (req, res, next) => {
   const updatedName = req.body["newName"];
-  const cooki = req.cookies["access_toke"];
+  const cooki = req.cookies["access_token"];
 
-  if (!cooki) {
+  if (cooki) {
     const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
-
     try {
       await pool.query(
         `UPDATE Konta SET Nazwa="${updatedName}" WHERE Id_konta=${userId};`
