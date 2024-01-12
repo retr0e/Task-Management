@@ -113,11 +113,7 @@ export const logout = (req, res) => {
 };
 
 export const checkAuthentication = (req, res) => {
-  const token = req.cookies.access_token;
-
-  if (!token) {
-    res.status(500).json({ success: false });
-  }
+  const token = req.cookies["access_token"];
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

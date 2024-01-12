@@ -1,22 +1,44 @@
+import { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const useAuth = () => {
-    /* Temporal hard codded login validation     */
-    /* Please insert there ur login verification */
-    /* ~ Patryk.                                 */
-    const user = {loggedIn: true};
-    return user && user.loggedIn;
+export const useAuth = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const res = await fetch("/api/v1/users/check_authentication", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Authentication check error:", error);
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuthentication();
+  }, []);
+
+  return { loggedIn: isAuthenticated, setIsAuthenticated };
 };
 
-const ProtectedRoutes = () => {
-    const isAuth = useAuth();
-    return isAuth ? <Outlet/> : <Navigate to="/" />
-}
+export const ProtectedRoutes = () => {
+  const isAuth = useAuth();
+  return isAuth ? <Outlet /> : <Navigate to='/' />;
+};
 
 /* Teporarly USELESS */
 export const RestrictedRoutes = () => {
-    const isAuth = useAuth();
-    return isAuth ? <Outlet/> : <Navigate to="/"/>
-}
-
-export default ProtectedRoutes;
+  const isAuth = useAuth();
+  return isAuth ? <Outlet /> : <Navigate to='/' />;
+};

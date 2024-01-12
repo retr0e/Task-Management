@@ -7,7 +7,7 @@ import {
   Link,
   Outlet,
 } from "react-router-dom";
-import ProtectedRoutes from "./ProtectedRoutes";
+import { ProtectedRoutes, useAuth } from "./ProtectedRoutes";
 
 // Pages
 import Home from "./pages/Home";
@@ -26,31 +26,7 @@ import Taskbar from "./components/Taskbar";
 import FormButton from "./components/FormButton";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      try {
-        const res = await fetch("/api/v1/users/check_authentication", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
-
-        if (data.success) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (error) {
-        console.error("Authentication check error:", error);
-      }
-    };
-
-    checkAuthentication();
-  }, []);
+  const { loggedIn, setIsAuthenticated } = useAuth();
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -74,7 +50,7 @@ export default function App() {
   return (
     <BrowserRouter>
       {/*<==================Always-Displayed-Element======================>*/}
-      <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+      <Header isAuthenticated={loggedIn} handleLogout={handleLogout} />
 
       {/*<===================Routes-To-Functionalities==================>*/}
       <Routes>
@@ -82,33 +58,30 @@ export default function App() {
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
 
         {/*<======================Restricted-access=====================>*/}
-        {isAuthenticated ? (
+        {loggedIn ? (
           <Route path='/' element={<Home />} />
         ) : (
           <Route path='/' element={<Overview />} />
         )}
-        
-        
+
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
         <Route
           element={
-            <ProtectedRoutes isAuthenticated={isAuthenticated}>
+            <ProtectedRoutes isAuthenticated={loggedIn}>
               <Route path='/about' element={<About />} />
               {/* <Route path='/profile' element={<Profile />} /> */}
-              
 
               {/* Sub-route for detailed project sites */}
               <Route path='/project' element={<Outlet />}>
-                <Route path={':project_id'} element={<Project />} />
+                <Route path={":project_id"} element={<Project />} />
               </Route>
             </ProtectedRoutes>
           }
         />
         {/*Catch all failed links - tempraly disabled due to some problems*/}
-      {/* <Route path='*' element={<Navigate to='/' />} /> */}
+        {/* <Route path='*' element={<Navigate to='/' />} /> */}
       </Routes>
-        {/* <FormButton/> */}
-      
+      {/* <FormButton/> */}
     </BrowserRouter>
   );
 }
