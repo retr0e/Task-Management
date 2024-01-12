@@ -1,7 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-    /* Temporal hard codded login validation*/
+    /* Temporal hard codded login validation     */
+    /* Please insert there ur login verification */
+    /* ~ Patryk.                                 */
     const user = {loggedIn: true};
     return user && user.loggedIn;
 };
