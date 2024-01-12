@@ -3,7 +3,6 @@ import {
   getProjectTasks,
   insertProject,
 } from "./../model/projectModel.js";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./config.env" });
@@ -36,34 +35,37 @@ export const getProjectInformation = async (req, res, next) => {
 };
 
 export const addProject = async (req, res, next) => {
-  let today = new Date();
-  let dd = today.getDate();
-
-  let mm = today.getMonth() + 1;
-  let yyyy = today.getFullYear();
-  if (dd < 10) {
-    dd = "0" + dd;
-  }
-
-  if (mm < 10) {
-    mm = "0" + mm;
-  }
-  today = yyyy + "-" + mm + "-" + dd;
+  // Calculating current date
+  const date = new Date();
+  let currentTime =
+    date.getMonth() + 1 < 10
+      ? `${date.getFullYear()}-0${date.getMonth() + 1}-`
+      : `${date.getFullYear()}-${date.getMonth() + 1}-`;
+  currentTime =
+    date.getDate() < 10
+      ? currentTime + `0${date.getDate()}`
+      : currentTime + `${date.getDate()}`;
+  console.log(currentTime);
 
   const project = {
-    name: "Nazwa projektu",
-    assignedTeam: 1,
-    priority: 2,
-    state: 1,
-    startDate: today,
-    endDate: today,
+    projectName: req.body["projectName"],
+    assignedTeam: req.body["assignedTeam"],
+    priority: req.body["projectPriority"],
+    state: req.body["projectState"],
+    startDate: currentTime,
+    endDate: "",
   };
 
-  insertProject(project);
-
-  res.status(200).json({
-    status: "success",
-    message: "Project succesfuly inserted",
-    object: project,
-  });
+  if (insertProject(project)) {
+    res.status(200).json({
+      status: "success",
+      message: "Project succesfuly inserted",
+      object: project,
+    });
+  } else {
+    res.status(500).json({
+      status: "failed",
+      message: "Unable to add a project",
+    });
+  }
 };
