@@ -63,21 +63,14 @@ export default function App() {
         ) : (
           <Route path='/' element={<Overview />} />
         )}
-
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
-        <Route
-          element={
-            <ProtectedRoutes isAuthenticated={loggedIn}>
-              <Route path='/about' element={<About />} />
-              {/* <Route path='/profile' element={<Profile />} /> */}
 
-              {/* Sub-route for detailed project sites */}
-              <Route path='/project' element={<Outlet />}>
-                <Route path={":project_id"} element={<Project />} />
-              </Route>
-            </ProtectedRoutes>
-          }
-        />
+        <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
+          <Route path='/about' element={<About />} />
+          {/* <Route path='/profile' element={<Profile />} /> */}
+          <Route path='/project/:project_id' element={<Project />} />
+        </Route>
+
         {/*Catch all failed links - tempraly disabled due to some problems*/}
         {/* <Route path='*' element={<Navigate to='/' />} /> */}
       </Routes>

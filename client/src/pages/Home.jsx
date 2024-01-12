@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { Link} from "react-router-dom";
+import { Navigate, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Badge(priorytet) {
   /* For automatic color and text */
@@ -39,16 +39,17 @@ function Card({ project }) {
     Id_statusu,
     Status,
     Data_start,
-    Data_koniec
+    Data_koniec,
   } = project;
 
   const [status_Color] = Badge(Id_statusu);
-  const [priority_Color] =Badge(Id_priorytetu)
-  const handleClick = () =>{window.alert('Jebane routy Dawid zrób coś')}
-
+  const [priority_Color] = Badge(Id_priorytetu);
+  const handleClick = () => {
+    window.alert("Jebane routy Dawid zrób coś");
+  };
 
   return (
-    <Link to={`/project/${ID}`} onClick={handleClick} >
+    <Link to={`/project/${ID}`} onClick={handleClick}>
       <div className='card'>
         <div className='px-6 py-4'>
           <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
@@ -71,7 +72,7 @@ function Card({ project }) {
           </span>
         </div>
       </div>
-    </Link>  
+    </Link>
   );
 }
 

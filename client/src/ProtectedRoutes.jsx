@@ -15,6 +15,12 @@ export const useAuth = () => {
         });
         const data = await res.json();
 
+        // const res2 = await fetch("/api/v1/users/privilege", {
+        //   method: "GET",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
         if (data.success) {
           setIsAuthenticated(true);
         } else {
@@ -32,13 +38,11 @@ export const useAuth = () => {
   return { loggedIn: isAuthenticated, setIsAuthenticated };
 };
 
-export const ProtectedRoutes = () => {
-  const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <Navigate to='/' />;
+export const ProtectedRoutes = ({ isAuthenticated }) => {
+  return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
 
 /* Teporarly USELESS */
-export const RestrictedRoutes = () => {
-  const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <Navigate to='/' />;
+export const RestrictedRoutes = ({ isAuthenticated }) => {
+  return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
