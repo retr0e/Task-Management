@@ -47,15 +47,9 @@ CREATE TABLE `Zespoly` (
   `Czlonek` INT
 );
 
-CREATE TABLE `Event` (
-  `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Type` VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE `Historia_Aktywnosci` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Data` DATE NOT NULL,
-  `Id_event` INT,
   `Dzialanie` VARCHAR(255) NOT NULL,
   `Id_pracownika` INT
 );
@@ -153,7 +147,5 @@ ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_zadania`) REFERENCES `Zadania` (`Id`);
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Komentujacy`) REFERENCES `Pracownicy` (`Id`);
-ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_event`) REFERENCES `Event` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
--- ALTER TABLE `Pracownicy` ADD FOREIGN KEY (`Id`) REFERENCES `Konta` (`Id_konta`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_konta`) REFERENCES `Pracownicy` (`Id`);
