@@ -25,11 +25,30 @@ const DataBar = () => {
 };
 
 const Project = ({ isAuthenticated }) => {
+  const [projects, setProject] = useState([]);
+  const [whatPrivilege, setPrivilege] = useState();
+
   const params = useParams();
 
-  const [projects, setProject] = useState([]);
-
   useEffect(() => {
+    const checkPrivilege = async () => {
+      const response = await fetch("/api/v1/users/privilege", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setPrivilege(data["userPrivilege"]["privilege"]);
+      } else {
+        setPrivilege(4);
+      }
+    };
+
+    checkPrivilege();
+
     const fetchData = async () => {
       const response = await fetch(
         `/api/v1/projects/get_project/${params["project_id"]}`
@@ -40,8 +59,6 @@ const Project = ({ isAuthenticated }) => {
     fetchData();
   }, []);
 
-  console.log(usePriv['privilage'])
-
   return (
     <div className=''>
       <DataBar />
@@ -49,4 +66,5 @@ const Project = ({ isAuthenticated }) => {
     </div>
   );
 };
+
 export default Project;
