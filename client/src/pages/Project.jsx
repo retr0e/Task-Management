@@ -57,7 +57,7 @@ const DataBar = ({ projectData, privilege }) => {
 const Project = ({ isAuthenticated }) => {
   const [projects, setProject] = useState(null);
   const [whatPrivilege, setPrivilege] = useState(null);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState();
 
   const params = useParams();
 
@@ -95,12 +95,15 @@ const Project = ({ isAuthenticated }) => {
         projects != null &&
         projects["projectTasks"].length > 0 &&
         projects["peopleWorking"].length > 0
-      )
+      ) {
         setDataLoaded(true);
+      } else {
+        setDataLoaded(false);
+      }
     };
 
     loadData();
-  });
+  }, [dataLoaded, params]);
 
   return (
     <div className=''>
