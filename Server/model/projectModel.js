@@ -52,6 +52,31 @@ export const getProjectTasks = async (projectId) => {
   return project[0];
 };
 
+export const getPeopleFromTeam = async (projectId) => {
+  const teamIdquery = await pool.query(`
+  SELECT
+    Projekty.Id_zespolu
+  FROM
+    Projekty
+  WHERE
+    ID=${projectId}`);
+  const teamId = teamIdquery[0][0]["Id_zespolu"];
+
+  const peopleInTeam = await pool.query(`
+  SELECT 
+    zespoly.Id, 
+    zespoly.Nr_zespolu,
+    pracownicy.Imie,
+    pracownicy.Nazwisko 
+  FROM 
+    zespoly 
+  INNER JOIN pracownicy ON pracownicy.Id = zespoly.Czlonek 
+  WHERE zespoly.Nr_zespolu = ${teamId};
+  `);
+
+  return peopleInTeam[0];
+};
+
 export const insertProject = async (project) => {
   const projectCheckPresence = await pool.query(
     `SELECT * FROM Projekty WHERE Nazwa='${project["projectName"]}'`

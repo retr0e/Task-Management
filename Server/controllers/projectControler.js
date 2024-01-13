@@ -1,5 +1,6 @@
 import {
   getAllProjectsData,
+  getPeopleFromTeam,
   getProjectTasks,
   insertProject,
 } from "./../model/projectModel.js";
@@ -23,10 +24,11 @@ export async function getProjects(req, res, next) {
 export const getProjectInformation = async (req, res, next) => {
   try {
     const tasks = await getProjectTasks(Number(req.params["id"]));
-
+    const people = await getPeopleFromTeam(req.params["id"]);
     res.status(200).json({
       status: "success",
       projectTasks: tasks,
+      peopleWorking: people,
     });
   } catch (err) {
     res.status(500).json("Unable to reach project value from server");
@@ -75,3 +77,5 @@ export const addProject = async (req, res, next) => {
     });
   }
 };
+
+export const deleteProject = async (req, res) => {};

@@ -98,6 +98,10 @@ export const signin = async (req, res, next) => {
     );
 
     const { Haslo: pass, ...rest } = validUser;
+    actionLog(
+      validUser.Id_konta,
+      `Uzytkownik: ${validUserData[0][0]["Login"]}, zalogowal sie do systemu`
+    );
     res
       .cookie("access_token", token, { httpOnly: true })
       .cookie("privilege", privilegeCookie, { httpOnly: true })
