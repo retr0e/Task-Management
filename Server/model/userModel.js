@@ -69,3 +69,12 @@ export const addAccountAndEmployee = async (data) => {
     console.log("Error Occured when adding a employee");
   }
 };
+
+export const getAllEmployees = async () => {
+  const employees = pool.query(`
+  SELECT *
+  FROM Pracownicy
+  JOIN Konta ON Pracownicy.Id = Konta.Id_pracownika;
+  `);
+  return employees[0];
+};

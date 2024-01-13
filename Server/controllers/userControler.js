@@ -1,6 +1,5 @@
 import mysql from "mysql2";
 import bcryptjs from "bcryptjs";
-import validator from "email-validator";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import { actionLog } from "../model/logModel.js";
@@ -22,9 +21,10 @@ export const signup = async (req, res, next) => {
   try {
     addAccountAndEmployee(req.body);
 
-    // CHANGE HARD CODED VALUE 1 TO:
-    // jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
-    // actionLog(1, `Dodanie uzytkownika: ${username}`);
+    actionLog(
+      jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
+      `Dodanie uzytkownika: ${req.body["username"]}`
+    );
     res.status(201).json("User created successfully!");
   } catch (err) {
     res.status(500).json("Something went wrong! In user creation!");
