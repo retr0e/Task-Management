@@ -77,5 +77,3 @@ export const addProject = async (req, res, next) => {
     });
   }
 };
-
-export const deleteProject = async (req, res) => {};

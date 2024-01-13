@@ -12,6 +12,18 @@ const pool = mysql
   })
   .promise();
 
+export const deleteTaskFromBase = async (taskId) => {
+  await pool.query(`
+  DELETE FROM Zadania WHERE Id=${taskId}
+  `);
+};
+
+export const getTaskName = async (taskId) => {
+  const task = await pool.query(`SELECT Nazwa FROM Zadania WHERE Id=${taskId}`);
+
+  return task[0][0]["Nazwa"];
+};
+
 export const addTask = async (data) => {
   console.log("Przypał");
 };

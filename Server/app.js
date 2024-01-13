@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import userRouter from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/task", taskRoutes);
 
 // START SERVER
 export default app;
