@@ -95,6 +95,7 @@ const Project = ({ isAuthenticated }) => {
     const loadData = async () => {
       await Promise.all([checkPrivilege(), fetchData()]);
       if (
+        projects != null &&
         projects["projectTasks"].length > 0 &&
         projects["peopleWorking"].length > 0
       )
