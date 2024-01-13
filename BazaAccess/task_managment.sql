@@ -49,7 +49,7 @@ CREATE TABLE `Zespoly` (
 
 CREATE TABLE `Historia_Aktywnosci` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Data` DATE NOT NULL,
+  `Data` TIMESTAMP NOT NULL,
   `Dzialanie` VARCHAR(255) NOT NULL,
   `Id_pracownika` INT
 );

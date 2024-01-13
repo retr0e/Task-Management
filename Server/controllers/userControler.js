@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import validator from "email-validator";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import { actionLog } from "../model/logModel.js";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./config.env" });
@@ -42,6 +43,10 @@ export const signup = async (req, res, next) => {
         "INSERT INTO Konta (Nazwa, Login, Haslo, Uprawnienia) VALUES (?,?,?,?)",
         [username, email, hashedPassword, 4]
       );
+
+      // CHANGE HARD CODED VALUE 1 TO:
+      // jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
+      actionLog(1, `Dodanie uzytkownika: ${username}`);
       res.status(201).json("User created successfully!");
     } catch (err) {
       res.status(500).json("Something went wrong! In user creation!");
@@ -53,8 +58,8 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     const validUserData = await pool.query(
       `SELECT Id_konta,Login,Haslo,Uprawnienia FROM Konta WHERE login = ?`,
       [email]
@@ -134,7 +139,7 @@ export const privilegeLevel = (req, res) => {
     );
     res.status(200).json({
       success: true,
-      userPrivilege: privilegeLevel.privilege,
+      userPrivilege: levelOfPrivilege,
     });
   } catch (error) {
     res.status(500).json({ success: false });

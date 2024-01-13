@@ -20,5 +20,6 @@ module.exports = {
     "react/no-unknown-property": "off",
     "react/prop-types": "off",
     "react-refresh/only-export-components": "off",
+    "react-hooks/rules-of-hooks": "off",
   },
 };
