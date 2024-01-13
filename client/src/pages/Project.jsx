@@ -32,7 +32,7 @@ const DataBar = ({ projectData, privilege }) => {
 
   // console.log(projectData);
   return (
-    <div className='main '>
+    <div className='main card'>
         
           <div className='odd:bg-slate-400 even:bg-slate-300 '>{'Nazwa_Projektu'}</div>
           
@@ -41,15 +41,18 @@ const DataBar = ({ projectData, privilege }) => {
           
       
       
-        <div className='odd:bg-slate-400 even:bg-slate-300  '>Team {peopleWorking[0]['Nr_zespolu']}
-          <ul>
-            {/* {peopleWorking.map((person, index) => (
-              <li key={index}>
-                {person['Imie']} {person['Nazwisko']}
-              </li>
-            ))} */}
-            
-          </ul>
+        <div className='odd:bg-slate-400 even:bg-slate-300  '>
+
+          <details className="dropdown">
+            <summary className="m-1 btn">Team {peopleWorking[0]['Nr_zespolu']}</summary>
+            <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+              {peopleWorking.map((person, index) => (
+                <li key={index}>
+                  <a>{person['Imie']} {person['Nazwisko']}</a>
+                </li>
+              ))} 
+            </ul>
+          </details>
           
           </div>
     </div>

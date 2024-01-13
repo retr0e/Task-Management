@@ -130,11 +130,13 @@ class AddingProjects extends React.Component {
     return (
       <div className='main flex justify-center py-6'>
         <div className='card p-6'>
-          <span>Dodawanie Projektu</span>
+        <p className='text-xl font-bold text-center'>Dodawanie Projektu</p>
+        <hr className="py-2"/>
           <form onSubmit={this.handleSubmit}>
             <input
               type='text'
               placeholder='ProjectName'
+              className='rounded border p-3'
               required
               onChange={this.handleInputChange}
             />
@@ -171,7 +173,8 @@ class AddingProjects extends React.Component {
               onChange={this.handleEndDateChange}
             />
             <br />
-            <button type='submit'>Dodaj Projekt</button>
+            <hr className="py-2"/>
+            <button type='submit' className="toolbox-Badge text-slate-100 bg-orange hover:bg-opacity-50 hover:text-slate-500">Dodaj Projekt</button>
           </form>
         </div>
       </div>

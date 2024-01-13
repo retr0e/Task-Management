@@ -3,55 +3,9 @@
 @tailwind utilities;
 
 @layer components{
-
-  .toolbox{
-    @apply bg-color6  py-1 px-4 flex items-stretch ;
-    border-radius: 0px 0px 0px 8px;
+  .btn-orange{
+    @apply btn bg-orange;
+    
   }
 
-  .toolbox-Name{
-    @apply text-color1 px-3 font-bold text-xl;
-  }
-  .toolbox-List-Title{
-    @apply text-center text-orange font-bold text-xl;
-  }
-  .toolbox-List{
-    @apply bg-color6 px-8 py-1 w-auto float-right inline-block text-right h-max;
-    border-radius: 0px 0px 8px 8px;
-    display: table;
-  }
-
-  .toolbox-Badge{
-    @apply inline-block rounded-full px-3 py-1 text-sm mr-2 mb-2 align-middle;
-  }
-
-  .toolbox-Element{
-    @apply bg-color4 text-color1  sm:inline p-3 ;
-  }
-  .toolbox-Element:hover{
-    @apply  underline;
-  }
-  vertLine{
-    border-left: 6px solid green;
-    height: 500px;
-  }
-
-  .card{
-    @apply max-w-sm rounded overflow-hidden shadow-lg border-2 min-w-[272px];
-  }
-
-  .rock{
-    width: 25px;
-    height: 25px;
-    object-fit: cover;
-    @apply rounded-full sm:inline;
-  }
-
-  .center {
-    margin: auto;
-    width: 50%;
-    padding-top: 45%;
-    display: flex;
-    justify-content: center;
-  }
 }
