@@ -31,3 +31,7 @@ export const getPrivileges = async (req, res) => {
     });
   }
 };
+
+export const debug = (req, res) => {
+  console.log(req.body);
+};
