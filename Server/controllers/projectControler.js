@@ -37,31 +37,16 @@ export const getProjectInformation = async (req, res, next) => {
 };
 
 export const addProject = async (req, res, next) => {
-  // Calculating current date
-  const date = new Date();
-  let currentTime =
-    date.getMonth() + 1 < 10
-      ? `${date.getFullYear()}-0${date.getMonth() + 1}-`
-      : `${date.getFullYear()}-${date.getMonth() + 1}-`;
-  currentTime =
-    date.getDate() < 10
-      ? currentTime + `0${date.getDate()}`
-      : currentTime + `${date.getDate()}`;
-  console.log(currentTime);
-
-  const endTimeDay =
-    date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
-  let endTimeMonth = date.getMonth();
-
-  // const endTime;
+  console.log(req.body);
 
   const project = {
     projectName: req.body["projectName"],
-    assignedTeam: req.body["assignedTeam"],
-    priority: req.body["projectPriority"],
-    state: 1,
-    startDate: currentTime,
-    endDate: endTime,
+    assignedTeam: req.body["team"],
+    priority: req.body["priority"],
+    state: req.body["status"],
+    description: req.body["description"],
+    startDate: req.body["startDate"],
+    endDate: req.body["endDate"],
   };
 
   if (insertProject(project)) {

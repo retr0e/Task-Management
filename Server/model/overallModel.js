@@ -13,13 +13,34 @@ const pool = mysql
   .promise();
 
 export const getAllStates = async () => {
-  const states = await pool.query(`SELECT * FROM Status`);
+  const states = await pool.query(`SELECT Nazwa FROM Status`);
+  let result = [];
 
-  return states[0];
+  for (const obj of states[0]) {
+    result.push(obj["Nazwa"]);
+  }
+
+  return result;
 };
 
-export const getAllPrivileges = async () => {
-  const privileges = await pool.query(`SELECT * FROM Priorytety`);
+export const getAllPriorities = async () => {
+  const priorities = await pool.query(`SELECT Priorytety FROM Priorytety`);
+  let result = [];
 
-  return privileges[0];
+  for (const obj of priorities[0]) {
+    result.push(obj["Priorytety"]);
+  }
+
+  return result;
+};
+
+export const getAllTeams = async () => {
+  const teams = await pool.query(`SELECT DISTINCT Nr_zespolu FROM Zespoly`);
+  let result = [];
+
+  for (const obj of teams[0]) {
+    result.push(obj["Nr_zespolu"]);
+  }
+
+  return result;
 };

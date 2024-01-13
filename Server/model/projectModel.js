@@ -78,10 +78,20 @@ export const getPeopleFromTeam = async (projectId) => {
 };
 
 export const insertProject = async (project) => {
+  const state = await pool.query(
+    `SELECT Id FROM Status WHERE Nazwa='${project.state}'`
+  );
+  const stateId = state[0][0]["Id"];
+
+  const priority = await pool.query(
+    `SELECT Id FROM Priorytety WHERE Priorytety.Priorytety='${project["priority"]}'`
+  );
+  const priorityId = priority[0][0]["Id"];
+
   const projectCheckPresence = await pool.query(
     `SELECT * FROM Projekty WHERE Nazwa='${project["projectName"]}'`
   );
-  console.log(projectCheckPresence);
+  // console.log(projectCheckPresence);
   // Using object convertion checking if the project exist
   // if (projectCheckPresence.length > 0 && projectCheckPresence[0]['Data_koniec'].length ) {
   //   return false;
@@ -89,13 +99,14 @@ export const insertProject = async (project) => {
   await pool.query(`
     INSERT INTO
       Projekty
-      (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Data_start, Data_koniec)
+      (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_start, Data_koniec)
     VALUES
     (
       '${project["projectName"]}',
       ${parseInt(project["assignedTeam"], 10)},
-      ${parseInt(project["priority"], 10)},
-      ${parseInt(project["state"], 10)},
+      ${parseInt(priorityId, 10)},
+      ${parseInt(stateId, 10)},
+      '${project["description"]}',
       '${project["startDate"]}',
       '${project["endDate"]}'
     )
