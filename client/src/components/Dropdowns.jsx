@@ -1,39 +1,4 @@
-
 import React, { useState } from 'react';
-
-// Funcjia przujmuje 2 argumenty 
-// - nazwa dropdowna
-// - lista elementow
-function DropdownTest(dropdown_Name,list){
-    return(
-        <div className="relative border-solid rounded-xl border-2 border-sky-500 w-56">
-            <details className="dropdown p-1">
-            <summary className="m-1 btn">dropdown_Name</summary>
-                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 2</a></li>
-                </ul>
-            </details>
-        </div>
-    )
-}
-
-
-// Tailwind Formating to be added
-function CheckboxList( DropdownName, stringArray) {
-    return (
-        <div>
-            {stringArray.map((item, index) => (
-                <div key={index}>
-                    <input type="checkbox" id={item} name={item} />
-                    <label htmlFor={item}>{item}</label>
-                </div>
-            ))}
-        </div>
-    );
-}
-
-
 
 export default function Dropdowns({ options, onOptionChange }) {
   const [selectedOption, setSelectedOption] = useState('');
@@ -57,6 +22,8 @@ export default function Dropdowns({ options, onOptionChange }) {
           className="peer relative h-10 w-full appearance-none border-b border-slate-200 bg-white px-4 text-sm text-slate-500 outline-none transition-all autofill:bg-white focus:border-emerald-500 focus-visible:outline-none focus:focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
         >
           <option value="" disabled selected></option>
+          <option value={'tester'}>tester</option>
+          <option value={'tester'}>tester</option>
           {/* {options.map((option) => (
             <option key={option} value={option}>
               {option}
