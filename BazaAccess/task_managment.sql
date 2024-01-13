@@ -33,7 +33,7 @@ CREATE TABLE `Pracownicy` (
   `Imie` VARCHAR(255) NOT NULL,
   `Nazwisko` VARCHAR(255) NOT NULL,
   `Stanowisko` VARCHAR(255) NOT NULL,
-  `Ikonka` VARCHAR(255)
+  `PESEL` VARCHAR(11) NOT NULL UNIQUE KEY
 );
 
 CREATE TABLE `Status` (
@@ -70,6 +70,7 @@ CREATE TABLE `PoziomDostepu` (
 
 CREATE TABLE `Konta` (
   `Id_konta` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `Id_pracownika` INT NOT NULL,
   `Nazwa` VARCHAR(255) NOT NULL,
   `Login` VARCHAR(255) NOT NULL,
   `Haslo` VARCHAR(255) NOT NULL,
@@ -101,16 +102,16 @@ INSERT INTO `Zespoly` (Nr_zespolu, Czlonek) VALUES
 (3, 9);
 
 -- Dodaj rekordy do tabeli Pracownicy
-INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, Ikonka) VALUES
-('Jan', 'Kowalski', 'Programista', 'icon1.png'),
-('Anna', 'Nowak', 'Analityk', 'icon2.png'),
-('Piotr', 'Wiśniewski', 'Tester', 'icon3.png'),
-('Alicja', 'Dąbrowska', 'Programista', 'icon4.png'),
-('Mateusz', 'Lewandowski', 'Analityk', 'icon5.png'),
-('Karolina', 'Kowalczyk', 'Tester', 'icon6.png'),
-('Marcin', 'Jankowski', 'Programista', 'icon7.png'),
-('Katarzyna', 'Szymańska', 'Analityk', 'icon8.png'),
-('Michał', 'Woźniak', 'Tester', 'icon9.png');
+INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, PESEL) VALUES
+('Jan', 'Kowalski', 'Programista', '12345674563'),
+('Anna', 'Nowak', 'Analityk', '52341351352'),
+('Piotr', 'Wiśniewski', 'Tester', '93758463720'),
+('Alicja', 'Dąbrowska', 'Programista', '10275948372'),
+('Mateusz', 'Lewandowski', 'Analityk', '74928374651'),
+('Karolina', 'Kowalczyk', 'Tester', '91023421234'),
+('Marcin', 'Jankowski', 'Programista', '12361245321'),
+('Katarzyna', 'Szymańska', 'Analityk', '75840395748'),
+('Michał', 'Woźniak', 'Tester', '87584321239');
 
 -- Dodaj rekordy do tabeli Status
 INSERT INTO Status (Nazwa) VALUES
@@ -148,4 +149,4 @@ ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty`
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_zadania`) REFERENCES `Zadania` (`Id`);
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Komentujacy`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
-ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_konta`) REFERENCES `Pracownicy` (`Id`);
+ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);

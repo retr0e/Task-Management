@@ -43,9 +43,26 @@ export const changeProfileName = async (req, res, next) => {
   }
 };
 
+// NOT TESTED!
 export const deleteUser = async (req, res, next) => {
-  const cooki = req.cookies["access_token"];
-  const userId = jwt.verify(cooki, process.env.JWT_SECRET).id;
+  const userId = jwt.verify(
+    req.cookies["access_token"],
+    process.env.JWT_SECRET
+  ).id;
+  const priv = jwt.verify(
+    req.cookies["privilege"],
+    process.env.JWT_SECRET
+  ).privilege;
+
+  // Admin can not delete himself
+  if (priv == 1) {
+    res.status(500).json({
+      success: false,
+      message: "Delete account can not be performed!",
+    });
+    next();
+  }
+
   try {
     await pool.query(`DELETE FROM Konta WHERE Id_konta=${userId};`);
     res.clearCookie("access_token");

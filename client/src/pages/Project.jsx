@@ -1,56 +1,36 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+const Contents = ({ projectData, privilege }) => {
+  const { peopleWorking, projectTasks } = projectData;
 
-
-const Contents = ({projectData,privilege}) =>{
-
-  const {
-    peopleWorking,
-    projectTasks
-  } = projectData;
-  
-
-
-  return(
+  return (
     <div className='bg-red-400 '>
-      <div className='bg-slate-200 w-auto h-40'>I'm empty documentation</div>
+      <div className='bg-slate-200 w-auto h-40'>Documentation is empty</div>
       <ul className='list-inside'>
         {projectTasks.map((task, index) => (
-            <li key={index} className='even:bg-slate-500 odd:bg-slate-400 text-black py-2 px-3 grid grid-cols-6 gap-2 shadow-sm rounded ' >
-              <span className='font-bold'>  
-                {task['Opis_Zadania']}  
-              </span>
-              
-              <span className='col-span-3 '>  
-                {task['Imie']}          
-              </span>
-              <span className='col-span-1'>  
-                {task['Nazwisko']}     
-              </span>
-              <span className='toolbox-Badge bg-green-400 float-left'>  
-                {task['Status']}        
-              </span>
-              
-            </li>
+          <li
+            key={index}
+            className='even:bg-slate-500 odd:bg-slate-400 text-black py-2 px-3 grid grid-cols-6 gap-2 shadow-sm rounded '
+          >
+            <span className='font-bold'>{task["Opis_Zadania"]}</span>
+            {/* <p>{task["ID"]}</p> */}
+            <span className='col-span-1 '>{task["Imie"]}</span>
+            <span className='col-span-1'>{task["Nazwisko"]}</span>
+            <span className='toolbox-Badge bg-green-400 float-left'>
+              {task["Status"]}
+            </span>
+          </li>
         ))}
-        
-            
       </ul>
     </div>
   );
 };
 
-const DataBar = ({projectData,privilege}) => {
-  const {
-    peopleWorking,
-    projectTasks
-  } = projectData;
+const DataBar = ({ projectData, privilege }) => {
+  const { peopleWorking, projectTasks } = projectData;
 
-
-  
-  //console.log(projectData);
-  //console.log('task',projectTasks);
+  // console.log(projectData);
   return (
     <div className='main '>
         
@@ -79,7 +59,7 @@ const DataBar = ({projectData,privilege}) => {
 const Project = ({ isAuthenticated }) => {
   const [projects, setProject] = useState(null);
   const [whatPrivilege, setPrivilege] = useState(null);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState();
 
   const params = useParams();
 
@@ -111,24 +91,32 @@ const Project = ({ isAuthenticated }) => {
       }
     };
 
-
     const loadData = async () => {
       await Promise.all([checkPrivilege(), fetchData()]);
-      setDataLoaded(true);
+      if (
+        projects != null &&
+        projects["projectTasks"].length > 0 &&
+        projects["peopleWorking"].length > 0
+      ) {
+        setDataLoaded(true);
+      } else {
+        setDataLoaded(false);
+      }
     };
 
     loadData();
-  }, [params]);
+  }, [dataLoaded, params]);
 
-  
-  
   return (
     <div className=''>
-      {dataLoaded && (
-        <DataBar projectData={projects} privilege={whatPrivilege} />
-        
+      {dataLoaded ? (
+        <>
+          <DataBar projectData={projects} privilege={whatPrivilege} />
+          <Contents projectData={projects} privilege={whatPrivilege} />
+        </>
+      ) : (
+        <div className='loading-message'>There is no data for the project</div>
       )}
-      
     </div>
   );
 };

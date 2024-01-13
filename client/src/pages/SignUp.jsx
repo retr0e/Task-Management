@@ -32,34 +32,43 @@ export default function SignUp() {
       }
       setLoading(false);
       setError(null);
-      navigate("/sign-in");
+      // navigate("/sign-in");
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
   };
 
-  console.log(formData);
+  // console.log(formData);
   return (
     <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Create User Account</h1>
+      <h1 className='text-3xl text-center font-semibold my-7'>
+        Create User Account
+      </h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-        <div className="flex flex-row gap-4">
+        <div className='flex flex-row gap-4'>
+          <input
+            type='text'
+            placeholder='Name'
+            className='border p-3 rounded-lg w-1/2 order-1'
+            id='name'
+            onChange={handleChange}
+          />
+          <input
+            type='text'
+            placeholder='Surname'
+            className='border p-3 rounded-lg w-1/2 order-2'
+            id='surname'
+            onChange={handleChange}
+          />
+        </div>
         <input
           type='text'
-          placeholder='Name'
-          className='border p-3 rounded-lg w-1/2 order-1'
-          id='Name'
+          placeholder='PESEL'
+          className='border p-3 rounded-lg order-3'
+          id='pesel'
           onChange={handleChange}
         />
-        <input
-          type='text'
-          placeholder='Surname'
-          className='border p-3 rounded-lg w-1/2 order-2'
-          id='surname'
-          onChange={handleChange}
-        />
-      </div>
         <input
           type='text'
           placeholder='Position'
