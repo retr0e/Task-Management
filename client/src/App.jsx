@@ -56,7 +56,7 @@ export default function App() {
       <Routes>
         {/*<=======================Public-access========================>*/}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
-
+        <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
           <Route path='/' element={<Home />} />
