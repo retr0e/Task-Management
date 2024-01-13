@@ -6,9 +6,10 @@ USE PBD;
 CREATE TABLE `Projekty` (
   `ID` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Nazwa` VARCHAR(255) NOT NULL,
-  `Id_zespolu` INT,
-  `Id_priorytetu` INT,
-  `Id_statusu` INT,
+  `Id_zespolu` INT NOT NULL,
+  `Id_priorytetu` INT NOT NULL,
+  `Id_statusu` INT NOT NULL,
+  `Opis` VARCHAR(255),
   `Data_start` DATE,
   `Data_koniec` DATE
 );
@@ -120,16 +121,16 @@ INSERT INTO Status (Nazwa) VALUES
 ('Zakończony');
 
 -- Dodaj rekordy do tabeli Projekty
-INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Data_start, Data_koniec) VALUES
-('Projekt A', 1, 1, 1, '2023-01-01', '2023-03-31'),
-('Projekt B', 2, 2, 2, '2023-02-01', '2023-04-30'),
-('Projekt C', 3, 3, 3, '2023-03-01', '2023-05-31'),
-('Projekt D', 4, 1, 1, '2023-04-01', '2023-06-30'),
-('Projekt E', 5, 2, 2, '2023-05-01', '2023-07-31'),
-('Projekt F', 6, 3, 3, '2023-06-01', '2023-08-31'),
-('Projekt G', 7, 1, 1, '2023-07-01', '2023-09-30'),
-('Projekt H', 8, 2, 2, '2023-08-01', '2023-10-31'),
-('Projekt I', 9, 3, 3, '2023-09-01', '2023-11-30');
+INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_start, Data_koniec) VALUES
+('Projekt A', 1, 1, 1, '', '2023-01-01', '2023-03-31'),
+('Projekt B', 2, 2, 2, '', '2023-02-01', '2023-04-30'),
+('Projekt C', 3, 3, 3, '', '2023-03-01', '2023-05-31'),
+('Projekt D', 4, 1, 1, '', '2023-04-01', '2023-06-30'),
+('Projekt E', 5, 2, 2, '', '2023-05-01', '2023-07-31'),
+('Projekt F', 6, 3, 3, '', '2023-06-01', '2023-08-31'),
+('Projekt G', 7, 1, 1, '', '2023-07-01', '2023-09-30'),
+('Projekt H', 8, 2, 2, '', '2023-08-01', '2023-10-31'),
+('Projekt I', 9, 3, 3, '', '2023-09-01', '2023-11-30');
 
 INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `Data_start`, `Data_koniec`) VALUES
 ('Zadanie 1', 1, 2, 3, '2024-01-15', '2024-01-20'),
