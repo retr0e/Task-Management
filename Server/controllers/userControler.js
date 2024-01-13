@@ -5,6 +5,7 @@ import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import { actionLog } from "../model/logModel.js";
 import dotenv from "dotenv";
+import { addAccountAndEmployee } from "../model/userModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -17,43 +18,17 @@ const pool = mysql
   })
   .promise();
 
-async function checkLogin(providedLogin) {
-  const dbFetchLogin = await pool.query(`SELECT Login FROM Konta`);
-  const logins = dbFetchLogin[0];
-
-  for (const element of logins) {
-    if (element.Login == providedLogin) {
-      // The user with provided login is present in data base
-      return false;
-    }
-  }
-
-  return true;
-}
-
 export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
-  const hashedPassword = bcryptjs.hashSync(password, 10);
-  const loginCorrectness = validator.validate(email);
-  const duplicationCorrectness = await checkLogin(email);
+  try {
+    addAccountAndEmployee(req.body);
 
-  if (loginCorrectness && duplicationCorrectness) {
-    try {
-      await pool.query(
-        "INSERT INTO Konta (Nazwa, Login, Haslo, Uprawnienia) VALUES (?,?,?,?)",
-        [username, email, hashedPassword, 4]
-      );
-
-      // CHANGE HARD CODED VALUE 1 TO:
-      // jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
-      actionLog(1, `Dodanie uzytkownika: ${username}`);
-      res.status(201).json("User created successfully!");
-    } catch (err) {
-      res.status(500).json("Something went wrong! In user creation!");
-      next(err);
-    }
-  } else {
-    res.status(400).json("Bad data!");
+    // CHANGE HARD CODED VALUE 1 TO:
+    // jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
+    // actionLog(1, `Dodanie uzytkownika: ${username}`);
+    res.status(201).json("User created successfully!");
+  } catch (err) {
+    res.status(500).json("Something went wrong! In user creation!");
+    next(err);
   }
 };
 
