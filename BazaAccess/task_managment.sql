@@ -14,9 +14,15 @@ CREATE TABLE `Projekty` (
   `Data_koniec` DATE
 );
 
+CREATE TABLE `Color_Code` (
+  `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `hex` VARCHAR(10) NOT NULL
+);
+
 CREATE TABLE `Priorytety` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Priorytety` VARCHAR(255) NOT NULL
+  `Priorytety` VARCHAR(255) NOT NULL,
+  `Id_colorCode` INT NOT NULL
 );
 
 CREATE TABLE `Zadania` (
@@ -39,7 +45,8 @@ CREATE TABLE `Pracownicy` (
 
 CREATE TABLE `Status` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Nazwa` VARCHAR(255) NOT NULL
+  `Nazwa` VARCHAR(255) NOT NULL,
+  `Id_colorCode` INT NOT NULL
 );
 
 CREATE TABLE `Zespoly` (
@@ -78,11 +85,20 @@ CREATE TABLE `Konta` (
   `Uprawnienia` INT NOT NULL
 );
 
-INSERT INTO `Priorytety` (Priorytety) VALUES
-('Pilny'),
-('Normalny'),
-('Wstrzymany'),
-('Zakończony');
+INSERT INTO `Color_Code` (hex) VALUES
+('#72B1C2'),
+('#71888F'),
+('#60D5F5'),
+('#4A585C'),
+('#1F2F33'),
+('#4A585D'),
+('#4A485C');
+
+INSERT INTO `Priorytety` (Priorytety, Id_colorCode) VALUES
+('Pilny', 1),
+('Normalny', 2),
+('Wstrzymany', 3),
+('Zakończony', 4);
 
 INSERT INTO `PoziomDostepu` (`Uprawnienia`) VALUES
 ("Admin"),
@@ -115,10 +131,10 @@ INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, PESEL) VALUES
 ('Michał', 'Woźniak', 'Tester', '87584321239');
 
 -- Dodaj rekordy do tabeli Status
-INSERT INTO Status (Nazwa) VALUES
-('Nowy'),
-('W trakcie'),
-('Zakończony');
+INSERT INTO Status (Nazwa, Id_colorCode) VALUES
+('Nowy', 5),
+('W trakcie', 6),
+('Zakończony', 7);
 
 -- Dodaj rekordy do tabeli Projekty
 INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_start, Data_koniec) VALUES
@@ -151,3 +167,5 @@ ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_zadania`) REFERENCES `Zadania` (
 ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Komentujacy`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
+ALTER TABLE `Priorytety` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
+ALTER TABLE `Status` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
