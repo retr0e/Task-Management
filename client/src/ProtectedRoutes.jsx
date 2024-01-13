@@ -17,12 +17,6 @@ export const useAuth = () => {
 
         const data = await res.json();
 
-         /* const res2 = await fetch("/api/v1/users/privilege", {
-           method: "GET",
-           headers: {
-             "Content-Type": "application/json",
-           },
-         }); */
         if (data.success) {
           setIsAuthenticated(true);
         } else {
@@ -40,68 +34,33 @@ export const useAuth = () => {
   return { loggedIn: isAuthenticated, setIsAuthenticated };
 };
 
-export const usePriv = () => {
-  const [isPrivilaged, setIsPrivilaged] = useState(false);
-  useEffect(() => {
-    const checkPrivilage = async() => {
-      try{
-        const response = await fetch("/api/v1/users/privilege", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+// DO NOT TOUCH THIS DEMON
+// export const usePriv = async () => {
+//   const [whatPrivilege, setPrivilege] = useState();
 
-        const data = response.json();
-        data.result['privilage'];
+//   useEffect(() => {
+//     const checkPrivilege = async () => {
+//       const response = await fetch("/api/v1/users/privilege", {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
+//       const data = await response.json();
 
-      }catch(error){
-        console.error("Authentication check error:", error);
-        setIsPrivilaged(false)
-      };
-    };
-    checkPrivilage();
-  },[]);
-  return {privilage: isPrivilaged, setIsPrivilaged};
-};
+//       if (data.success) {
+//         setPrivilege(data["userPrivilege"]["privilege"]);
+//       } else {
+//         setPrivilege(4);
+//       }
+//     };
 
+//     checkPrivilege();
+//   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//   return { privilege: whatPrivilege, setPrivilege };
+// };
 
 export const ProtectedRoutes = ({ isAuthenticated }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
-
-
