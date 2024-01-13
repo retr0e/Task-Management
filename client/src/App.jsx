@@ -24,6 +24,7 @@ import Project from "./pages/Project";
 import Header from "./components/Header";
 import Taskbar from "./components/Taskbar";
 import FormButton from "./components/FormButton";
+import Component from "./TESTERS/placeHolder";
 
 export default function App() {
   const { loggedIn, setIsAuthenticated } = useAuth();
@@ -57,6 +58,7 @@ export default function App() {
         {/*<=======================Public-access========================>*/}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
+        <Route path='/tester'  element={<Component/>}                     />
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
           <Route path='/' element={<Home />} />

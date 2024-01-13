@@ -18,6 +18,7 @@
   .toolbox-List{
     @apply bg-color6 px-8 py-1 w-auto float-right inline-block text-right h-auto;
     border-radius: 0px 0px 8px 8px;
+    display: table;
   }
 
   .toolbox-Badge{
