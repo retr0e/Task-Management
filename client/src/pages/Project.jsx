@@ -49,26 +49,29 @@ const DataBar = ({projectData,privilege}) => {
 
 
   
-  console.log(projectData);
+  //console.log(projectData);
   //console.log('task',projectTasks);
   return (
-    <div className='main'>
-      <div className='toolbox'>
-        <div className='toolbox-Name'>{'Nazwa_Projektu'}</div>
-        <div className='toolbox-Badge bg-[red]'>{'Priorytet'}</div>
-        <div className='toolbox-Badge bg-[pink]'>{'Status'}</div>
-      </div>
-      <div className='toolbox-List text-slate-100 '>
-        <div className='toolbox-List-Title'>Team {peopleWorking[0]['Nr_zespolu']}</div>
+    <div className='main '>
+        
+          <div className='odd:bg-slate-400 even:bg-slate-300 '>{'Nazwa_Projektu'}</div>
+          
+            <div className='toolbox-Badge odd:bg-slate-400 even:bg-slate-300 '>{'Priorytet'}</div>
+            <div className='toolbox-Badge odd:bg-slate-400 even:bg-slate-300 '>{'Status'}</div>
+          
+      
+      
+        <div className='odd:bg-slate-400 even:bg-slate-300  '>Team {peopleWorking[0]['Nr_zespolu']}
           <ul>
-            {peopleWorking.map((person, index) => (
+            {/* {peopleWorking.map((person, index) => (
               <li key={index}>
                 {person['Imie']} {person['Nazwisko']}
               </li>
-            ))}
+            ))} */}
             
           </ul>
-      </div>
+          
+          </div>
     </div>
   );
 };
@@ -125,10 +128,7 @@ const Project = ({ isAuthenticated }) => {
         <DataBar projectData={projects} privilege={whatPrivilege} />
         
       )}
-      {dataLoaded && (
-        <Contents projectData={projects} privilege={whatPrivilege} />
-        
-      )}
+      
     </div>
   );
 };
