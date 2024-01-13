@@ -45,31 +45,26 @@ function Card({ project }) {
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] = Badge(Id_priorytetu);
 
-  return (
-    <Link to={`/project/${ID}`}>
-      <div className='card'>
-        <div className='px-6 py-4'>
-          <div className='font-bold text-xl mb-2'>{Nazwa_Projektu}</div>
-          <p className='text-gray-700 text-base'>{`Nr_zespolu: ${Nr_zespolu}`}</p>
-          <p className='text-gray-700 text-base'>{`Data_start: ${Data_start}`}</p>
-          <p className='text-gray-700 text-base'>
-            {`Data_koniec: ${Data_koniec}`}
-          </p>
-        </div>
-        <div className='px-6 pt-4 pb-2'>
-          <span
-            className={`inline-block ${status_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
-          >
+  return(
+  <Link to={`/project/${ID}`}>
+    <div className="p-1">
+      <div className="card w-96 bg-color2 shadow-xl ">
+      <div className="card-body">
+        <h2 className="card-title">{Nazwa_Projektu}</h2>
+        <p className=''>{`Nr_zespolu: ${Nr_zespolu}`}</p>
+        <p className=''>{`Data_start: ${Data_start}`}</p>
+        <div className="card-actions ">
+          <span className={`badge badge-lg ${priority_Color} text-gray-700`}>
             {Status}
           </span>
-          <span
-            className={`inline-block ${priority_Color} rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2`}
-          >
+          <span className={`badge badge-lg ${priority_Color} text-gray-700`}>
             {Priorytet}
           </span>
         </div>
       </div>
-    </Link>
+      </div>
+    </div>
+  </Link>
   );
 }
 
