@@ -107,11 +107,13 @@ const Project = ({ isAuthenticated }) => {
 
   return (
     <div className=''>
-      {dataLoaded && (
-        <DataBar projectData={projects} privilege={whatPrivilege} />
-      )}
-      {dataLoaded && (
-        <Contents projectData={projects} privilege={whatPrivilege} />
+      {dataLoaded ? (
+        <>
+          <DataBar projectData={projects} privilege={whatPrivilege} />
+          <Contents projectData={projects} privilege={whatPrivilege} />
+        </>
+      ) : (
+        <div className='loading-message'>There is no data for the project</div>
       )}
     </div>
   );
