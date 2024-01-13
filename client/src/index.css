@@ -5,16 +5,18 @@
 @layer components{
 
   .toolbox{
-    @apply bg-color6 mx-1 py-1 px-4 flex items-stretch ;
+    @apply bg-color6  py-1 px-4 flex items-stretch ;
     border-radius: 0px 0px 0px 8px;
   }
 
   .toolbox-Name{
     @apply text-color1 px-3 font-bold text-xl;
   }
-
+  .toolbox-List-Title{
+    @apply text-center text-orange font-bold text-xl;
+  }
   .toolbox-List{
-    @apply bg-color6 px-4 py-1 mx-1 w-1/6 float-right inline-block text-right h-auto;
+    @apply bg-color6 px-8 py-1 w-auto float-right inline-block text-right h-auto;
     border-radius: 0px 0px 8px 8px;
   }
 
