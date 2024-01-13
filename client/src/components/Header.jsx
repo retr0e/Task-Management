@@ -13,7 +13,7 @@ export default function Header({ isAuthenticated, handleLogout }) {
         </Link>
 
 
-        <ul className='flex gap-4'>
+        <ul className='flex gap-1'>
           {isAuthenticated ? (
             <>
               <Link to='/'>
@@ -35,7 +35,7 @@ export default function Header({ isAuthenticated, handleLogout }) {
                 className='sm:inline text-slate-700 hover:underline cursor-pointer'
                 onClick={handleLogout}
               >
-                <span className='text-color1'>Log Out</span>
+                <span className='text-color1 hover:underline'>Log Out</span>
               </li>
             </>
           ) : (

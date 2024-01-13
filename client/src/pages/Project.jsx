@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { usePriv } from "../ProtectedRoutes";
+import Component from "../TESTERS/placeHolder";
+
 
 const DataBar = () => {
   return (
-    <div className='toolbox'>
-      <div className='toolbox-Name'>ToolboxName</div>
-      <div className='toolbox-Badge'>ToolboxBadge1</div>
-      <div className='toolbox-Badge'>ToolboxBadge2</div>
+    <div className="main">
+      <div className='toolbox'>
+        <div className='toolbox-Name'>ToolboxName</div>
+        <div className='toolbox-Badge bg-[red]'>ToolboxBadge1</div>
+        <div className='toolbox-Badge bg-[pink]'>ToolboxBadge2</div>
+      </div>
+      <div className='toolbox-List text-slate-100'>
+        
+        <ul>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <li key={index}>Jan Paweł II</li>
+          ))}
+      </ul>
+      </div>
     </div>
   );
 };
@@ -49,6 +62,7 @@ const Project = ({ isAuthenticated }) => {
   return (
     <div className=''>
       <DataBar />
+      <Component/>
     </div>
   );
 };
