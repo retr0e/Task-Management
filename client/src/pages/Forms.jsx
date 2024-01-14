@@ -2,25 +2,36 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 //Function for fetching Teams Data
-async function fetchDataFromApis() {
+async function fetchDataFromApis(project) {
   try {
     const prioritiesResponse = await fetch("/api/v1/overall/get_priorities");
     const teamsResponse = await fetch("/api/v1/overall/get_teams");
+    const personsResponse = await fetch("/api/v1/overall/get_employees", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ projectId: project }),
+    });
 
-    if (!prioritiesResponse.ok || !teamsResponse.ok) {
+    if (!prioritiesResponse.ok || !teamsResponse.ok || !personsResponse.ok) {
       throw new Error("Failed to fetch data from one or more APIs");
     }
 
     const prioritiesData = await prioritiesResponse.json();
     const teamsData = await teamsResponse.json();
+    const personData = await personsResponse.json();
+
+    console.log(personData);
 
     return {
       priorities: prioritiesData["priority"],
       teams: teamsData["teams"],
+      persons: personData["persons"],
     };
   } catch (error) {
     console.error("Error fetching data from APIs:", error);
-    throw error; // You may want to handle the error in the calling code
+    throw error;
   }
 }
 
@@ -74,7 +85,7 @@ const Add_Project_Form = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDataFromApis();
+        const data = await fetchDataFromApis(0);
         setTeamsData(data.teams);
         setPriData(data.priorities);
       } catch (error) {
@@ -185,7 +196,65 @@ const Add_Project_Form = () => {
   );
 };
 
-export const Add_Task_Form = () => {
+export const Add_Task_Form = ({ projectId }) => {
+  const [formData, setFormData] = useState({});
+  const [selectedPerson, setSelectedPerson] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  console.log({ projectId });
+  const handleChange = (e) => {
+    if (e.target.id === "team") {
+      setSelectedPerson(e.target.value);
+    }
+
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+      person: selectedPerson,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/v1/projects/add_project", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message);
+      } else {
+        setError(null);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [personData, setPersonData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDataFromApis(projectId);
+        setPersonData(data.persons);
+      } catch (error) {
+        console.error("Error fetching teams data:", error);
+        // Handle the error, show a message, etc.
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className='main card card-bordered  max-w-xs mx-auto'>
       <div className='card-body'>
@@ -193,14 +262,14 @@ export const Add_Task_Form = () => {
 
         <hr className='py-2' />
         {/*<======================Form-Main=====================>*/}
-        <form onSubmit={console.log("XD")}>
+        <form onSubmit={handleSubmit}>
           {/*<======================Task-Name=====================>*/}
           <input
             type='text'
             placeholder='Project Task'
             className='input input-bordered w-full max-w-xs'
             required
-            onChange={console.log("XD")}
+            onChange={handleChange}
           />
           <hr className='py-2 border-none' />
 
@@ -209,8 +278,11 @@ export const Add_Task_Form = () => {
             <option disabled selected>
               Select Person
             </option>
-            <option>Han Solo</option>
-            <option>Greedo</option>
+            {personData.map((person) => (
+              <option key={person} value={person}>
+                {person}
+              </option>
+            ))}
           </select>
           <hr className='py-2 border-none' />
 
@@ -227,7 +299,7 @@ export const Add_Task_Form = () => {
               type='date'
               placeholder='Start Date'
               required
-              onChange={console.log("XD")}
+              onChange={handleChange}
             />
           </div>
           <hr className='py-2 border-none' />

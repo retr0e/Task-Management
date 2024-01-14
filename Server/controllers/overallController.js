@@ -2,6 +2,7 @@ import {
   getAllStates,
   getAllPriorities,
   getAllTeams,
+  getAllPersons,
 } from "../model/overallModel.js";
 
 export const getStates = async (req, res) => {
@@ -43,6 +44,22 @@ export const getTeams = async (req, res) => {
     res.status(200).json({
       status: "success",
       teams: teams,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+    });
+  }
+};
+
+export const getEmployees = async (req, res) => {
+  try {
+    const persons = await getAllPersons(req.body["projectId"]);
+
+    res.status(200).json({
+      status: "success",
+      persons: persons,
     });
   } catch (error) {
     console.log(error);

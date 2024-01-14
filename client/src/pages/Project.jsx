@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom";
 import { Add_Task_Form } from "./Forms";
 import Modal from "../components/modal";
 
-
-
-
-
 const Contents = ({ projectData, privilege }) => {
   const { peopleWorking, projectTasks } = projectData;
 
@@ -33,23 +29,27 @@ const Contents = ({ projectData, privilege }) => {
   );
 };
 
-const DataBar = ({ projectData, privilege }) => {
+const DataBar = ({ projectData, privilege, params }) => {
   const { peopleWorking, projectTasks } = projectData;
 
   // console.log(projectData);
   return (
     <div className='navbar bg-slate-800'>
       <div className='navbar-start'>
-        <div className='font-bold text-xl'> {'Project Name'} </div>
+        <div className='font-bold text-xl'> {"Project Name"} </div>
         <div className='px-2'>
-          <div className='badge badge-lg bg-red-400 text-black'>Status</div> 
+          <div className='badge badge-lg bg-red-400 text-black'>Status</div>
         </div>
         <div>
-          <div className='badge badge-lg bg-red-400 text-black'>priorytet</div> 
+          <div className='badge badge-lg bg-red-400 text-black'>priorytet</div>
         </div>
       </div>
-      <div className="navbar-center">
-        <Modal element={<Add_Task_Form/>} btn_Name={'Dodaj Zadanie'} btn_Style={'btn-orange'} />
+      <div className='navbar-center'>
+        <Modal
+          element={<Add_Task_Form projectId={params["project_id"]} />}
+          btn_Name={"Dodaj Zadanie"}
+          btn_Style={"btn-orange text-black"}
+        />
       </div>
     </div>
   );
@@ -110,9 +110,12 @@ const Project = ({ isAuthenticated }) => {
     <div className=''>
       {dataLoaded ? (
         <>
-          <DataBar projectData={projects} privilege={whatPrivilege} />
+          <DataBar
+            projectData={projects}
+            privilege={whatPrivilege}
+            params={params}
+          />
           <Contents projectData={projects} privilege={whatPrivilege} />
-          
         </>
       ) : (
         <div className='loading-message'>There is no data for the project</div>

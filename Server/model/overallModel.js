@@ -44,3 +44,19 @@ export const getAllTeams = async () => {
 
   return result;
 };
+
+export const getAllPersons = async (projectId) => {
+  const employees = await pool.query(`SELECT Pracownicy.*, Zespoly.Nr_zespolu
+  FROM Pracownicy
+  LEFT JOIN Zespoly ON Pracownicy.Id = Zespoly.Czlonek
+  WHERE Nr_zespolu='${projectId}';
+  `);
+
+  let result = [];
+
+  for (const obj of employees[0]) {
+    result.push(obj["Imie"] + " " + obj["Nazwisko"] + " " + obj["Stanowisko"]);
+  }
+
+  return result;
+};

@@ -71,7 +71,7 @@ export const addAccountAndEmployee = async (data) => {
 };
 
 export const getAllEmployees = async () => {
-  const employees = pool.query(`
+  const employees = await pool.query(`
   SELECT *
   FROM Pracownicy
   JOIN Konta ON Pracownicy.Id = Konta.Id_pracownika;
