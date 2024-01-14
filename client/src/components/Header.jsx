@@ -23,7 +23,7 @@ export default function Header({ isAuthenticated, handleLogout }) {
   checkPrivilege();
 
   return(
-    <header className="navbar bg-color4">
+    <header className="navbar bg-color4 shadow-lg">
       <div className='navbar-start'>
       {/*<======================Project-Name=====================>*/}
       <Link to='/'>

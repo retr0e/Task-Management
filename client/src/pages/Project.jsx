@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Add_Task_Form } from "./Forms";
+
+
+
+
 
 const Contents = ({ projectData, privilege }) => {
   const { peopleWorking, projectTasks } = projectData;
@@ -32,29 +37,19 @@ const DataBar = ({ projectData, privilege }) => {
 
   // console.log(projectData);
   return (
-    <div className='main card'>
+    <div className='navbar'>
+      <div className='navbar-start'>
+        <div className='font-bold text-xl'> {'Project Name'} </div>
+        <div className='px-2'>
+          <div className='badge badge-lg bg-red-400 text-black'>Status</div> 
+        </div>
+        <div>
+          <div className='badge badge-lg bg-red-400 text-black'>priorytet</div> 
+        </div>
+      </div>
+      <div className="navbar-center">
         
-          <div className='odd:bg-slate-400 even:bg-slate-300 '>{'Nazwa_Projektu'}</div>
-          
-            <div className='toolbox-Badge odd:bg-slate-400 even:bg-slate-300 '>{'Priorytet'}</div>
-            <div className='toolbox-Badge odd:bg-slate-400 even:bg-slate-300 '>{'Status'}</div>
-          
-      
-      
-        <div className='odd:bg-slate-400 even:bg-slate-300  '>
-
-          <details className="dropdown">
-            <summary className="m-1 btn">Team {peopleWorking[0]['Nr_zespolu']}</summary>
-            <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-              {peopleWorking.map((person, index) => (
-                <li key={index}>
-                  <a>{person['Imie']} {person['Nazwisko']}</a>
-                </li>
-              ))} 
-            </ul>
-          </details>
-          
-          </div>
+      </div>
     </div>
   );
 };
