@@ -144,3 +144,19 @@ export const getStatusAndPriorities = async () => {
   const obj = { states: states[0], priorities: priorities[0] };
   return obj;
 };
+
+export const getProjectInfo = async (projectId) => {
+  const info = await pool.query(`
+  SELECT 
+    Projekty.Nazwa AS Projekt, 
+    Projekty.Opis AS Opis,
+    Priorytety.Priorytety AS Priorytet, 
+    Status.Nazwa AS Status
+  FROM Projekty 
+  JOIN Priorytety ON Projekty.Id_priorytetu = Priorytety.Id
+  JOIN Status ON Projekty.Id_statusu = Status.Id
+  WHERE Projekty.ID=${projectId}
+  `);
+
+  return info[0][0];
+};

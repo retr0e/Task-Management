@@ -4,6 +4,7 @@ import {
   getProjectTasks,
   insertProject,
   getStatusAndPriorities,
+  getProjectInfo,
 } from "./../model/projectModel.js";
 import dotenv from "dotenv";
 
@@ -29,10 +30,13 @@ export const getProjectInformation = async (req, res, next) => {
   try {
     const tasks = await getProjectTasks(Number(req.params["id"]));
     const people = await getPeopleFromTeam(req.params["id"]);
+    const projectInfo = await getProjectInfo(req.params["id"]);
+
     res.status(200).json({
       status: "success",
       projectTasks: tasks,
       peopleWorking: people,
+      info: projectInfo,
     });
   } catch (err) {
     res.status(500).json("Unable to reach project value from server");
