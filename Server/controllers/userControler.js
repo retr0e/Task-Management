@@ -21,10 +21,10 @@ export const signup = async (req, res, next) => {
   try {
     addAccountAndEmployee(req.body);
 
-    actionLog(
-      jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
-      `Dodanie uzytkownika: ${req.body["username"]}`
-    );
+    // actionLog(
+    //   jwt.verify(req.cookies["access_token"], process.env.JWT_SECRET),
+    //   `Dodanie uzytkownika: ${req.body["username"]}`
+    // );
     res.status(201).json("User created successfully!");
   } catch (err) {
     res.status(500).json("Something went wrong! In user creation!");

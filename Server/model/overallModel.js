@@ -55,7 +55,15 @@ export const getAllPersons = async (projectId) => {
   let result = [];
 
   for (const obj of employees[0]) {
-    result.push(obj["Imie"] + " " + obj["Nazwisko"] + " " + obj["Stanowisko"]);
+    result.push(
+      obj["Imie"] +
+        " " +
+        obj["Nazwisko"] +
+        " " +
+        obj["Stanowisko"] +
+        " " +
+        obj["Id"]
+    );
   }
 
   return result;

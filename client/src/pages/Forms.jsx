@@ -211,6 +211,7 @@ export const Add_Task_Form = ({ projectId }) => {
       ...formData,
       [e.target.id]: e.target.value,
       person: selectedPerson,
+      projectId: projectId,
     });
   };
 

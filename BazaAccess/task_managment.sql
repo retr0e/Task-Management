@@ -140,12 +140,12 @@ INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_s
 ('Projekt H', 8, 2, 2, '', '2023-08-01', '2023-10-31'),
 ('Projekt I', 9, 3, 3, '', '2023-09-01', '2023-11-30');
 
-INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `Data_start`, `Data_koniec`) VALUES
-('Zadanie 1', 1, 2, 3, '2024-01-15', '2024-01-20'),
-('Zadanie 2', 1, 1, 2, '2024-02-01', '2024-02-10'),
-('Zadanie 3', 2, 3, 1, '2024-03-10', '2024-03-20'),
-('Zadanie 4', 2, 2, 3, '2024-04-05', '2024-04-15'),
-('Zadanie 5', 3, 1, 2, '2024-05-15', '2024-05-25');
+INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `Description`, `Data_start`, `Data_koniec`) VALUES
+('Zadanie 1', 1, 2, 3, 'cokolwiek', '2024-01-15', '2024-01-20'),
+('Zadanie 2', 1, 1, 2, 'cokolwiek', '2024-02-01', '2024-02-10'),
+('Zadanie 3', 2, 3, 1, 'cokolwiek', '2024-03-10', '2024-03-20'),
+('Zadanie 4', 2, 2, 3, 'cokolwiek', '2024-04-05', '2024-04-15'),
+('Zadanie 5', 3, 1, 2, 'cokolwiek', '2024-05-15', '2024-05-25');
 
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);

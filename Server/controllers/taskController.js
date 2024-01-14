@@ -1,4 +1,8 @@
-import { deleteTaskFromBase, getTaskName } from "../model/taskModel.js";
+import {
+  deleteTaskFromBase,
+  getTaskName,
+  insertTask,
+} from "../model/taskModel.js";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./config.env" });
@@ -15,7 +19,17 @@ export const deleteTask = async (req, res) => {
 
 export const addTask = async (req, res) => {
   console.log(req.body);
-  console.log("Dodawanie zadania");
+  const employeeName = req.body["person"].split(" ")[3];
+
+  const task = {
+    taskName: req.body["taskName"],
+    person: employeeName,
+    projectId: req.body["projectId"],
+    description: req.body["description"],
+    startDate: req.body["startDate"],
+  };
+
+  insertTask(task);
 };
 
 export const editTask = async (req, res) => {

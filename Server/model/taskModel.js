@@ -24,6 +24,15 @@ export const getTaskName = async (taskId) => {
   return task[0][0]["Nazwa"];
 };
 
-export const addTask = async (data) => {
-  console.log("Przypał");
+export const insertTask = async (data) => {
+  await pool.query(`INSERT INTO Zadania (Nazwa, Id_projektu, Id_statusu, Id_pracownika, Description, Data_start, Data_koniec) 
+  VALUES (
+    '${data["taskName"]}',
+    ${parseInt(data["projectId"], 10)},
+    1,
+    ${parseInt(data["person"], 10)},
+    '${data["description"]}',
+    '${data["startDate"]}',
+    NULL
+  )`);
 };
