@@ -8,7 +8,9 @@ const Contents = ({ projectData, privilege }) => {
 
   return (
     <div className='bg-red-400 '>
-      <div className='bg-slate-200 w-auto h-40'>Documentation is empty</div>
+      <div className='bg-slate-200 w-auto h-40'>
+        {projectData["info"]["Opis"]}
+      </div>
       <ul className='list-inside'>
         {projectTasks.map((task, index) => (
           <li
@@ -32,16 +34,22 @@ const Contents = ({ projectData, privilege }) => {
 const DataBar = ({ projectData, privilege, params }) => {
   const { peopleWorking, projectTasks } = projectData;
 
-  // console.log(projectData);
   return (
     <div className='navbar bg-slate-800'>
       <div className='navbar-start'>
-        <div className='font-bold text-xl'> {"Project Name"} </div>
+        <div className='font-bold text-xl'>
+          {" "}
+          {projectData["info"]["Projekt"]}{" "}
+        </div>
         <div className='px-2'>
-          <div className='badge badge-lg bg-red-400 text-black'>Status</div>
+          <div className='badge badge-lg bg-red-400 text-black'>
+            {projectData["info"]["Status"]}
+          </div>
         </div>
         <div>
-          <div className='badge badge-lg bg-red-400 text-black'>priorytet</div>
+          <div className='badge badge-lg bg-red-400 text-black'>
+            {projectData["info"]["Priorytet"]}
+          </div>
         </div>
       </div>
       <div className='navbar-center'>
