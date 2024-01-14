@@ -1,21 +1,30 @@
 import React  from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //Function for fetching Teams Data
+async function fetchDataFromApis() {
+    try {
+      const prioritiesResponse = await fetch('/api/v1/overall/get_priorities');
+      const teamsResponse = await fetch('/api/v1/overall/get_teams');
+  
+      if (!prioritiesResponse.ok || !teamsResponse.ok) {
+        throw new Error('Failed to fetch data from one or more APIs');
+      }
+  
+      const prioritiesData = await prioritiesResponse.json();
+      const teamsData = await teamsResponse.json();
+  
+      return { priorities: prioritiesData, teams: teamsData };
+    } catch (error) {
+      console.error('Error fetching data from APIs:', error);
+      throw error; // You may want to handle the error in the calling code
+    }
+  }
+  
+
+
 
 const Add_Project_Form = () =>{
-
-    fetchTeamsData = async () => {
-        try {
-          const response = await fetch("/api/v1/overall/get_teams");
-          const data = await response.json();
-          return data.teams; // Corrected variable name
-        } catch (error) {
-          console.error("Error fetching priority data:", error);
-          return [];
-        }
-      };
-
     const [formData, setFormData] = useState({});
     const [selectedValue, setSelectedValue] = useState('');
     const [error, setError] = useState(null);
@@ -57,6 +66,27 @@ const Add_Project_Form = () =>{
         setError(error.message);
       }
     };
+    
+    
+    const [teamsData, setTeamsData] = useState([]);
+    const [priData, setPriData] = useState([]);
+      
+        useEffect(() => {
+          const fetchData = async () => {
+            try {
+              const data = await fetchDataFromApis();
+              setTeamsData(data.teams);
+              setPriData(data.priorities);
+            } catch (error) {
+              console.error('Error fetching teams data:', error);
+              // Handle the error, show a message, etc.
+            }
+          };
+      
+          fetchData();
+        }, []);
+        //console.log(teamsData);
+        //console.log(priData);
 
     return(
         <div className='main card card-bordered  max-w-xs mx-auto'>
@@ -85,8 +115,9 @@ const Add_Project_Form = () =>{
                         onChange={handleSelectChange}
                         >
                         <option disabled selected>Select Team</option>
-                        <option>Han Solo</option>
-                        <option>Greedo</option>
+                            {/* {teams_data.map((team) => (
+                                <option value={team}>{team}</option>
+                            ))} */}
                     </select>
                     <hr className='py-2 border-none'/>
 
@@ -98,8 +129,9 @@ const Add_Project_Form = () =>{
                         onChange={handleSelectChange}
                         >
                         <option disabled selected>Select Priority</option>
-                        <option>Han Solo</option>
-                        <option>Greedo</option>
+                        {/* {priData.map((pri) => (
+                                <option value={pri}>{pri}</option>
+                            ))} */}
                     </select>
                     <hr className='py-2 border-none'/>
 

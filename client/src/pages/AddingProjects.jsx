@@ -131,6 +131,7 @@ class AddingProjects extends React.Component {
       <div className='main flex justify-center py-6'>
         <div className='card p-6'>
         <p className='text-xl font-bold text-center'>Dodawanie Projektu</p>
+        
         <hr className="py-2"/>
           <form onSubmit={this.handleSubmit}>
             <input
