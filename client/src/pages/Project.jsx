@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Add_Task_Form } from "./Forms";
+import Modal from "../components/modal";
 
 
 
@@ -48,7 +49,7 @@ const DataBar = ({ projectData, privilege }) => {
         </div>
       </div>
       <div className="navbar-center">
-        
+        <Modal element={<Add_Task_Form/>} btn_Name={'Dodaj Zadanie'} btn_Style={'btn-orange'} />
       </div>
     </div>
   );
@@ -111,7 +112,7 @@ const Project = ({ isAuthenticated }) => {
         <>
           <DataBar projectData={projects} privilege={whatPrivilege} />
           <Contents projectData={projects} privilege={whatPrivilege} />
-          <Add_Task_Form/>
+          
         </>
       ) : (
         <div className='loading-message'>There is no data for the project</div>
