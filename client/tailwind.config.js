@@ -17,5 +17,12 @@ export default {
       },
     },
   },
+  daisyui: {
+    themes: [
+   
+      "dracula",
+
+    ],
+  },
   plugins: [require("daisyui")],
 };

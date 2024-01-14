@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { IoAddCircleOutline } from "react-icons/io5";
 import { Navigate, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Modal from "../components/modal";
+import Add_Project_Form from "./Forms";
 
 function Badge(priorytet) {
   /* For automatic color and text */
@@ -30,7 +33,7 @@ function Badge(priorytet) {
 
 // Użycie funkcji w komponencie Card
 function Card({ project }) {
-  console.log(project);
+  //console.log(project);
   const {
     ID,
     Nazwa_Projektu,
@@ -49,7 +52,7 @@ function Card({ project }) {
   return(
   <Link to={`/project/${ID}`}>
     <div className="p-1">
-      <div className="card w-96 bg-color2 shadow-xl ">
+      <div className="card w-96 shadow-xl bg-base-300">
       <div className="card-body">
         <h2 className="card-title">{Nazwa_Projektu}</h2>
         <p className=''>{`Nr_zespolu: ${Nr_zespolu}`}</p>
@@ -67,6 +70,28 @@ function Card({ project }) {
       </div>
     </div>
   </Link>
+  );
+}
+
+export const AddProject = () => {
+  return(
+    
+    <div className="p-1">
+      <div className="card w-96 skeleton shadow-xl ">
+      <div className="card-body">
+        <h2 className="card-title   badge badge-lg w-72 h-6"></h2>
+        <p className=' badge badge-lg w-24 h-6'></p>
+        <p className='badge badge-lg w-48 h-6'></p>
+        <p className='badge badge-lg w-48 h-6'></p>
+        <span className='absolute font-bold text-4xl text-slate-400 m-auto  top-20 left-0 right-0'>NEW</span>
+        <div className="card-actions ">
+          <span className={`badge badge-lg  text-gray-700 w-24`}></span>
+          <span className={`badge badge-lg  text-gray-700 w-24`}> </span>
+        </div>
+      </div>
+      </div>
+    </div>
+  
   );
 }
 
@@ -93,6 +118,8 @@ function Home() {
       {projects.map((project) => (
         <Card key={project.ID} project={project} />
       ))}
+      <Modal element={<Add_Project_Form/>} btn_Name={<AddProject/>} />
+
     </div>
   );
 }

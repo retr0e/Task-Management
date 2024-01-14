@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 export default function Profile({ handleLogout }) {
   return (
     <>
-      <div className="text-white p-3  h-75 w-full flex justify-center items-center">
-        <div className="border-2 rounded-lg p-10">
-          Profile options
-            <ChangeName />
-          {/* <ChangeEmail />
-            <ChangePassword /> */}
-          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-          <DeleteAccount handleLogout={handleLogout} />
+      <div className='max-w-xs mx-auto'>
+        <div className='modal-box skeleton'>
+          <p className='text-center'>Profile data</p>
+          <div className='grid grid-cols-2 grid-rows-5 gap-1'>
+          
+          </div>
         </div>
+        
+        
       </div>
     </>
   );
@@ -53,7 +53,7 @@ export function ChangeName() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+    <form onSubmit={handleSubmit} NameName='flex flex-col gap-4 '>
       <input
         type='text'
         placeholder='New Account Name'
@@ -71,59 +71,59 @@ export function ChangeName() {
   );
 }
 
-// export function ChangeEmail(){
-//   return(
-//     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-//       <input
-//         type='text'
-//         placeholder='New Email'
-//         className='border p-3 rounded-lg'
-//         id='email'
-//         onChange={handleChange}
-//       />
-//       <input
-//         type='text'
-//         placeholder='Confirm New Email'
-//         className='border p-3 rounded-lg'
-//         id='email'
-//         onChange={handleChange}
-//       />
-//       <button
-//         disabled={loading}
-//         className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-//       >
-//         {loading ? "Loading..." : "Change Email"}
-//       </button>
-//     </form>
-//   )
+export function ChangeEmail(){
+  return(
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+      <input
+        type='text'
+        placeholder='New Email'
+        className='border p-3 rounded-lg'
+        id='email'
+        onChange={handleChange}
+      />
+      <input
+        type='text'
+        placeholder='Confirm New Email'
+        className='border p-3 rounded-lg'
+        id='email'
+        onChange={handleChange}
+      />
+      <button
+        disabled={loading}
+        className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+      >
+        {loading ? "Loading..." : "Change Email"}
+      </button>
+    </form>
+  )
 
-// }
-// export function ChangePassword(){
-//   return(
-//     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-//     <input
-//       type='text'
-//       placeholder='New Password'
-//       className='border p-3 rounded-lg'
-//       id='password'
-//       onChange={handleChange}
-//     />
-//     <input
-//       type='text'
-//       placeholder='Confirm New Email'
-//       className='border p-3 rounded-lg'
-//       id='password'
-//       onChange={handleChange}
-//     />
-//     <button
-//       disabled={loading}
-//       className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-//     >
-//       {loading ? "Loading..." : "Change Password"}
-//     </button>
-//   </form>
-//   )
-// }
+}
+export function ChangePassword(){
+  return(
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+    <input
+      type='text'
+      placeholder='New Password'
+      className='border p-3 rounded-lg'
+      id='password'
+      onChange={handleChange}
+    />
+    <input
+      type='text'
+      placeholder='Confirm New Email'
+      className='border p-3 rounded-lg'
+      id='password'
+      onChange={handleChange}
+    />
+    <button
+      disabled={loading}
+      className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+    >
+      {loading ? "Loading..." : "Change Password"}
+    </button>
+  </form>
+  )
+}
 
 export function DeleteAccount({ handleLogout }) {
   const [error, setError] = useState(null);
