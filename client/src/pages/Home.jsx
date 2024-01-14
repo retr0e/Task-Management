@@ -53,8 +53,8 @@ function Card({ project }) {
           <div className='card-body'>
             <h2 className='card-title'>{Nazwa_Projektu}</h2>
             <p className=''>{`Przypisany zespół: ${Nr_zespolu}`}</p>
-            <p className=''>{`Data start: ${Data_start}`}</p>
-            <p className=''>{`Data przewidywany koniec: ${Data_koniec}`}</p>
+            <p className=''>{`Start: ${Data_start}`}</p>
+            <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
             <div className='card-actions '>
               <span
                 className={`badge badge-lg ${priority_Color} text-gray-700`}
