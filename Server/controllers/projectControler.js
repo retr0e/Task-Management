@@ -43,12 +43,14 @@ export const addProject = async (req, res, next) => {
     projectName: req.body["projectName"],
     assignedTeam: req.body["team"],
     priority: req.body["priority"],
-    state: req.body["status"],
+    // state: req.body["status"],
+    state: 1,
     description: req.body["description"],
     startDate: req.body["startDate"],
     endDate: req.body["endDate"],
   };
 
+  console.log(project);
   if (insertProject(project)) {
     res.status(200).json({
       status: "success",

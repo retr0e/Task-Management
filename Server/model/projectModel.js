@@ -78,10 +78,10 @@ export const getPeopleFromTeam = async (projectId) => {
 };
 
 export const insertProject = async (project) => {
-  const state = await pool.query(
-    `SELECT Id FROM Status WHERE Nazwa='${project.state}'`
-  );
-  const stateId = state[0][0]["Id"];
+  // const state = await pool.query(
+  //   `SELECT Id FROM Status WHERE Nazwa='${project.state}'`
+  // );
+  // const stateId = state[0][0]["Id"];
 
   const priority = await pool.query(
     `SELECT Id FROM Priorytety WHERE Priorytety.Priorytety='${project["priority"]}'`
@@ -105,7 +105,7 @@ export const insertProject = async (project) => {
       '${project["projectName"]}',
       ${parseInt(project["assignedTeam"], 10)},
       ${parseInt(priorityId, 10)},
-      ${parseInt(stateId, 10)},
+      ${project["state"]},
       '${project["description"]}',
       '${project["startDate"]}',
       '${project["endDate"]}'
