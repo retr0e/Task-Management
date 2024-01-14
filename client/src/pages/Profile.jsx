@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 export default function Profile({ handleLogout }) {
   return (
     <>
-      <div className="text-white p-3  h-75 w-full flex justify-center items-center">
-        <div className="border-2 rounded-lg p-10">
+      <div className='text-white p-3  h-75 w-full flex justify-center items-center'>
+        <div className='border-2 rounded-lg p-10'>
           Profile options
-            <ChangeName />
+          <ChangeName />
           {/* <ChangeEmail />
             <ChangePassword /> */}
-          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+          <hr class='h-px my-8 bg-gray-200 border-0 dark:bg-gray-700' />
           <DeleteAccount handleLogout={handleLogout} />
         </div>
       </div>
