@@ -202,9 +202,8 @@ export const Add_Task_Form = ({ projectId }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log({ projectId });
   const handleChange = (e) => {
-    if (e.target.id === "team") {
+    if (e.target.id === "person") {
       setSelectedPerson(e.target.value);
     }
 
@@ -219,7 +218,7 @@ export const Add_Task_Form = ({ projectId }) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("/api/v1/projects/add_project", {
+      const res = await fetch(`/api/v1/task/${projectId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -265,6 +264,7 @@ export const Add_Task_Form = ({ projectId }) => {
         <form onSubmit={handleSubmit}>
           {/*<======================Task-Name=====================>*/}
           <input
+            id='taskName'
             type='text'
             placeholder='Project Task'
             className='input input-bordered w-full max-w-xs'
@@ -274,7 +274,11 @@ export const Add_Task_Form = ({ projectId }) => {
           <hr className='py-2 border-none' />
 
           {/*<==================Task-Person-Select================>*/}
-          <select className='select select-bordered w-full max-w-xs'>
+          <select
+            id='person'
+            className='select select-bordered w-full max-w-xs'
+            onChange={handleChange}
+          >
             <option disabled selected>
               Select Person
             </option>
@@ -288,8 +292,10 @@ export const Add_Task_Form = ({ projectId }) => {
 
           {/*<===================Task-Description=================>*/}
           <textarea
+            id='description'
             className='textarea textarea-bordered w-full max-w-xs'
             placeholder='Decriprion'
+            onChange={handleChange}
           />
 
           <div className='grid grid-cols-2 gap-1'>
@@ -297,6 +303,7 @@ export const Add_Task_Form = ({ projectId }) => {
             <p>Start Date</p>
             <input
               type='date'
+              id='startDate'
               placeholder='Start Date'
               required
               onChange={handleChange}

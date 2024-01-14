@@ -14,6 +14,7 @@ export const deleteTask = async (req, res) => {
 };
 
 export const addTask = async (req, res) => {
+  console.log(req.body);
   console.log("Dodawanie zadania");
 };
 

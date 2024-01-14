@@ -9,7 +9,7 @@ CREATE TABLE `Projekty` (
   `Id_zespolu` INT NOT NULL,
   `Id_priorytetu` INT NOT NULL,
   `Id_statusu` INT NOT NULL,
-  `Opis` VARCHAR(255),
+  `Opis` VARCHAR(400),
   `Data_start` DATE,
   `Data_koniec` DATE
 );
@@ -28,10 +28,11 @@ CREATE TABLE `Priorytety` (
 CREATE TABLE `Zadania` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Nazwa` VARCHAR(255) NOT NULL,
-  `Id_projektu` INT,
-  `Id_statusu` INT,
-  `Id_pracownika` INT,
-  `Data_start` DATE,
+  `Id_projektu` INT NOT NULL,
+  `Id_statusu` INT NOT NULL,
+  `Id_pracownika` INT NOT NULL,
+  `Description` VARCHAR(400) NOT NULL,
+  `Data_start` DATE NOT NULL,
   `Data_koniec` DATE
 );
 
@@ -60,15 +61,6 @@ CREATE TABLE `Historia_Aktywnosci` (
   `Data` TIMESTAMP NOT NULL,
   `Dzialanie` VARCHAR(255) NOT NULL,
   `Id_pracownika` INT
-);
-
-CREATE TABLE `Dokumentacja` (
-  `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `Id_projektu` INT,
-  `Id_zadania` INT,
-  `Komentujacy` INT,
-  `Data` DATE NOT NULL,
-  `Tresc` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `PoziomDostepu` (
@@ -162,9 +154,6 @@ ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status` (`Id`);
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_zespolu`) REFERENCES `Zespoly` (`Id`);
 ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy` (`Id`); 
 ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
-ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
-ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Id_zadania`) REFERENCES `Zadania` (`Id`);
-ALTER TABLE `Dokumentacja` ADD FOREIGN KEY (`Komentujacy`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Priorytety` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
