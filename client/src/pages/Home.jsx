@@ -30,6 +30,7 @@ function Badge(priorytet) {
 
 // Użycie funkcji w komponencie Card
 function Card({ project }) {
+  console.log(project);
   const {
     ID,
     Nazwa_Projektu,
@@ -53,6 +54,7 @@ function Card({ project }) {
         <h2 className="card-title">{Nazwa_Projektu}</h2>
         <p className=''>{`Nr_zespolu: ${Nr_zespolu}`}</p>
         <p className=''>{`Data_start: ${Data_start}`}</p>
+        <p className=''>{`Data_start: ${Data_koniec}`}</p>
         <div className="card-actions ">
           <span className={`badge badge-lg ${priority_Color} text-gray-700`}>
             {Status}

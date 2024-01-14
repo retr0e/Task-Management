@@ -41,6 +41,24 @@ const Add_Project_Form = () => {
   const [selectedPriority, setSelectedPriority] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
+
+  const handleMinDateChange = (e) => {
+    setMinDate(e.target.value);
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleMaxDateChange = (e) => {
+    setMaxDate(e.target.value);
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
 
   const handleChange = (e) => {
     if (e.target.id === "team") {
@@ -166,9 +184,11 @@ const Add_Project_Form = () => {
             <input
               id='startDate'
               type='date'
+              max={maxDate}
+              value={minDate}
               placeholder='Start Date'
               required
-              onChange={handleChange}
+              onChange={handleMinDateChange}
             />
 
             {/* Project-Date-End */}
@@ -177,8 +197,10 @@ const Add_Project_Form = () => {
               id='endDate'
               type='date'
               placeholder='End Date'
+              min={minDate}
+              value={maxDate}
               required
-              onChange={handleChange}
+              onChange={handleMaxDateChange}
             />
             <br />
           </div>
