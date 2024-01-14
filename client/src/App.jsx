@@ -25,7 +25,24 @@ import Taskbar from "./components/Taskbar";
 import Component from "./TESTERS/placeHolder";
 
 export default function App() {
+  const [whichPrivilege, setPrivilege] = useState(4);
   const { loggedIn, setIsAuthenticated } = useAuth();
+
+  const checkPrivilege = async () => {
+    const response = await fetch("/api/v1/users/privilege", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      setPrivilege(data["userPrivilege"]["privilege"]);
+    }
+  };
+
+  checkPrivilege();
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -46,17 +63,23 @@ export default function App() {
     }
   };
 
+  checkPrivilege();
+  console.log(whichPrivilege);
   return (
     <BrowserRouter>
       {/*<==================Always-Displayed-Element======================>*/}
-      <Header isAuthenticated={loggedIn} handleLogout={handleLogout} />
+      <Header
+        isAuthenticated={loggedIn}
+        handleLogout={handleLogout}
+        privilege={whichPrivilege}
+      />
 
       {/*<===================Routes-To-Functionalities==================>*/}
       <Routes>
         {/*<=======================Public-access========================>*/}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
-        <Route path='/tester'  element={<Component/>}                     />
+        <Route path='/tester' element={<Component />} />
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
           <Route path='/' element={<Home />} />
@@ -66,9 +89,11 @@ export default function App() {
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
 
         <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
-         
           {/* <Route path='/profile' element={<Profile />} /> */}
-          <Route path='/project/:project_id' element={<Project />} />
+          <Route
+            path='/project/:project_id'
+            element={<Project privilege={whichPrivilege} />}
+          />
         </Route>
 
         {/*Catch all failed links */}

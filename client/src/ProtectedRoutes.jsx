@@ -34,33 +34,6 @@ export const useAuth = () => {
   return { loggedIn: isAuthenticated, setIsAuthenticated };
 };
 
-// DO NOT TOUCH THIS DEMON
-// export const usePriv = async () => {
-//   const [whatPrivilege, setPrivilege] = useState();
-
-//   useEffect(() => {
-//     const checkPrivilege = async () => {
-//       const response = await fetch("/api/v1/users/privilege", {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       const data = await response.json();
-
-//       if (data.success) {
-//         setPrivilege(data["userPrivilege"]["privilege"]);
-//       } else {
-//         setPrivilege(4);
-//       }
-//     };
-
-//     checkPrivilege();
-//   });
-
-//   return { privilege: whatPrivilege, setPrivilege };
-// };
-
 export const ProtectedRoutes = ({ isAuthenticated }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };

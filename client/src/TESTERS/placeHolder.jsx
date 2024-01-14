@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import Add_Project_Form, { Add_Task_Form } from "../pages/Forms";
 import Profile from "../pages/Profile";
-import YourComponent from "./test";
+// import YourComponent from "./test";
 import { AddProject } from "../pages/Home";
 
 const Component = () => {
-  return <Profile/>;
+  return <Profile />;
 };
 export default Component;
