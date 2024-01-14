@@ -12,7 +12,6 @@ import { ProtectedRoutes, useAuth } from "./ProtectedRoutes";
 // Pages
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
-import About from "./pages/About";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 
@@ -23,7 +22,6 @@ import Project from "./pages/Project";
 
 import Header from "./components/Header";
 import Taskbar from "./components/Taskbar";
-
 import Component from "./TESTERS/placeHolder";
 
 export default function App() {
@@ -68,7 +66,7 @@ export default function App() {
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
 
         <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
-          <Route path='/about' element={<About />} />
+         
           {/* <Route path='/profile' element={<Profile />} /> */}
           <Route path='/project/:project_id' element={<Project />} />
         </Route>

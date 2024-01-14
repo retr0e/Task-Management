@@ -111,6 +111,7 @@ const Project = ({ isAuthenticated }) => {
         <>
           <DataBar projectData={projects} privilege={whatPrivilege} />
           <Contents projectData={projects} privilege={whatPrivilege} />
+          <Add_Task_Form/>
         </>
       ) : (
         <div className='loading-message'>There is no data for the project</div>
