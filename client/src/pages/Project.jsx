@@ -49,7 +49,7 @@ const DataBar = ({ projectData, privilege }) => {
         </div>
       </div>
       <div className="navbar-center">
-        <Modal element={<Add_Task_Form/>} btn_Name={'Dodaj Zadanie'} btn_Style={'btn-orange text-black'} />
+        <Modal element={<Add_Task_Form/>} btn_Name={'Dodaj Zadanie'} btn_Style={'btn-orange'} />
       </div>
     </div>
   );
