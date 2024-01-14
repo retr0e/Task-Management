@@ -2,6 +2,7 @@ import mysql from "mysql2";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import { getProfileInfo } from "../model/profileModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -58,7 +59,7 @@ export const deleteUser = async (req, res, next) => {
   if (priv == 1) {
     res.status(500).json({
       success: false,
-      message: "Delete account can not be performed!",
+      message: "Delete account can not be performed on admin!",
     });
     next();
   }
@@ -76,5 +77,25 @@ export const deleteUser = async (req, res, next) => {
       message: "Delete account can not be performed!",
     });
     next(err);
+  }
+};
+
+export const profileInfo = async (req, res) => {
+  try {
+    const userId = jwt.verify(
+      req.cookies["access_token"],
+      process.env.JWT_SECRET
+    ).id;
+
+    const userInfo = getProfileInfo(userId);
+    res.status(200).json({
+      status: "success",
+      info: userInfo,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      message: "Cannot fetch info about user",
+    });
   }
 };
