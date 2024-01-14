@@ -1,41 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function Header({ isAuthenticated, handleLogout }) {
-  const [privilege, setPrivilege] = useState(4);
-
-  const checkPrivilege = async () => {
-    try {
-      const response = await fetch("/api/v1/users/privilege");
-      const data = await response.json();
-
-      if (data.success) {
-        setPrivilege(data["userPrivilege"]["privilege"]);
-      } else {
-        setPrivilege(4);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  checkPrivilege();
-
-  return(
-    <header className="navbar bg-color4 shadow-lg">
+export default function Header({ isAuthenticated, handleLogout, privilege }) {
+  return (
+    <header className='navbar bg-color4 shadow-lg'>
       <div className='navbar-start'>
-      {/*<======================Project-Name=====================>*/}
-      <Link to='/'>
+        {/*<======================Project-Name=====================>*/}
+        <Link to='/'>
           <h1 className='font-bold text-2xl sm:text-3xl menu menu-horizontal'>
             <span className='text-color1'>Task</span>
             <span className='text-orange'>Menager</span>
           </h1>
-      </Link>
+        </Link>
       </div>
       {/*<===================Accesed-Options=====================>*/}
-      <div className="navbar-end">
-        
-      <ul className='menu menu-vertical menu-md lg:menu-horizontal'>
+      <div className='navbar-end'>
+        <ul className='menu menu-vertical menu-md lg:menu-horizontal'>
           {isAuthenticated ? (
             <>
               <Link to='/'>
@@ -60,10 +40,7 @@ export default function Header({ isAuthenticated, handleLogout }) {
                   <span className='text-color1'>Profile</span>
                 </li>
               </Link>
-              <li
-                className=''
-                onClick={handleLogout}
-              >
+              <li className='' onClick={handleLogout}>
                 <span className='text-color1 hover:underline'>Log Out</span>
               </li>
             </>
@@ -77,6 +54,5 @@ export default function Header({ isAuthenticated, handleLogout }) {
         </ul>
       </div>
     </header>
-
   );
 }

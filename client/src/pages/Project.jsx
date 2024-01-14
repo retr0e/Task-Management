@@ -67,29 +67,13 @@ const DataBar = ({ projectData, privilege, params }) => {
   );
 };
 
-const Project = ({ isAuthenticated }) => {
+const Project = ({ isAuthenticated, privilege }) => {
   const [projects, setProject] = useState(null);
-  const [whatPrivilege, setPrivilege] = useState(null);
   const [dataLoaded, setDataLoaded] = useState();
 
   const params = useParams();
 
   useEffect(() => {
-    const checkPrivilege = async () => {
-      try {
-        const response = await fetch("/api/v1/users/privilege");
-        const data = await response.json();
-
-        if (data.success) {
-          setPrivilege(data["userPrivilege"]["privilege"]);
-        } else {
-          setPrivilege(4);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -103,7 +87,7 @@ const Project = ({ isAuthenticated }) => {
     };
 
     const loadData = async () => {
-      await Promise.all([checkPrivilege(), fetchData()]);
+      await Promise.all([privilege, fetchData()]);
       if (
         projects != null &&
         projects["projectTasks"].length > 0 &&
@@ -124,10 +108,10 @@ const Project = ({ isAuthenticated }) => {
         <>
           <DataBar
             projectData={projects}
-            privilege={whatPrivilege}
+            privilege={privilege}
             params={params}
           />
-          <Contents projectData={projects} privilege={whatPrivilege} />
+          <Contents projectData={projects} privilege={privilege} />
         </>
       ) : (
         <div className='loading-message skeleton'>There is no data for the project</div>
