@@ -37,7 +37,7 @@ const DataBar = ({ projectData, privilege }) => {
 
   // console.log(projectData);
   return (
-    <div className='navbar'>
+    <div className='navbar bg-slate-800'>
       <div className='navbar-start'>
         <div className='font-bold text-xl'> {'Project Name'} </div>
         <div className='px-2'>
