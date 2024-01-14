@@ -49,31 +49,36 @@ function Card({ project }) {
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] = Badge(Id_priorytetu);
 
+
   return (
-    <Link to={`/project/${ID}`}>
-      <div className='p-1'>
-        <div className='card w-96 bg-color2 shadow-xl '>
-          <div className='card-body'>
-            <h2 className='card-title'>{Nazwa_Projektu}</h2>
-            <p className=''>{`Przypisany zespół: ${Nr_zespolu}`}</p>
-            <p className=''>{`Start: ${Data_start}`}</p>
-            <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
-            <div className='card-actions '>
-              <span
-                className={`badge badge-lg ${priority_Color} text-gray-700`}
-              >
-                {Status}
-              </span>
-              <span
-                className={`badge badge-lg ${priority_Color} text-gray-700`}
-              >
-                {Priorytet}
-              </span>
+    <div className=''>
+      
+      <Link to={`/project/${ID}`}>
+      
+        <div className='p-1'>
+          <div className='card w-96 bg-color2 shadow-xl '>
+            <div className='card-body'>
+              <h2 className='card-title'>{Nazwa_Projektu}</h2>
+              <p className=''>{`Przypisany zespół: ${Nr_zespolu}`}</p>
+              <p className=''>{`Start: ${Data_start}`}</p>
+              <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
+              <div className='card-actions '>
+                <span
+                  className={`badge badge-lg ${priority_Color} text-gray-700`}
+                >
+                  {Status}
+                </span>
+                <span
+                  className={`badge badge-lg ${priority_Color} text-gray-700`}
+                >
+                  {Priorytet}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 

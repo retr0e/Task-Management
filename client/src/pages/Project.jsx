@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { Add_Task_Form } from "./Forms";
 import Modal from "../components/modal";
 
@@ -42,7 +42,7 @@ const DataBar = ({ projectData, privilege, params }) => {
           {projectData["info"]["Projekt"]}{" "}
         </div>
         <div className='px-2'>
-          <div className='badge badge-lg bg-red-400 text-black'>
+        <div className='badge badge-lg bg-red-400 text-black'>
             {projectData["info"]["Status"]}
           </div>
         </div>
@@ -52,12 +52,16 @@ const DataBar = ({ projectData, privilege, params }) => {
           </div>
         </div>
       </div>
-      <div className='navbar-center'>
+      <div>
+        <ChangeStat/>
+      </div>
+      <div className='navbar-end'>
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
           btn_Style={"btn-orange text-black"}
         />
+        
       </div>
     </div>
   );
@@ -126,8 +130,46 @@ const Project = ({ isAuthenticated }) => {
           <Contents projectData={projects} privilege={whatPrivilege} />
         </>
       ) : (
-        <div className='loading-message'>There is no data for the project</div>
+        <div className='loading-message skeleton'>There is no data for the project</div>
       )}
+    </div>
+  );
+};
+
+const ChangeStat = ({currentValue}) => {
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedPriority, setSelectedPriority] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.id === "status") {
+      setSelectedStatus(e.target.value);
+    } else if (e.target.id === "priority") {
+      setSelectedPriority(e.target.value);
+    }
+
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  return(
+    <div>
+      <form className='gap-3'>
+          <div class="join join-horizontal">
+            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="Nowy" value="Nowy" />
+            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="W trakcie" value="W trakcie"/>
+            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="Zakończony" value="Zakończony"/>
+          </div>
+        
+         
+          <div class="join join-horizontal px-2">
+            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Pilny" value="Pilny" />
+            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Normalny" value="Normalny"/>
+            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Wstrzymany" value="Wstrzymany"/>
+          </div>
+         <button className='btn btn-warning'>Apply</button>
+      </form>
     </div>
   );
 };
