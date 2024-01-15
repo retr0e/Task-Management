@@ -81,3 +81,16 @@ export const getAllPersons = async (projectId) => {
 
   return result;
 };
+
+export const getAllEmployees = async () => {
+  const employees = await pool.query(
+    `SELECT Id, Imie, Nazwisko, Stanowisko FROM Pracownicy;`
+  );
+
+  const employeesWithChecked = employees[0].map((person) => ({
+    ...person,
+    isChecked: false,
+  }));
+
+  return employeesWithChecked;
+};

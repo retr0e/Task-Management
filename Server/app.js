@@ -7,6 +7,7 @@ import projectRoutes from "./routes/projectRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import overallRoutes from "./routes/overallRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/task", taskRoutes);
 app.use("/api/v1/overall", overallRoutes);
+app.use("/api/v1/team", teamRoutes);
 
 // START SERVER
 export default app;
