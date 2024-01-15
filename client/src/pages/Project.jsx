@@ -35,7 +35,7 @@ const Contents = ({ projectData, privilege, states }) => {
 
 const DataBar = ({ projectData, privilege, params, states, priorities }) => {
   const { peopleWorking, projectTasks } = projectData;
-  console.log(projectData);
+  // console.log(projectData);
 
   return (
     <div className='navbar bg-slate-800'>
@@ -238,7 +238,7 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
-      projectId: currentValue["ID"],
+      projectId: currentValue["Id"],
     });
   };
 

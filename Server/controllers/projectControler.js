@@ -5,6 +5,7 @@ import {
   insertProject,
   getStatusAndPriorities,
   getProjectInfo,
+  patchProject,
 } from "./../model/projectModel.js";
 import dotenv from "dotenv";
 
@@ -71,5 +72,22 @@ export const addProject = async (req, res, next) => {
 };
 
 export const changeProjectStatePriority = (req, res) => {
-  console.log(req.body);
+  try {
+    const newData = {
+      id: req.body["projectId"],
+      state: req.body["status"],
+      priority: req.body["priorytet"],
+    };
+
+    patchProject(newData);
+    res.status(200).json({
+      status: "success",
+      message: "Project data correctly changed",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      message: "Unable to update project data due to server error",
+    });
+  }
 };

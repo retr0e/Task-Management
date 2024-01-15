@@ -160,3 +160,17 @@ export const getProjectInfo = async (projectId) => {
 
   return info[0][0];
 };
+
+export const patchProject = async (newProjectValues) => {
+  const stateCode = await pool.query(
+    `SELECT Id FROM Status WHERE Nazwa='${newProjectValues["state"]}'`
+  );
+
+  const priorityCode = await pool.query(
+    `SELECT Id FROM Priorytety WHERE Priorytety='${newProjectValues["priority"]}'`
+  );
+
+  await pool.query(
+    `UPDATE Projekty SET Id_priorytetu=${priorityCode[0][0]["Id"]}, Id_statusu=${stateCode[0][0]["Id"]} WHERE ID=${newProjectValues["id"]}`
+  );
+};
