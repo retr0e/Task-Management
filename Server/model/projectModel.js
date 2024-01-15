@@ -120,15 +120,15 @@ export const getStatusAndPriorities = async () => {
   const datas = await pool.query(`
   SELECT
     projekty.ID,
-    projekty.Nazwa,
+    projekty.Nazwa as ProjectName,
     projekty.Id_zespolu,
     projekty.Opis,
-    projekty.Data_start,
-    projekty.Data_koniec,
-    status.Nazwa,
-    color_code_status.hex as 'StatusColor',
-    priorytety.Priorytety,
-    color_code_priorytet.hex as 'PriorytetColor'
+    DATE_FORMAT(projekty.Data_start, '%Y-%m-%d') AS Data_start,
+    DATE_FORMAT(projekty.Data_koniec, '%Y-%m-%d') AS Data_koniec,
+    status.Nazwa as StatusName,
+    color_code_status.hex as StatusColor,
+    priorytety.Priorytety as PriorytetyName,
+    color_code_priorytet.hex as PriorytetColor
   FROM projekty
   JOIN status ON status.Id = projekty.Id_statusu
   JOIN color_code AS color_code_status ON color_code_status.Id = status.Id_colorCode
