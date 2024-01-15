@@ -2,52 +2,27 @@ import React, { useEffect, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Navigate, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Modal from "../components/modal";
+import Modal, { AccessBlock } from "../components/modal";
 import Add_Project_Form from "./Forms";
 
-function Badge(priorytet) {
-  /* For automatic color and text */
-  let status_Color;
-  let status_Name = "Halted";
 
-  switch (priorytet) {
-    case 1:
-      status_Color = "bg-red-400";
-      //status_Name = "Critical";
-      break;
-    case 2:
-      status_Color = "bg-green-400";
-      //status_Name = "Normal";
-      break;
-    case 3:
-      status_Color = "bg-yellow-400";
-      //status_Name = "On Hold";
-      break;
-    default:
-      status_Color = "bg-gray-400";
-      break;
-  }
-
-  return [status_Color];
-}
 
 // Użycie funkcji w komponencie Card
-function Card({ project, dataCodes }) {
-  console.log(dataCodes);
+function Card({ project }) {
+  console.log('jd',project);
   const {
     ID,
-    Nazwa_Projektu,
-    Nr_zespolu,
-    Id_priorytetu,
-    Priorytet,
-    Id_statusu,
-    Status,
-    Data_start,
+    Id_zespolu,
+    Opis,
+    PriorytetColor,
+    PriorytetyName,
+    ProjectName,
+    StatusColor,
+    StatusName,
     Data_koniec,
+    Data_start,
   } = project;
 
-  const [status_Color] = Badge(Id_statusu);
-  const [priority_Color] = Badge(Id_priorytetu);
 
   return (
     <div className=''>
@@ -55,20 +30,20 @@ function Card({ project, dataCodes }) {
         <div className='p-1'>
           <div className='card w-96 bg-color2 shadow-xl '>
             <div className='card-body'>
-              <h2 className='card-title'>{Nazwa_Projektu}</h2>
-              <p className=''>{`Przypisany zespół: ${Nr_zespolu}`}</p>
+              <h2 className='card-title'>{ProjectName}</h2>
+              <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>
               <p className=''>{`Start: ${Data_start}`}</p>
               <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
               <div className='card-actions '>
                 <span
-                  className={`badge badge-lg ${priority_Color} text-gray-700`}
+                  className={`badge badge-lg bg-${StatusColor} `}
                 >
-                  {Status}
+                  {StatusName}
                 </span>
                 <span
-                  className={`badge badge-lg ${priority_Color} text-gray-700`}
+                  className={`badge badge-lg bg-${PriorytetColor} `}
                 >
-                  {Priorytet}
+                  {PriorytetyName}
                 </span>
               </div>
             </div>
@@ -103,7 +78,7 @@ export const AddProject = () => {
 
 function Home() {
   const [projects, setProjects] = useState([]);
-  const [data, setData] = useState([]);
+  
 
   // console.log(projects);
   useEffect(() => {
@@ -113,7 +88,6 @@ function Home() {
         const response = await fetch("/api/v1/projects/get_projects");
         const data = await response.json();
         setProjects(data.result);
-        setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -125,9 +99,11 @@ function Home() {
   return (
     <div className='flex flex-wrap '>
       {projects.map((project) => (
-        <Card key={project.ID} project={project} dataCodes={data} />
+        <Card key={project.ID} project={project} />
       ))}
-      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
+      
+      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />}/>
+      
     </div>
   );
 }
