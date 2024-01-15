@@ -34,6 +34,21 @@ async function fetchDataFromApis(project) {
     throw error;
   }
 }
+// mode (add-0 | modify-1)
+export const Team_Form_X = () => {
+  return(
+    <div>
+      <form>
+      
+      
+      
+      </form>
+    </div>
+  );
+
+}
+
+
 
 const Add_Project_Form = () => {
   const [formData, setFormData] = useState({});

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Form, useParams, Link } from "react-router-dom";
+
 
 export default function Profile({ handleLogout }) {
+  const params = useParams();
   return (
     <>
       <div className='max-w-xs mx-auto'>
@@ -108,6 +110,8 @@ export function ChangeEmail(){
   )
 
 }
+
+
 export function ChangePassword(){
   return(
     <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>

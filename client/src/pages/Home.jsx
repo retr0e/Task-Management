@@ -24,17 +24,17 @@ function Card({ project }) {
     <div className=''>
       <Link to={`/project/${ID}`}>
         <div className='p-1'>
-          <div className='card w-96 bg-slate-800/75 shadow-xl '>
+          <div className='card w-96 bg-gray-500/70 shadow-xl '>
             <div className='card-body'>
               <h2 className='card-title'>{ProjectName}</h2>
               <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>
               <p className=''>{`Start: ${Data_start}`}</p>
               <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
               <div className='card-actions '>
-                <span className={`badge badge-lg bg-${StatusColor} `}>
+                <span className={`badge badge-lg bg-${StatusColor} text-white strokeme2 `}>
                   {StatusName}
                 </span>
-                <span className={`badge badge-lg bg-${PriorytetColor} `}>
+                <span className={`badge badge-lg bg-${PriorytetColor} strokeme2`}>
                   {PriorytetyName}
                 </span>
               </div>

@@ -4,4 +4,4 @@ Server/config.env
 Server/node_modules
 client/node_modules
 .DS_Store
-client/src/TESTERS/test.jsx
+
