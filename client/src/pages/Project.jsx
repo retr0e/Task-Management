@@ -5,25 +5,36 @@ import Modal from "../components/modal";
 
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
-
+  console.log(peopleWorking)
   return (
-    <div className='bg-base-400 p-3 '>
-      <div className='card card-body bg-slate-200 text-slate-600 max-w-full h-40'>
-        <span>Documentation</span>
-        <hr className=""/>
+    <div className='bg-base-400 p-3   gap-2'>
+      <div className="flex gap-2">
+      <div className='card card-body bg-slate-200/80 text-slate-600 w-3/4  h-auto'>
+        <span className="text-xl font-bold text-slate-900/70">Documentation</span>
+        <hr className="border-t-1 py-2 border-slate-600/75"/>
         {projectData["info"]["Opis"]}
       </div>
-      <ul className='flex w-1/2  gap-1 '>
+      <div className="card card-body bg-slate-200/80 text-slate-600  h-auto">
+        <p className="text-center text-slate-900 font-bold text-xl">Team {peopleWorking[0]['Nr_zespolu']}</p>
+        <hr className="border-t-1 py-2 border-slate-600/75"/>
+        <ul >
+          {peopleWorking.map((padawan) =>(
+            <li><p className="text-right">{padawan['Imie']} {padawan['Nazwisko']} </p></li>
+          ))}
+        </ul>
+      </div>
+      </div>
+      <ul className='flex  gap-2  '>
         {projectTasks.map((task, index) => (
           <li
             key={index}
-            className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 '
+            className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3 w-1/3 shadow-sm rounded my-2 '
           >
             <p className='font-bold text-xl'>{task["Nazwa_zadania"]}</p>
             
               <span className='text-right '>{task["Imie"]} {task["Nazwisko"]}</span>
               <hr className="border-t-1 py-2 border-slate-600/75"/>
-              <div className="px-2 py-2">
+              <div className="px-2 py-2 h-48">
                 <span className="">{task["Opis"]}</span>
               </div>
               
