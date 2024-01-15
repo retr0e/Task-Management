@@ -24,7 +24,7 @@ function Card({ project }) {
     <div className=''>
       <Link to={`/project/${ID}`}>
         <div className='p-1'>
-          <div className='card w-96 bg-color2 shadow-xl '>
+          <div className='card w-96 bg-slate-800/75 shadow-xl '>
             <div className='card-body'>
               <h2 className='card-title'>{ProjectName}</h2>
               <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>
@@ -55,7 +55,7 @@ export const AddProject = () => {
           <p className=' badge badge-lg w-24 h-6'></p>
           <p className='badge badge-lg w-48 h-6'></p>
           <p className='badge badge-lg w-48 h-6'></p>
-          <span className='absolute font-bold text-4xl text-slate-400 m-auto  top-20 left-0 right-0'>
+          <span className='absolute font-bold text-4xl text-base-400 m-auto  top-20 left-0 right-0'>
             NEW
           </span>
           <div className='card-actions '>

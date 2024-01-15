@@ -20,8 +20,8 @@ export default {
   daisyui: {
     themes: [
    
-      "dracula",
-
+      'business',
+      
     ],
   },
   plugins: [require("daisyui")],

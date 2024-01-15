@@ -7,22 +7,24 @@ const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
   return (
-    <div className='bg-red-400 '>
-      <div className='bg-slate-200 w-auto h-40'>
+    <div className='bg-base-400 p-3 '>
+      <div className='card card-body bg-slate-200 text-slate-600 w-full h-40'>
+        <span>Documentation</span>
+        <hr className=""/>
         {projectData["info"]["Opis"]}
       </div>
-      <ul className='list-inside'>
+      <ul className='flex gap-1 '>
         {projectTasks.map((task, index) => (
           <li
             key={index}
-            className='even:bg-slate-500 odd:bg-slate-400 text-black py-2 px-3 grid grid-cols-6 gap-2 shadow-sm rounded '
+            className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 '
           >
-            <span className='font-bold'>{task["Opis_Zadania"]}</span>
-            <span className='col-span-1 '>{task["Imie"]}</span>
-            <span className='col-span-1'>{task["Nazwisko"]}</span>
-            <span className='toolbox-Badge bg-green-400 float-left'>
-              {task["Status"]}
-            </span>
+            <span className='font-bold w-'>{task["Opis_Zadania"]}</span>
+            <div className=" ">
+              <span className='text-left '>{task["Imie"]}</span>
+              <span className='text-left'>{task["Nazwisko"]}</span>
+            </div>
+
             <div>
               <ChangeStat currentValue={task} states={states} />
             </div>
@@ -38,21 +40,14 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
   // console.log(projectData);
 
   return (
-    <div className='navbar bg-slate-800'>
-      <div className='navbar-start'>
-        <div className='font-bold text-xl'>
-          {" "}
-          {projectData["info"]["Projekt"]}{" "}
+    <div className='navbar bg-slate-500/70'>
+      <div className='navbar-start w-1/4'>
+        <div className='font-bold text-xl px-4'>
+          
+          {projectData["info"]["Projekt"]}
         </div>
         <div className='px-2'>
-          <div className='badge badge-lg bg-red-400 text-black'>
-            {projectData["info"]["Status"]}
-          </div>
-        </div>
-        <div>
-          <div className='badge badge-lg bg-red-400 text-black'>
-            {projectData["info"]["Priorytet"]}
-          </div>
+          
         </div>
       </div>
       <div>
@@ -62,7 +57,7 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
           priorities={priorities}
         />
       </div>
-      <div className='navbar-end'>
+      <div className='navbar-end w-1/4'>
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
@@ -197,9 +192,10 @@ const ChangeStat = ({ currentValue, states }) => {
               onChange={handleChange}
             />
           ))}
+          <button className='btn btn-secondary join-item'>Apply</button>
         </div>
 
-        <button className='btn btn-warning'>Apply</button>
+        
       </form>
     </div>
   );
@@ -246,18 +242,18 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
     setUsedState(currentValue["Status"]);
     setUsedPriority(currentValue["Priorytet"]);
   }, []);
-
+  console.log(states);
   return (
-    <div>
+    <div className="">
       <form onSubmit={handleSubmit} className='gap-3'>
-        <div className='join join-horizontal'>
+        <div className='join join-horizontal px-1'>
           {states["states"].map((state) => (
             <input
               id='status'
               key={state}
               type='radio'
               name='status'
-              className='btn theme-controller join-item'
+              className='btn  group-last:border-r-slate-300 theme-controller join-item'
               aria-label={state}
               value={state}
               checked={state === usedState}
@@ -265,24 +261,24 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
             />
           ))}
         </div>
-
-        <div className='join join-horizontal'>
+        <div className='join join-horizontal px-1'>
           {priorities["priority"].map((priorit) => (
             <input
               id='priorytet'
               key={priorit}
               type='radio'
               name='priority'
-              className='btn theme-controller join-item'
+              className='btn theme-controller join-item '
               aria-label={priorit}
               value={priorit}
               checked={priorit === usedPriority}
               onChange={handleChange}
             />
           ))}
+          <button className='join-item btn btn-secondary'>Apply</button>
         </div>
 
-        <button className='btn btn-warning'>Apply</button>
+        
       </form>
     </div>
   );

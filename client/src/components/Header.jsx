@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function Header({ isAuthenticated, handleLogout, privilege }) {
   return (
-    <header className='navbar bg-color4 shadow-lg'>
+    <header className='navbar bg-color4 bg-opacity-80 shadow-lg'>
       <div className='navbar-start'>
         {/*<======================Project-Name=====================>*/}
         <Link to='/'>
