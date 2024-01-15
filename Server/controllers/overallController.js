@@ -11,7 +11,8 @@ export const getStates = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      states: states,
+      states: states["names"],
+      statesWithColors: states["namesWithColors"],
     });
   } catch (error) {
     console.log(error);
@@ -27,7 +28,8 @@ export const getPriorities = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      priority: priorities,
+      priority: priorities["names"],
+      priorityWithColors: priorities["namesWithColors"],
     });
   } catch (error) {
     console.log(error);

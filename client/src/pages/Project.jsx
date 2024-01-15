@@ -210,6 +210,8 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
   const [usedState, setUsedState] = useState({});
   const [usedPriority, setUsedPriority] = useState({});
 
+  console.log(states);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

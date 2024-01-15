@@ -13,25 +13,38 @@ const pool = mysql
   .promise();
 
 export const getAllStates = async () => {
-  const states = await pool.query(`SELECT Nazwa FROM Status`);
+  const states = await pool.query(
+    `SELECT Status.Nazwa, Color_Code.hex FROM Status 
+    JOIN Color_Code On Status.Id_colorCode = Color_code.Id`
+  );
   let result = [];
 
   for (const obj of states[0]) {
     result.push(obj["Nazwa"]);
   }
 
-  return result;
+  const fetchResult = {
+    names: result,
+    namesWithColors: states[0],
+  };
+  return fetchResult;
 };
 
 export const getAllPriorities = async () => {
-  const priorities = await pool.query(`SELECT Priorytety FROM Priorytety`);
+  const priorities = await pool.query(
+    `SELECT Priorytety.Priorytety, Color_Code.hex FROM Priorytety JOIN Color_Code ON Priorytety.Id_colorCode = Color_Code.Id`
+  );
   let result = [];
 
   for (const obj of priorities[0]) {
     result.push(obj["Priorytety"]);
   }
 
-  return result;
+  const fetchResult = {
+    names: result,
+    namesWithColors: priorities[0],
+  };
+  return fetchResult;
 };
 
 export const getAllTeams = async () => {
