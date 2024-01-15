@@ -33,8 +33,9 @@ const Contents = ({ projectData, privilege, states }) => {
   );
 };
 
-const DataBar = ({ projectData, privilege, params }) => {
+const DataBar = ({ projectData, privilege, params, states, priorities }) => {
   const { peopleWorking, projectTasks } = projectData;
+  console.log(projectData);
 
   return (
     <div className='navbar bg-slate-800'>
@@ -54,6 +55,13 @@ const DataBar = ({ projectData, privilege, params }) => {
           </div>
         </div>
       </div>
+      <div>
+        <ChangeStatProject
+          currentValue={projectData["info"]}
+          states={states}
+          priorities={priorities}
+        />
+      </div>
       <div className='navbar-end'>
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
@@ -69,6 +77,7 @@ const Project = ({ isAuthenticated, privilege }) => {
   const [projects, setProject] = useState(null);
   const [dataLoaded, setDataLoaded] = useState();
   const [selectedStatus, setSelectedStatus] = useState({});
+  const [selectedPriority, setSelectedPriority] = useState({});
 
   const params = useParams();
 
@@ -78,11 +87,14 @@ const Project = ({ isAuthenticated, privilege }) => {
         const response = await fetch(
           `/api/v1/projects/get_project/${params["project_id"]}`
         );
-        const statesAndPriorities = await fetch("/api/v1/overall/get_states");
+        const states = await fetch("/api/v1/overall/get_states");
+        const priorities = await fetch("/api/v1/overall/get_priorities");
 
         const projectData = await response.json();
-        const stateResponse = await statesAndPriorities.json();
+        const stateResponse = await states.json();
+        const prioritiesResponse = await priorities.json();
 
+        setSelectedPriority(prioritiesResponse);
         setSelectedStatus(stateResponse);
         setProject(projectData);
       } catch (error) {
@@ -115,6 +127,8 @@ const Project = ({ isAuthenticated, privilege }) => {
             projectData={projects}
             privilege={privilege}
             params={params}
+            states={selectedStatus}
+            priorities={selectedPriority}
           />
           <Contents
             projectData={projects}
@@ -134,7 +148,6 @@ const Project = ({ isAuthenticated, privilege }) => {
 const ChangeStat = ({ currentValue, states }) => {
   const [formData, setFormData] = useState({});
   const [usedState, setUsedState] = useState({});
-  // const [selectedPriority, setSelectedPriority] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -167,7 +180,6 @@ const ChangeStat = ({ currentValue, states }) => {
     setUsedState(currentValue["Status"]);
   }, []);
 
-  // console.log(states["states"]);
   return (
     <div>
       <form onSubmit={handleSubmit} className='gap-3'>
@@ -187,29 +199,89 @@ const ChangeStat = ({ currentValue, states }) => {
           ))}
         </div>
 
-        {/* <div class='join join-horizontal px-2'>
-          <input
-            type='radio'
-            name='priority'
-            class='btn theme-controller join-item'
-            aria-label='Pilny'
-            value='Pilny'
-          />
-          <input
-            type='radio'
-            name='priority'
-            class='btn theme-controller join-item'
-            aria-label='Normalny'
-            value='Normalny'
-          />
-          <input
-            type='radio'
-            name='priority'
-            class='btn theme-controller join-item'
-            aria-label='Wstrzymany'
-            value='Wstrzymany'
-          />
-        </div> */}
+        <button className='btn btn-warning'>Apply</button>
+      </form>
+    </div>
+  );
+};
+
+const ChangeStatProject = ({ currentValue, states, priorities }) => {
+  const [formData, setFormData] = useState({});
+  const [usedState, setUsedState] = useState({});
+  const [usedPriority, setUsedPriority] = useState({});
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        `/api/v1/projects/get_project/${currentValue["Id"]}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.id === "status") {
+      setUsedState(e.target.value);
+    } else if (e.target.id === "priorytet") {
+      setUsedPriority(e.target.value);
+    }
+
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+      projectId: currentValue["ID"],
+    });
+  };
+
+  useEffect(() => {
+    setUsedState(currentValue["Status"]);
+    setUsedPriority(currentValue["Priorytet"]);
+  }, []);
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className='gap-3'>
+        <div className='join join-horizontal'>
+          {states["states"].map((state) => (
+            <input
+              id='status'
+              key={state}
+              type='radio'
+              name='status'
+              className='btn theme-controller join-item'
+              aria-label={state}
+              value={state}
+              checked={state === usedState}
+              onChange={handleChange}
+            />
+          ))}
+        </div>
+
+        <div className='join join-horizontal'>
+          {priorities["priority"].map((priorit) => (
+            <input
+              id='priorytet'
+              key={priorit}
+              type='radio'
+              name='priority'
+              className='btn theme-controller join-item'
+              aria-label={priorit}
+              value={priorit}
+              checked={priorit === usedPriority}
+              onChange={handleChange}
+            />
+          ))}
+        </div>
+
         <button className='btn btn-warning'>Apply</button>
       </form>
     </div>

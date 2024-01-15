@@ -26,7 +26,7 @@ const Modal = ({ element, btn_Name, btn_Style }) => {
   );
 };
 
-const AccessBlock = ({ element, reqLvl, currLvl }) => {
+export const AccessBlock = ({ element, reqLvl, currLvl }) => {
   if (currLvl <= reqLvl) {
     return { element };
   } else {

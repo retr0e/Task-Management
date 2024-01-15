@@ -69,3 +69,7 @@ export const addProject = async (req, res, next) => {
     });
   }
 };
+
+export const changeProjectStatePriority = (req, res) => {
+  console.log(req.body);
+};
