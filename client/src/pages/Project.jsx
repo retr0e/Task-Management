@@ -6,8 +6,6 @@ import Modal from "../components/modal";
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
-  console.log(projectData);
-
   return (
     <div className='bg-base-400 p-3 '>
       <div className='card card-body bg-slate-200 text-slate-600 w-full h-40'>
