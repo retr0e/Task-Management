@@ -6,16 +6,24 @@ export default function SignUp() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    if (e.target.id.includes("privilegeLevel")) {
+      setFormData({
+        ...formData,
+        privilegeLevel: e.target.value,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
   };
   const handleStar = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +37,7 @@ export default function SignUp() {
       });
       const data = await res.json();
       if (data.success === false) {
-        setError(data.massage);
+        setError(data.message);
         setLoading(false);
         return;
       }
@@ -48,7 +56,10 @@ export default function SignUp() {
       <h1 className='text-3xl text-center font-semibold my-7'>
         Create User Account
       </h1>
-      <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-4 grid-rows-8'>
+      <form
+        onSubmit={handleSubmit}
+        className='grid grid-cols-1 gap-4 grid-rows-8'
+      >
         <div className='flex gap-4'>
           <input
             type='text'
@@ -73,26 +84,51 @@ export default function SignUp() {
           onChange={handleChange}
         />
 
-        <div className="flex gap-4">
-          
-        
-        <input
-          type='text'
-          placeholder='Position'
-          className='input input-bordered w-1/2 max-w-base'
-          id='position'
-          
-          onChange={handleChange}
-        />
-        <div className="input input-bordered w-1/2 max-w-base ">
-          <span className="text-center px-2">Access Level</span>
-            <div className="rating py-3">
-              <input type="radio" name="rating-1" className="mask mask-star" value={4} onChange={handleStar}/>
-              <input type="radio" name="rating-1" className="mask mask-star" value={3} onChange={handleStar}/>
-              <input type="radio" name="rating-1" className="mask mask-star" value={2} onChange={handleStar}/>
-              <input type="radio" name="rating-1" className="mask mask-star" value={1} onChange={handleStar}/>
+        <div className='flex gap-4'>
+          <input
+            type='text'
+            placeholder='Position'
+            className='input input-bordered w-1/2 max-w-base'
+            id='position'
+            onChange={handleChange}
+          />
+          <div className='input input-bordered w-1/2 max-w-base '>
+            <span className='text-center px-2'>Access Level</span>
+            <div className='rating py-3'>
+              <input
+                id='privilegeLevel4'
+                type='radio'
+                name='rating-1'
+                className='mask mask-star'
+                value={4}
+                onChange={handleChange}
+              />
+              <input
+                id='privilegeLevel3'
+                type='radio'
+                name='rating-1'
+                className='mask mask-star'
+                value={3}
+                onChange={handleChange}
+              />
+              <input
+                id='privilegeLevel2'
+                type='radio'
+                name='rating-1'
+                className='mask mask-star'
+                value={2}
+                onChange={handleChange}
+              />
+              <input
+                id='privilegeLevel1'
+                type='radio'
+                name='rating-1'
+                className='mask mask-star'
+                value={1}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-        </div>
         </div>
         <input
           type='text'
@@ -115,9 +151,7 @@ export default function SignUp() {
           id='password'
           onChange={handleChange}
         />
-        
-        
-          
+
         <button
           disabled={loading}
           className='bg-slate-700 text-white p-3 rounded-lg uppercase order-7 hover:opacity-95 disabled:opacity-80'

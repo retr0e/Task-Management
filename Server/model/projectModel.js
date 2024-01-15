@@ -16,7 +16,7 @@ export const getAllProjectsData = async () => {
   const projects = await pool.query(`
     SELECT
       p.ID,
-      p.Nazwa AS Nazwa_Projektu,
+      p.Nazwa AS Nazwa_zadania,
       z.Nr_zespolu,
       p.Id_priorytetu,
       pr.Priorytety AS Priorytet,
@@ -37,7 +37,8 @@ export const getProjectTasks = async (projectId) => {
   const project = await pool.query(`
   SELECT
     zad.ID,
-    zad.Nazwa AS Opis_Zadania,
+    zad.Nazwa AS Nazwa_zadania,
+    zad.Description AS Opis,
     s.Nazwa AS Status,
     p.Imie,
     p.Nazwisko

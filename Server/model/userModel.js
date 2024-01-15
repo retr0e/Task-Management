@@ -30,7 +30,16 @@ async function checkLogin(providedLogin) {
 
 export const addAccountAndEmployee = async (data) => {
   try {
-    const { name, surname, pesel, position, username, email, password } = data;
+    const {
+      name,
+      surname,
+      pesel,
+      position,
+      privilegeLevel,
+      username,
+      email,
+      password,
+    } = data;
 
     const hashedPassword = bcryptjs.hashSync(password, 10);
     const loginCorrectness = validator.validate(email);
@@ -61,7 +70,7 @@ export const addAccountAndEmployee = async (data) => {
           '${username}',
           '${email}',
           '${hashedPassword}',
-          4
+          ${parseInt(privilegeLevel)}
       )`);
     }
   } catch (error) {

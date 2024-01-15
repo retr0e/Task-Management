@@ -6,6 +6,8 @@ import Modal from "../components/modal";
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
+  console.log(projectData);
+
   return (
     <div className='bg-base-400 p-3 '>
       <div className='card card-body bg-slate-200 text-slate-600 w-full h-40'>
@@ -205,6 +207,8 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
   const [formData, setFormData] = useState({});
   const [usedState, setUsedState] = useState({});
   const [usedPriority, setUsedPriority] = useState({});
+
+  console.log(states);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
