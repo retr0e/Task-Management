@@ -6,6 +6,8 @@ import Modal from "../components/modal";
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
+  console.log(projectData);
+
   return (
     <div className='bg-red-400 '>
       <div className='bg-slate-200 w-auto h-40'>
@@ -17,7 +19,7 @@ const Contents = ({ projectData, privilege, states }) => {
             key={index}
             className='even:bg-slate-500 odd:bg-slate-400 text-black py-2 px-3 grid grid-cols-6 gap-2 shadow-sm rounded '
           >
-            <span className='font-bold'>{task["Opis_Zadania"]}</span>
+            <span className='font-bold'>{task["Nazwa_zadania"]}</span>
             <span className='col-span-1 '>{task["Imie"]}</span>
             <span className='col-span-1'>{task["Nazwisko"]}</span>
             <span className='toolbox-Badge bg-green-400 float-left'>
