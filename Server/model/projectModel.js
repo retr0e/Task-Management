@@ -37,7 +37,8 @@ export const getProjectTasks = async (projectId) => {
   const project = await pool.query(`
   SELECT
     zad.ID,
-    zad.Nazwa AS Opis_Zadania,
+    zad.Nazwa AS Nazwa_zadania,
+    zad.Description AS Opis,
     s.Nazwa AS Status,
     p.Imie,
     p.Nazwisko
