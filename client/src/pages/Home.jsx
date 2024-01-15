@@ -6,7 +6,7 @@ import Modal, { AccessBlock } from "../components/modal";
 import Add_Project_Form from "./Forms";
 
 // Użycie funkcji w komponencie Card
-function Card({ project }) {
+const Card = ({ project }) => {
   const {
     ID,
     Id_zespolu,
@@ -22,7 +22,7 @@ function Card({ project }) {
 
   return (
     <div className=''>
-      <Link to={`/project/${ID}`}>
+      <Link to={`/projects/${ID}`}>
         <div className='p-1'>
           <div className='card w-96 bg-gray-500/70 shadow-xl '>
             <div className='card-body'>
@@ -44,6 +44,34 @@ function Card({ project }) {
       </Link>
     </div>
   );
+};
+
+const ListElement = ({ project }) => {
+  const {
+    ID,
+    Id_zespolu,
+    ProjectName,
+    StatusName,
+  } = project;
+  return(
+    <Link to={`/projects/${ID}`}>
+    <li>
+      <div className="bg-slate-200/75 hover:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 ">
+        <div className="">
+          <table>
+          <tr className="flex flex-wrap gap-2">
+            <td className="font-semibold">{ProjectName}</td>
+            <td className="">{Id_zespolu}</td>
+            <td className="">{StatusName}</td>
+          </tr>
+          </table>
+          
+        </div>
+      </div>
+    </li>
+    </Link>
+  );
+
 }
 
 export const AddProject = () => {
@@ -68,7 +96,41 @@ export const AddProject = () => {
   );
 };
 
-function Home() {
+export const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+
+  // console.log(projects);
+  useEffect(() => {
+    // Fetch data from the server
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/v1/projects/get_projects");
+        const data = await response.json();
+        setProjects(data.result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <div className="centerMe max-w-xl mx-auto ">
+      <div className="modal-box bg-slate-200/80 text-slate-600">
+        <h1 className="text-center text-bold text-2xl">All Projects List</h1>
+        <hr className="border-t-1 py-2 border-slate-600/75"/>
+      
+      <ul className="grid grid-cols-1 gap-1">
+        {projects.map(( project ) =>(
+          <ListElement key={project.ID} project={project}/>
+        ))}
+      </ul>
+      </div>
+    </div>
+  );
+};
+
+const Home = () => {
   const [projects, setProjects] = useState([]);
 
   // console.log(projects);
@@ -96,6 +158,6 @@ function Home() {
       <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
     </div>
   );
-}
+};
 
 export default Home;

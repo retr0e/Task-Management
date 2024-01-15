@@ -23,17 +23,24 @@ export default function Header({ isAuthenticated, handleLogout, privilege }) {
                   <span className='text-color1'>Home</span>
                 </li>
               </Link>
-              <Link to='/projects'>
+              <Link to='/project'>
                 <li className=''>
                   <span className='text-color1'>Projects</span>
                 </li>
               </Link>
               {privilege === 1 && ( // Check if privilege is 1
+                <>
                 <Link to='/sign-up'>
                   <li className=''>
                     <span className='text-color1'>Add User</span>
                   </li>
                 </Link>
+                <Link to='/tester'>
+                <li className=''>
+                  <span className='text-color1'>Tester</span>
+                </li>
+              </Link>
+              </>
               )}
               <Link to='/account'>
                 <li className=''>

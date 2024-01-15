@@ -76,7 +76,7 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
-          btn_Style={"btn btn-secondary text-black"}
+          btn_Style={"btn btn-secondary "}
         />
       </div>
     </div>

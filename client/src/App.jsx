@@ -10,7 +10,7 @@ import {
 import { ProtectedRoutes, useAuth } from "./ProtectedRoutes";
 
 // Pages
-import Home from "./pages/Home";
+import Home, { ProjectList } from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
@@ -93,8 +93,12 @@ export default function App() {
             path='/profile/:profile_id' 
             element={<Profile />} /> 
           <Route
-            path='/project/:project_id'
+            path='/projects/:project_id'
             element={<Project privilege={whichPrivilege} />}
+          />
+          <Route
+            path='/project'
+            element={<ProjectList />}
           />
         </Route>
 

@@ -48,8 +48,6 @@ export const Team_Form_X = () => {
 
 }
 
-
-
 const Add_Project_Form = () => {
   const [formData, setFormData] = useState({});
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -223,7 +221,7 @@ const Add_Project_Form = () => {
           {/* Project-Submit */}
           <button
             type='submit'
-            className='btn-orange  w-full max-w-xs text-slate-100'
+            className='btn btn-secondary  w-full max-w-xs text-slate-100'
           >
             {loading ? "Loading..." : "Dodaj Projekt"}
           </button>
@@ -352,7 +350,7 @@ export const Add_Task_Form = ({ projectId }) => {
           {/*<===================Project-Submit===================>*/}
           <button
             type='submit'
-            className='btn-orange  w-full max-w-xs text-slate-100'
+            className='btn btn-secondary  w-full max-w-xs text-slate-100'
           >
             Dodaj Zadanie
           </button>
