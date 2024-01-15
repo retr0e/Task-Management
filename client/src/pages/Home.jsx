@@ -9,7 +9,6 @@ import Add_Project_Form from "./Forms";
 
 // Użycie funkcji w komponencie Card
 function Card({ project }) {
-  console.log('jd',project);
   const {
     ID,
     Id_zespolu,

@@ -12,7 +12,10 @@ export default function SignUp() {
       [e.target.id]: e.target.value,
     });
   };
-
+  const handleStar = (e) => {
+    console.log(e.target.value)
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -45,19 +48,19 @@ export default function SignUp() {
       <h1 className='text-3xl text-center font-semibold my-7'>
         Create User Account
       </h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-        <div className='flex flex-row gap-4'>
+      <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-4 grid-rows-8'>
+        <div className='flex gap-4'>
           <input
             type='text'
             placeholder='Name'
-            className='border p-3 rounded-lg w-1/2 order-1'
+            className='input input-bordered w-full max-w-xs'
             id='name'
             onChange={handleChange}
           />
           <input
             type='text'
             placeholder='Surname'
-            className='border p-3 rounded-lg w-1/2 order-2'
+            className='input input-bordered w-full max-w-xs'
             id='surname'
             onChange={handleChange}
           />
@@ -65,39 +68,56 @@ export default function SignUp() {
         <input
           type='text'
           placeholder='PESEL'
-          className='border p-3 rounded-lg order-3'
+          className='input input-bordered w-full max-w-base'
           id='pesel'
           onChange={handleChange}
         />
+
+        <div className="flex gap-4">
+          
+        
         <input
           type='text'
           placeholder='Position'
-          className='border p-3 rounded-lg order-3'
+          className='input input-bordered w-1/2 max-w-base'
           id='position'
+          
           onChange={handleChange}
         />
-
+        <div className="input input-bordered w-1/2 max-w-base ">
+          <span className="text-center px-2">Access Level</span>
+            <div className="rating py-3">
+              <input type="radio" name="rating-1" className="mask mask-star" value={4} onChange={handleStar}/>
+              <input type="radio" name="rating-1" className="mask mask-star" value={3} onChange={handleStar}/>
+              <input type="radio" name="rating-1" className="mask mask-star" value={2} onChange={handleStar}/>
+              <input type="radio" name="rating-1" className="mask mask-star" value={1} onChange={handleStar}/>
+          </div>
+        </div>
+        </div>
         <input
           type='text'
           placeholder='username'
-          className='border p-3 rounded-lg order-4'
+          className='input input-bordered w-full max-w-base'
           id='username'
           onChange={handleChange}
         />
         <input
           type='text'
           placeholder='email'
-          className='border p-3 rounded-lg order-5'
+          className='input input-bordered w-full max-w-base'
           id='email'
           onChange={handleChange}
         />
         <input
           type='password'
           placeholder='password'
-          className='border p-3 rounded-lg order-6'
+          className='input input-bordered w-full max-w-base'
           id='password'
           onChange={handleChange}
         />
+        
+        
+          
         <button
           disabled={loading}
           className='bg-slate-700 text-white p-3 rounded-lg uppercase order-7 hover:opacity-95 disabled:opacity-80'
@@ -105,12 +125,6 @@ export default function SignUp() {
           {loading ? "Loading..." : "Create User Account"}
         </button>
       </form>
-      {/* <div className='flex gap-2 mt-5'>
-        <p>Have an account?</p>
-        <Link to={"/sign-in"}>
-          <span className='text-blue-700'>Create User Account</span>
-        </Link>
-      </div> */}
       {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
   );

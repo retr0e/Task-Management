@@ -77,14 +77,14 @@ CREATE TABLE `Konta` (
   `Uprawnienia` INT NOT NULL
 );
 
-INSERT INTO `Color_Code` (hex) VALUES
-('#72B1C2'),
-('#71888F'),
-('#60D5F5'),
-('#4A585C'),
-('#1F2F33'),
-('#4A585D'),
-('#4A485C');
+INSERT INTO `color_code` (`Id`, `hex`) VALUES
+('green-600'),
+('yellow-500'),
+('red-600'),
+('sky-500'),
+('gray-500'),
+('blue-700'),
+('pink-700');
 
 INSERT INTO `Priorytety` (Priorytety, Id_colorCode) VALUES
 ('Pilny', 1),
