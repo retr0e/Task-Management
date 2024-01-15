@@ -33,7 +33,6 @@ function Badge(priorytet) {
 
 // Użycie funkcji w komponencie Card
 function Card({ project, dataCodes }) {
-  console.log(dataCodes);
   const {
     ID,
     Nazwa_Projektu,

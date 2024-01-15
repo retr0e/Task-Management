@@ -2,6 +2,7 @@ import {
   deleteTaskFromBase,
   getTaskName,
   insertTask,
+  patchTask,
 } from "../model/taskModel.js";
 import dotenv from "dotenv";
 
@@ -33,5 +34,21 @@ export const addTask = async (req, res) => {
 };
 
 export const editTask = async (req, res) => {
-  console.log("Edytowanie zadania");
+  try {
+    const newData = {
+      id: req.body["taskId"],
+      state: req.body["status"],
+    };
+
+    patchTask(newData);
+    res.status(200).json({
+      status: "success",
+      message: "Task correctly modified",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      message: "Task not modified. Server failed to perform this request",
+    });
+  }
 };
