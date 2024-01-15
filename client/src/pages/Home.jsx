@@ -130,7 +130,8 @@ export const ProjectList = () => {
   );
 };
 
-const Home = () => {
+const Home = ({ acLvl }) => {
+  console.log(acLvl);
   const [projects, setProjects] = useState([]);
 
   // console.log(projects);
@@ -155,7 +156,10 @@ const Home = () => {
         <Card key={project.ID} project={project} />
       ))}
 
+      {/*Displays modal only when acces level is 2 or lower*/}
+      {acLvl <= 2 &&(
       <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
+      )}
     </div>
   );
 };

@@ -6,6 +6,6 @@ import Test from "./test";
 import { AddProject, ProjectList } from "../pages/Home";
 
 const Component = () => {
-  return <ProjectList />;
+  return <Profile />;
 };
 export default Component;

@@ -7,20 +7,23 @@ export default function Profile({ handleLogout }) {
   return (
     <>
       <div className='max-w-xs mx-auto'>
-        <div className='card card-body skeleton'>
-          <p className='card-title text-center'>Profile data</p>
-          <div className='grid grid-cols-1 grid-rows-5 gap-2'>
-            <div className='flex gap-2'>
-              <input className='input input-bordered w-1/2 max-w-base' disabled placeholder='User Name'/>
-              <input className='input input-bordered w-1/2 max-w-base' disabled placeholder='User Surname'/>
+        <div className='card card-body bg-slate-300/70'>
+          <p className='text-3xl font-semibold text-center'>Profile data</p>
+          <hr className="border-t-1 py-2 border-slate-600/75"/>
+          <div className='grid grid-cols-2 grid-rows-7 gap-2'>
+            <div className='col-span-2 flex gap-2'>
+              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Name'/>
+              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Surname'/>
             </div>
-            <div className='flex gap-2'>
-              <input className='input input-bordered w-1/2 max-w-base' disabled placeholder='User Position'/>
-              <input className='input input-bordered w-1/2 max-w-base' disabled placeholder='User Access Level'/>
+            <div className='col-span-2 flex gap-2'>
+              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Position'/>
+              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Access Level'/>
             </div>
-            <input className='input input-bordered w-full max-w-base' disabled placeholder='User Login'/>
-            <input className='input input-bordered w-full max-w-base' disabled placeholder='User Email'/>
-            <input className='input input-bordered w-full max-w-base' disabled placeholder='User Password'/>
+            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Login'/>
+            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Email'/>
+            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Password'/>
+            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Confirm Password'/>
+
           </div>
         </div>
         

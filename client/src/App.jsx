@@ -82,7 +82,7 @@ export default function App() {
         <Route path='/tester' element={<Component />} />
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home acLvl={whichPrivilege}/>} />
         ) : (
           <Route path='/' element={<Overview />} />
         )}
