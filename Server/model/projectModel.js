@@ -117,31 +117,26 @@ export const insertProject = async (project) => {
 };
 
 export const getStatusAndPriorities = async () => {
-  const states = await pool.query(`
+  const datas = await pool.query(`
   SELECT
-    Status.Id,
-    Status.Nazwa,
-    Color_Code.Id,
-    Color_Code.hex
-  FROM
-    Status
-  JOIN
-    Color_Code ON Status.Id_colorCode = Color_Code.Id;
+    projekty.ID,
+    projekty.Nazwa,
+    projekty.Id_zespolu,
+    projekty.Opis,
+    projekty.Data_start,
+    projekty.Data_koniec,
+    status.Nazwa,
+    color_code_status.hex as 'StatusColor',
+    priorytety.Priorytety,
+    color_code_priorytet.hex as 'PriorytetColor'
+  FROM projekty
+  JOIN status ON status.Id = projekty.Id_statusu
+  JOIN color_code AS color_code_status ON color_code_status.Id = status.Id_colorCode
+  JOIN priorytety ON priorytety.Id = projekty.Id_priorytetu
+  JOIN color_code AS color_code_priorytet ON color_code_priorytet.Id = priorytety.Id_colorCode;
   `);
 
-  const priorities = await pool.query(`  
-  SELECT
-    Priorytety.Id,
-    Priorytety.Priorytety,
-    Color_Code.Id, 
-    Color_Code.hex
-  FROM
-    Priorytety
-  JOIN
-    Color_Code ON Priorytety.Id_colorCode = Color_Code.Id;
-  `);
-
-  const obj = { states: states[0], priorities: priorities[0] };
+  const obj = { data: datas[0] };
   return obj;
 };
 

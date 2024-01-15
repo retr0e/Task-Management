@@ -12,13 +12,10 @@ dotenv.config({ path: "./config.env" });
 
 export async function getProjects(req, res, next) {
   try {
-    const projects = await getAllProjectsData();
-    const statusAndPriorities = await getStatusAndPriorities();
+    const projectData = await getStatusAndPriorities();
 
     res.status(200).json({
-      result: projects,
-      states: statusAndPriorities["states"],
-      priorities: statusAndPriorities["priorities"],
+      result: projectData["data"],
     });
   } catch (err) {
     res.status(500).json("Unable to reach projects values from server");
