@@ -105,6 +105,7 @@ const Add_Project_Form = () => {
       try {
         const data = await fetchDataFromApis(0);
         setTeamsData(data.teams);
+        data.priorities.pop();
         setPriData(data.priorities);
       } catch (error) {
         console.error("Error fetching teams data:", error);
