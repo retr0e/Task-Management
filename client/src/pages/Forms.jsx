@@ -6,6 +6,7 @@ async function fetchDataFromApis(project) {
   try {
     const prioritiesResponse = await fetch("/api/v1/overall/get_priorities");
     const teamsResponse = await fetch("/api/v1/overall/get_teams");
+    const employessResponse = await fetch("/api/v1/overall/get_all_employees");
     const personsResponse = await fetch("/api/v1/overall/get_employees", {
       method: "POST",
       headers: {
@@ -21,31 +22,18 @@ async function fetchDataFromApis(project) {
     const prioritiesData = await prioritiesResponse.json();
     const teamsData = await teamsResponse.json();
     const personData = await personsResponse.json();
-
-    // console.log(personData);
+    const employessData = await employessResponse.json();
 
     return {
       priorities: prioritiesData["priority"],
       teams: teamsData["teams"],
       persons: personData["persons"],
+      employess: employessData["employees"],
     };
   } catch (error) {
     console.error("Error fetching data from APIs:", error);
     throw error;
   }
-}
-// mode (add-0 | modify-1)
-export const Team_Form_X = () => {
-  return(
-    <div>
-      <form>
-      
-      
-      
-      </form>
-    </div>
-  );
-
 }
 
 const Add_Project_Form = () => {
@@ -284,7 +272,6 @@ export const Add_Task_Form = ({ projectId }) => {
         setPersonData(data.persons);
       } catch (error) {
         console.error("Error fetching teams data:", error);
-        // Handle the error, show a message, etc.
       }
     };
 
@@ -358,6 +345,172 @@ export const Add_Task_Form = ({ projectId }) => {
         </form>
       </div>
     </div>
+  );
+};
+
+// mode (add-0 | modify-1)
+export const Team_Form_X = () => {
+  const [personData, setPersonData] = useState([]);
+  const [teamData, setTeamData] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState();
+  const [allChecked, setAllChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDataFromApis(0);
+        setPersonData(data["employess"]);
+        setTeamData(data["teams"]);
+      } catch (error) {
+        console.error("Error fetching teams data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setPersonData((prevData) =>
+      prevData.map((person) => ({ ...person, isChecked: allChecked }))
+    );
+  }, [allChecked]);
+
+  // useEffect(() => {}, [selectedTeam]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const selected = personData.filter((person) => person.isChecked);
+
+      const peopleForSave = {
+        people: selected,
+        teamId: selectedTeam,
+      };
+
+      const res = await fetch("/api/v1/team/add_to_team", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(peopleForSave),
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message);
+      } else {
+        setError(null);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const updatedId = e.target.id;
+    setPersonData((prevData) =>
+      prevData.map((person) =>
+        person.Id == updatedId
+          ? { ...person, isChecked: !person.isChecked }
+          : person
+      )
+    );
+  };
+
+  const handleChangeAll = (e) => {
+    setAllChecked(!allChecked);
+  };
+
+  const handleSelect = async (e) => {
+    setSelectedTeam(e.target.value);
+
+    const objSend = {
+      persons: personData,
+      teamId: e.target.value,
+    };
+    const res = await fetch("/api/v1/team/check_presence", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(objSend),
+    });
+
+    const data = await res.json();
+
+    setPersonData(data["people"]);
+  };
+
+  console.log(personData);
+
+  return (
+    <>
+      <div className='card bg-slate-600/70'>
+        <form
+          className='p-3 max-w-lg mx-auto'
+          action=''
+          onSubmit={handleSubmit}
+        >
+          <p className='text-3xl text-center font-semibold my-7'>Form Name</p>
+
+          <select
+            id='person'
+            className='select select-bordered w-full max-w-xs'
+            onChange={handleSelect}
+          >
+            <option disabled selected>
+              Select Team
+            </option>
+            {teamData.map((team) => (
+              <option key={team} value={team}>
+                Team {team}
+              </option>
+            ))}
+          </select>
+          <hr className='py-2 border-none' />
+
+          <table className='table'>
+            {/*Kolumny tytulowe*/}
+            <tr>
+              <th>
+                <input
+                  type='checkbox'
+                  className='toggle'
+                  onChange={handleChangeAll}
+                  checked={allChecked}
+                />
+              </th>
+              <th>Pracownik</th>
+              <th>Stanowisko</th>
+            </tr>
+            {/*Rzedy*/}
+            {Object.values(personData).map((person) => (
+              <tr key={person.Id}>
+                <td>
+                  <input
+                    id={person["Id"]}
+                    type='checkbox'
+                    className='toggle'
+                    onChange={handleChange}
+                    checked={person.isChecked || false}
+                  />
+                </td>
+                <td>
+                  {person["Imie"]} {person["Nazwisko"]}
+                </td>
+                <td>{person["Stanowisko"]}</td>
+              </tr>
+            ))}
+          </table>
+          <button className='btn btn-primary'>Name apply</button>
+        </form>
+      </div>
+    </>
   );
 };
 
