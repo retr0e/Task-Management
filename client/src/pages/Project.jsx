@@ -10,24 +10,28 @@ const Contents = ({ projectData, privilege, states }) => {
 
   return (
     <div className='bg-base-400 p-3 '>
-      <div className='card card-body bg-slate-200 text-slate-600 w-full h-40'>
+      <div className='card card-body bg-slate-200 text-slate-600 max-w-full h-40'>
         <span>Documentation</span>
         <hr className=""/>
         {projectData["info"]["Opis"]}
       </div>
-      <ul className='flex gap-1 '>
+      <ul className='flex w-1/2  gap-1 '>
         {projectTasks.map((task, index) => (
           <li
             key={index}
             className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 '
           >
-            <span className='font-bold w-'>{task["Opis_Zadania"]}</span>
-            <div className=" ">
-              <span className='text-left '>{task["Imie"]}</span>
-              <span className='text-left'>{task["Nazwisko"]}</span>
-            </div>
+            <p className='font-bold text-xl'>{task["Nazwa_zadania"]}</p>
+            
+              <span className='text-right '>{task["Imie"]} {task["Nazwisko"]}</span>
+              <hr className="border-t-1 py-2 border-slate-600/75"/>
+              <div className="px-2 py-2">
+                <span className="">{task["Opis"]}</span>
+              </div>
+              
 
             <div>
+            <hr className="border-t-1 py-2 border-slate-600/75"/>
               <ChangeStat currentValue={task} states={states} />
             </div>
           </li>
@@ -63,7 +67,7 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
-          btn_Style={"btn-orange text-black"}
+          btn_Style={"btn btn-secondary text-black"}
         />
       </div>
     </div>
