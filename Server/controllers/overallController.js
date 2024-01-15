@@ -3,6 +3,7 @@ import {
   getAllPriorities,
   getAllTeams,
   getAllPersons,
+  getAllEmployees,
 } from "../model/overallModel.js";
 
 export const getStates = async (req, res) => {
@@ -55,7 +56,7 @@ export const getTeams = async (req, res) => {
   }
 };
 
-export const getEmployees = async (req, res) => {
+export const getEmployeesById = async (req, res) => {
   try {
     const persons = await getAllPersons(req.body["projectId"]);
 
@@ -73,4 +74,20 @@ export const getEmployees = async (req, res) => {
 
 export const debug = (req, res) => {
   console.log(req.body);
+};
+
+export const getEmployees = async (req, res) => {
+  try {
+    const employees = await getAllEmployees();
+
+    res.status(200).json({
+      status: "success",
+      employees: employees,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+    });
+  }
 };
