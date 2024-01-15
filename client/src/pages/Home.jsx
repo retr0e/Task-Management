@@ -32,8 +32,8 @@ function Badge(priorytet) {
 }
 
 // Użycie funkcji w komponencie Card
-function Card({ project }) {
-  //console.log(project);
+function Card({ project, dataCodes }) {
+  console.log(dataCodes);
   const {
     ID,
     Nazwa_Projektu,
@@ -49,12 +49,9 @@ function Card({ project }) {
   const [status_Color] = Badge(Id_statusu);
   const [priority_Color] = Badge(Id_priorytetu);
 
-
   return (
     <div className=''>
-      
       <Link to={`/project/${ID}`}>
-      
         <div className='p-1'>
           <div className='card w-96 bg-color2 shadow-xl '>
             <div className='card-body'>
@@ -83,30 +80,32 @@ function Card({ project }) {
 }
 
 export const AddProject = () => {
-  return(
-    
-    <div className="p-1">
-      <div className="card w-96 skeleton shadow-xl ">
-      <div className="card-body">
-        <h2 className="card-title   badge badge-lg w-72 h-6"></h2>
-        <p className=' badge badge-lg w-24 h-6'></p>
-        <p className='badge badge-lg w-48 h-6'></p>
-        <p className='badge badge-lg w-48 h-6'></p>
-        <span className='absolute font-bold text-4xl text-slate-400 m-auto  top-20 left-0 right-0'>NEW</span>
-        <div className="card-actions ">
-          <span className={`badge badge-lg  text-gray-700 w-24`}></span>
-          <span className={`badge badge-lg  text-gray-700 w-24`}> </span>
+  return (
+    <div className='p-1'>
+      <div className='card w-96 skeleton shadow-xl '>
+        <div className='card-body'>
+          <h2 className='card-title   badge badge-lg w-72 h-6'></h2>
+          <p className=' badge badge-lg w-24 h-6'></p>
+          <p className='badge badge-lg w-48 h-6'></p>
+          <p className='badge badge-lg w-48 h-6'></p>
+          <span className='absolute font-bold text-4xl text-slate-400 m-auto  top-20 left-0 right-0'>
+            NEW
+          </span>
+          <div className='card-actions '>
+            <span className={`badge badge-lg  text-gray-700 w-24`}></span>
+            <span className={`badge badge-lg  text-gray-700 w-24`}> </span>
+          </div>
         </div>
       </div>
-      </div>
     </div>
-  
   );
-}
+};
 
 function Home() {
   const [projects, setProjects] = useState([]);
+  const [data, setData] = useState([]);
 
+  // console.log(projects);
   useEffect(() => {
     // Fetch data from the server
     const fetchData = async () => {
@@ -114,6 +113,7 @@ function Home() {
         const response = await fetch("/api/v1/projects/get_projects");
         const data = await response.json();
         setProjects(data.result);
+        setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -125,10 +125,9 @@ function Home() {
   return (
     <div className='flex flex-wrap '>
       {projects.map((project) => (
-        <Card key={project.ID} project={project} />
+        <Card key={project.ID} project={project} dataCodes={data} />
       ))}
-      <Modal element={<Add_Project_Form/>} btn_Name={<AddProject/>} />
-
+      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
     </div>
   );
 }
