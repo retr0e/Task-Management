@@ -17,4 +17,8 @@
     -webkit-font-smoothing: antialiased;
 }
 
+  .bg-meme{
+    background-image: url('https://64.media.tumblr.com/8d4a3394badc3853e774e4b9cda31896/99bd34a6b7b08fd5-d9/s1280x1920/746f9c42815b227234aab8e1abfa6f50f0778e66.gif');
+  }
+
 }
