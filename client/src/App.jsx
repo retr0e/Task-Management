@@ -89,7 +89,9 @@ export default function App() {
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
 
         <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
-          {/* <Route path='/profile' element={<Profile />} /> */}
+          <Route 
+            path='/profile/:profile_id' 
+            element={<Profile />} /> 
           <Route
             path='/project/:project_id'
             element={<Project privilege={whichPrivilege} />}
