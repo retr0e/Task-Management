@@ -77,7 +77,7 @@ CREATE TABLE `Konta` (
   `Uprawnienia` INT NOT NULL
 );
 
-INSERT INTO `color_code` (`Id`, `hex`) VALUES
+INSERT INTO `color_code` (`hex`) VALUES
 ('green-600'),
 ('yellow-500'),
 ('red-600'),

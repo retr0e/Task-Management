@@ -142,15 +142,20 @@ export const getStatusAndPriorities = async () => {
 
 export const getProjectInfo = async (projectId) => {
   const info = await pool.query(`
-  SELECT 
+  SELECT
+    Projekty.ID as Id,
     Projekty.Nazwa AS Projekt, 
     Projekty.Opis AS Opis,
     Priorytety.Priorytety AS Priorytet, 
-    Status.Nazwa AS Status
+    color_code_priorytet.hex as PriorytetColor,
+    Status.Nazwa AS Status,
+    color_code_status.hex as StatusColor
   FROM Projekty 
   JOIN Priorytety ON Projekty.Id_priorytetu = Priorytety.Id
   JOIN Status ON Projekty.Id_statusu = Status.Id
-  WHERE Projekty.ID=${projectId}
+  JOIN color_code AS color_code_status ON color_code_status.Id = status.Id_colorCode
+  JOIN color_code AS color_code_priorytet ON color_code_priorytet.Id = priorytety.Id_colorCode
+  WHERE Projekty.ID=${projectId};
   `);
 
   return info[0][0];
