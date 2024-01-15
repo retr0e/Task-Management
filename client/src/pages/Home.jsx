@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import Modal, { AccessBlock } from "../components/modal";
 import Add_Project_Form from "./Forms";
 
-
-
 // Użycie funkcji w komponencie Card
 function Card({ project }) {
   const {
@@ -22,7 +20,6 @@ function Card({ project }) {
     Data_start,
   } = project;
 
-
   return (
     <div className=''>
       <Link to={`/project/${ID}`}>
@@ -34,14 +31,10 @@ function Card({ project }) {
               <p className=''>{`Start: ${Data_start}`}</p>
               <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
               <div className='card-actions '>
-                <span
-                  className={`badge badge-lg bg-${StatusColor} `}
-                >
+                <span className={`badge badge-lg bg-${StatusColor} `}>
                   {StatusName}
                 </span>
-                <span
-                  className={`badge badge-lg bg-${PriorytetColor} `}
-                >
+                <span className={`badge badge-lg bg-${PriorytetColor} `}>
                   {PriorytetyName}
                 </span>
               </div>
@@ -77,7 +70,6 @@ export const AddProject = () => {
 
 function Home() {
   const [projects, setProjects] = useState([]);
-  
 
   // console.log(projects);
   useEffect(() => {
@@ -100,9 +92,8 @@ function Home() {
       {projects.map((project) => (
         <Card key={project.ID} project={project} />
       ))}
-      
-      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />}/>
-      
+
+      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
     </div>
   );
 }

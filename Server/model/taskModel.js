@@ -36,3 +36,13 @@ export const insertTask = async (data) => {
     NULL
   )`);
 };
+
+export const patchTask = async (newValues) => {
+  const stateCode = await pool.query(
+    `SELECT Id FROM Status WHERE Nazwa='${newValues["state"]}'`
+  );
+
+  await pool.query(
+    `UPDATE Zadania SET Id_statusu=${stateCode[0][0]["Id"]} WHERE Id=${newValues["id"]}`
+  );
+};

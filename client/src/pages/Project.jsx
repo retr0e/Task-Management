@@ -3,7 +3,7 @@ import { Form, useParams } from "react-router-dom";
 import { Add_Task_Form } from "./Forms";
 import Modal from "../components/modal";
 
-const Contents = ({ projectData, privilege }) => {
+const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
   return (
@@ -18,12 +18,14 @@ const Contents = ({ projectData, privilege }) => {
             className='even:bg-slate-500 odd:bg-slate-400 text-black py-2 px-3 grid grid-cols-6 gap-2 shadow-sm rounded '
           >
             <span className='font-bold'>{task["Opis_Zadania"]}</span>
-            {/* <p>{task["ID"]}</p> */}
             <span className='col-span-1 '>{task["Imie"]}</span>
             <span className='col-span-1'>{task["Nazwisko"]}</span>
             <span className='toolbox-Badge bg-green-400 float-left'>
               {task["Status"]}
             </span>
+            <div>
+              <ChangeStat currentValue={task} states={states} />
+            </div>
           </li>
         ))}
       </ul>
@@ -42,7 +44,7 @@ const DataBar = ({ projectData, privilege, params }) => {
           {projectData["info"]["Projekt"]}{" "}
         </div>
         <div className='px-2'>
-        <div className='badge badge-lg bg-red-400 text-black'>
+          <div className='badge badge-lg bg-red-400 text-black'>
             {projectData["info"]["Status"]}
           </div>
         </div>
@@ -52,16 +54,12 @@ const DataBar = ({ projectData, privilege, params }) => {
           </div>
         </div>
       </div>
-      <div>
-        <ChangeStat/>
-      </div>
       <div className='navbar-end'>
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
           btn_Style={"btn-orange text-black"}
         />
-        
       </div>
     </div>
   );
@@ -70,6 +68,7 @@ const DataBar = ({ projectData, privilege, params }) => {
 const Project = ({ isAuthenticated, privilege }) => {
   const [projects, setProject] = useState(null);
   const [dataLoaded, setDataLoaded] = useState();
+  const [selectedStatus, setSelectedStatus] = useState({});
 
   const params = useParams();
 
@@ -79,7 +78,12 @@ const Project = ({ isAuthenticated, privilege }) => {
         const response = await fetch(
           `/api/v1/projects/get_project/${params["project_id"]}`
         );
+        const statesAndPriorities = await fetch("/api/v1/overall/get_states");
+
         const projectData = await response.json();
+        const stateResponse = await statesAndPriorities.json();
+
+        setSelectedStatus(stateResponse);
         setProject(projectData);
       } catch (error) {
         console.log(error);
@@ -90,8 +94,9 @@ const Project = ({ isAuthenticated, privilege }) => {
       await Promise.all([privilege, fetchData()]);
       if (
         projects != null &&
-        projects["projectTasks"].length > 0 &&
-        projects["peopleWorking"].length > 0
+        ((projects["projectTasks"] && projects["projectTasks"].length > 0) ||
+          (projects["peopleWorking"] && projects["peopleWorking"].length > 0) ||
+          projects["info"])
       ) {
         setDataLoaded(true);
       } else {
@@ -111,48 +116,101 @@ const Project = ({ isAuthenticated, privilege }) => {
             privilege={privilege}
             params={params}
           />
-          <Contents projectData={projects} privilege={privilege} />
+          <Contents
+            projectData={projects}
+            privilege={privilege}
+            states={selectedStatus}
+          />
         </>
       ) : (
-        <div className='loading-message skeleton'>There is no data for the project</div>
+        <div className='loading-message skeleton'>
+          There is no data for the project
+        </div>
       )}
     </div>
   );
 };
 
-const ChangeStat = ({currentValue}) => {
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedPriority, setSelectedPriority] = useState("");
+const ChangeStat = ({ currentValue, states }) => {
+  const [formData, setFormData] = useState({});
+  const [usedState, setUsedState] = useState({});
+  // const [selectedPriority, setSelectedPriority] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/v1/task/${currentValue["ID"]}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     if (e.target.id === "status") {
-      setSelectedStatus(e.target.value);
-    } else if (e.target.id === "priority") {
-      setSelectedPriority(e.target.value);
+      setUsedState(e.target.value);
     }
 
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
+      taskId: currentValue["ID"],
     });
   };
 
-  return(
+  useEffect(() => {
+    setUsedState(currentValue["Status"]);
+  }, []);
+
+  // console.log(states["states"]);
+  return (
     <div>
-      <form className='gap-3'>
-          <div class="join join-horizontal">
-            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="Nowy" value="Nowy" />
-            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="W trakcie" value="W trakcie"/>
-            <input type="radio" name="status" class="btn theme-controller join-item" aria-label="Zakończony" value="Zakończony"/>
-          </div>
-        
-         
-          <div class="join join-horizontal px-2">
-            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Pilny" value="Pilny" />
-            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Normalny" value="Normalny"/>
-            <input type="radio" name="priority" class="btn theme-controller join-item" aria-label="Wstrzymany" value="Wstrzymany"/>
-          </div>
-         <button className='btn btn-warning'>Apply</button>
+      <form onSubmit={handleSubmit} className='gap-3'>
+        <div className='join join-horizontal'>
+          {states["states"].map((state) => (
+            <input
+              id='status'
+              key={state}
+              type='radio'
+              name='status'
+              className='btn theme-controller join-item'
+              aria-label={state}
+              value={state}
+              checked={state === usedState}
+              onChange={handleChange}
+            />
+          ))}
+        </div>
+
+        {/* <div class='join join-horizontal px-2'>
+          <input
+            type='radio'
+            name='priority'
+            class='btn theme-controller join-item'
+            aria-label='Pilny'
+            value='Pilny'
+          />
+          <input
+            type='radio'
+            name='priority'
+            class='btn theme-controller join-item'
+            aria-label='Normalny'
+            value='Normalny'
+          />
+          <input
+            type='radio'
+            name='priority'
+            class='btn theme-controller join-item'
+            aria-label='Wstrzymany'
+            value='Wstrzymany'
+          />
+        </div> */}
+        <button className='btn btn-warning'>Apply</button>
       </form>
     </div>
   );

@@ -22,7 +22,7 @@ async function fetchDataFromApis(project) {
     const teamsData = await teamsResponse.json();
     const personData = await personsResponse.json();
 
-    console.log(personData);
+    // console.log(personData);
 
     return {
       priorities: prioritiesData["priority"],
@@ -41,8 +41,8 @@ const Add_Project_Form = () => {
   const [selectedPriority, setSelectedPriority] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [minDate, setMinDate] = useState('');
-  const [maxDate, setMaxDate] = useState('');
+  const [minDate, setMinDate] = useState("");
+  const [maxDate, setMaxDate] = useState("");
 
   const handleMinDateChange = (e) => {
     setMinDate(e.target.value);
