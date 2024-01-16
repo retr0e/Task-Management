@@ -554,7 +554,22 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
 
   return (
     <div className='strokeme2'>
-      <form className='' onSubmit={handleSubmit}>
+      <div className="">
+      <form action="teams">
+        <select>
+          <option value="tak" disabled>Choose team</option>
+        </select>
+        <button className="btn btn-accent">apply</button>
+      </form>
+      <hr className="p-3 border-none"/>
+      <form action="slave">
+        <select name="" id="">
+          <option value="choose" disabled>choose Slave</option>
+        </select>
+        <button className="btn btn-accent">apply</button>
+      </form>
+      </div>
+      <form className='hidden' onSubmit={handleSubmit}>
         <label className='form-control'>
           <h2 className='text-center font-bold text-lg'>Edit description</h2>
           <hr className='py-2 border-none' />
