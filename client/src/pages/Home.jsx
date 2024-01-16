@@ -6,7 +6,7 @@ import Modal, { AccessBlock } from "../components/modal";
 import Add_Project_Form from "./Forms";
 
 // Użycie funkcji w komponencie Card
-const Card = ({ project }) => {
+const Card = ({ project, privilege }) => {
   const {
     ID,
     Id_zespolu,
@@ -31,10 +31,14 @@ const Card = ({ project }) => {
               <p className=''>{`Start: ${Data_start}`}</p>
               <p className=''>{`Przewidywany koniec: ${Data_koniec}`}</p>
               <div className='card-actions '>
-                <span className={`badge badge-lg bg-${StatusColor} text-white strokeme2 `}>
+                <span
+                  className={`badge badge-lg bg-${StatusColor} text-white strokeme2 `}
+                >
                   {StatusName}
                 </span>
-                <span className={`badge badge-lg bg-${PriorytetColor} strokeme2`}>
+                <span
+                  className={`badge badge-lg bg-${PriorytetColor} strokeme2`}
+                >
                   {PriorytetyName}
                 </span>
               </div>
@@ -47,32 +51,25 @@ const Card = ({ project }) => {
 };
 
 const ListElement = ({ project }) => {
-  const {
-    ID,
-    Id_zespolu,
-    ProjectName,
-    StatusName,
-  } = project;
-  return(
+  const { ID, Id_zespolu, ProjectName, StatusName } = project;
+  return (
     <Link to={`/projects/${ID}`}>
-    <li>
-      <div className="bg-slate-200/75 hover:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 ">
-        <div className="">
-          <table>
-          <tr className="flex flex-wrap gap-2">
-            <td className="font-semibold">{ProjectName}</td>
-            <td className="">{Id_zespolu}</td>
-            <td className="">{StatusName}</td>
-          </tr>
-          </table>
-          
+      <li>
+        <div className='bg-slate-200/75 hover:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 '>
+          <div className=''>
+            <table>
+              <tr className='flex flex-wrap gap-2'>
+                <td className='font-semibold'>{ProjectName}</td>
+                <td className=''>{Id_zespolu}</td>
+                <td className=''>{StatusName}</td>
+              </tr>
+            </table>
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
     </Link>
   );
-
-}
+};
 
 export const AddProject = () => {
   return (
@@ -115,16 +112,16 @@ export const ProjectList = () => {
     fetchData();
   }, []);
   return (
-    <div className="centerMe max-w-xl mx-auto ">
-      <div className="modal-box bg-slate-200/80 text-slate-600">
-        <h1 className="text-center text-bold text-2xl">All Projects List</h1>
-        <hr className="border-t-1 py-2 border-slate-600/75"/>
-      
-      <ul className="grid grid-cols-1 gap-1">
-        {projects.map(( project ) =>(
-          <ListElement key={project.ID} project={project}/>
-        ))}
-      </ul>
+    <div className='centerMe max-w-xl mx-auto '>
+      <div className='modal-box bg-slate-200/80 text-slate-600'>
+        <h1 className='text-center text-bold text-2xl'>All Projects List</h1>
+        <hr className='border-t-1 py-2 border-slate-600/75' />
+
+        <ul className='grid grid-cols-1 gap-1'>
+          {projects.map((project) => (
+            <ListElement key={project.ID} project={project} />
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -133,15 +130,21 @@ export const ProjectList = () => {
 const Home = ({ acLvl }) => {
   console.log(acLvl);
   const [projects, setProjects] = useState([]);
+  const [teams, setTeams] = useState([]);
 
   // console.log(projects);
   useEffect(() => {
     // Fetch data from the server
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/v1/projects/get_projects");
-        const data = await response.json();
-        setProjects(data.result);
+        const projectResponse = await fetch("/api/v1/projects/get_projects");
+        const userTeamsResponse = await fetch("/api/v1/users/team");
+
+        const userData = await userTeamsResponse.json();
+        const projectData = await projectResponse.json();
+        console.log(projectData);
+        setProjects(projectData.result);
+        setTeams(userData["teams"]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -152,13 +155,31 @@ const Home = ({ acLvl }) => {
 
   return (
     <div className='flex flex-wrap '>
-      {projects.map((project) => (
-        <Card key={project.ID} project={project} />
-      ))}
-
       {/*Displays modal only when acces level is 2 or lower*/}
-      {acLvl <= 2 &&(
-      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} modal_ID={'add project'}/>
+      {acLvl <= 2 ? (
+        <>
+          <Modal
+            element={<Add_Project_Form />}
+            btn_Name={<AddProject />}
+            modal_ID={"add project"}
+          />
+
+          {projects.map((project) => (
+            <Card key={project.ID} project={project} />
+          ))}
+        </>
+      ) : (
+        <>
+          {projects
+            .filter(
+              (project) =>
+                !(project.StatusName === "Zakończony" && acLvl > 2) &&
+                teams.includes(project.Id_zespolu)
+            )
+            .map((project) => (
+              <Card key={project.ID} project={project} />
+            ))}
+        </>
       )}
     </div>
   );

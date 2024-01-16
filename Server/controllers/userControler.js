@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import { actionLog } from "../model/logModel.js";
 import dotenv from "dotenv";
-import { addAccountAndEmployee } from "../model/userModel.js";
+import { addAccountAndEmployee, getTeams } from "../model/userModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -122,5 +122,26 @@ export const privilegeLevel = (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false });
+  }
+};
+
+export const getUserTeams = async (req, res) => {
+  try {
+    const decoded = jwt.verify(
+      req.cookies["access_token"],
+      process.env.JWT_SECRET
+    );
+    console.log(decoded);
+    const teams = await getTeams(decoded["id"]);
+
+    res.status(200).json({
+      status: "success",
+      teams: teams,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      error: error,
+    });
   }
 };

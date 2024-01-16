@@ -30,6 +30,7 @@ export const getAllProjectsData = async () => {
     JOIN Zespoly z ON p.Id_zespolu = z.Id
     JOIN Status s ON p.Id_statusu = s.Id;`);
 
+  console.log(project[0]);
   return projects[0];
 };
 
@@ -48,6 +49,7 @@ export const getProjectTasks = async (projectId) => {
   JOIN Pracownicy p ON zad.Id_pracownika = p.Id
   WHERE
     Id_projektu=${projectId}
+  ORDER BY Status;
   `);
 
   return project[0];
@@ -134,7 +136,8 @@ export const getStatusAndPriorities = async () => {
   JOIN status ON status.Id = projekty.Id_statusu
   JOIN color_code AS color_code_status ON color_code_status.Id = status.Id_colorCode
   JOIN priorytety ON priorytety.Id = projekty.Id_priorytetu
-  JOIN color_code AS color_code_priorytet ON color_code_priorytet.Id = priorytety.Id_colorCode;
+  JOIN color_code AS color_code_priorytet ON color_code_priorytet.Id = priorytety.Id_colorCode
+  ORDER BY StatusName, PriorytetyName;
   `);
 
   const obj = { data: datas[0] };
