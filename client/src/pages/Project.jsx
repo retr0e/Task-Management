@@ -52,18 +52,26 @@ const Contents = ({ projectData, privilege, states }) => {
               <hr className='border-t-1 py-2 border-slate-600/75' />
               <div className='grid grid-cols-3'>
                 <div className='colspan-2'>
-                  <ChangeStat currentValue={task} states={states} />
+                  <ChangeStat
+                    currentValue={task}
+                    states={states}
+                    privilege={privilege}
+                  />
                 </div>
                 <div className=''></div>
-
-                <Modal
-                  modal_ID={task["Nazwa_zadania"]}
-                  btn_Name={"Edit Description"}
-                  btn_Style={"item-join btn btn-secondary"}
-                  element={
-                    <DesChangeForm forWhat={"zadanie"} elementId={task["ID"]} />
-                  }
-                />
+                {privilege <= 2 ? (
+                  <Modal
+                    modal_ID={task["Nazwa_zadania"]}
+                    btn_Name={"Edit Description"}
+                    btn_Style={"item-join btn btn-secondary"}
+                    element={
+                      <DesChangeForm
+                        forWhat={"zadanie"}
+                        elementId={task["ID"]}
+                      />
+                    }
+                  />
+                ) : null}
               </div>
             </div>
           </li>
@@ -85,32 +93,39 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
         </div>
         <div className='px-2'></div>
       </div>
-      <div>
-        <ChangeStatProject
-          currentValue={projectData["info"]}
-          states={states}
-          priorities={priorities}
-        />
-      </div>
-      <div className='navbar-end w-1/4 join'>
-        <Modal
-          element={<Add_Task_Form projectId={params["project_id"]} />}
-          btn_Name={"Dodaj Zadanie"}
-          btn_Style={"btn btn-secondary join-item"}
-          modal_ID={"taskform"}
-        />
-        <Modal
-          element={
-            <DesChangeForm
-              forWhat={"project"}
-              elementId={params["project_id"]}
+      {privilege <= 3 ? (
+        <>
+          <div key='changeStatProject'>
+            <ChangeStatProject
+              currentValue={projectData["info"]}
+              states={states}
+              priorities={priorities}
+              privilege={privilege}
             />
-          }
-          btn_Name={"Edit Description"}
-          btn_Style={"btn btn-secondary join-item"}
-          modal_ID={"decriptionform"}
-        />
-      </div>
+          </div>
+          {privilege <= 2 ? (
+            <div className='navbar-end w-1/4 join' key='navbarEnd'>
+              <Modal
+                element={<Add_Task_Form projectId={params["project_id"]} />}
+                btn_Name={"Dodaj Zadanie"}
+                btn_Style={"btn btn-secondary join-item"}
+                modal_ID={"taskform"}
+              />
+              <Modal
+                element={
+                  <DesChangeForm
+                    forWhat={"project"}
+                    elementId={params["project_id"]}
+                  />
+                }
+                btn_Name={"Edit Description"}
+                btn_Style={"btn btn-secondary join-item"}
+                modal_ID={"decriptionform"}
+              />
+            </div>
+          ) : null}
+        </>
+      ) : null}
     </div>
   );
 };
@@ -187,7 +202,7 @@ const Project = ({ isAuthenticated, privilege }) => {
   );
 };
 
-const ChangeStat = ({ currentValue, states }) => {
+const ChangeStat = ({ currentValue, states, privilege }) => {
   const [formData, setFormData] = useState({});
   const [usedState, setUsedState] = useState({});
 
@@ -228,6 +243,7 @@ const ChangeStat = ({ currentValue, states }) => {
         <div className='join join-horizontal'>
           {states["states"].map((state) => (
             <input
+              disabled={privilege > 2 ? true : false}
               id='status'
               key={state}
               type='radio'
@@ -239,19 +255,25 @@ const ChangeStat = ({ currentValue, states }) => {
               onChange={handleChange}
             />
           ))}
-          <button className='btn btn-secondary join-item'>Apply</button>
+          <button
+            className={
+              privilege > 2
+                ? `join-item btn btn-secondary hidden`
+                : `join-item btn btn-secondary`
+            }
+          >
+            Apply
+          </button>
         </div>
       </form>
     </div>
   );
 };
 
-const ChangeStatProject = ({ currentValue, states, priorities }) => {
+const ChangeStatProject = ({ currentValue, states, priorities, privilege }) => {
   const [formData, setFormData] = useState({});
   const [usedState, setUsedState] = useState({});
   const [usedPriority, setUsedPriority] = useState({});
-
-  console.log(states);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -289,13 +311,14 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
     setUsedState(currentValue["Status"]);
     setUsedPriority(currentValue["Priorytet"]);
   }, []);
-  console.log(states);
+
   return (
     <div className=''>
       <form onSubmit={handleSubmit} className='gap-3'>
         <div className='join join-horizontal px-1'>
           {states["states"].map((state) => (
             <input
+              disabled={privilege > 2 ? true : false}
               id='status'
               key={state}
               type='radio'
@@ -311,6 +334,7 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
         <div className='join join-horizontal px-1'>
           {priorities["priority"].map((priorit) => (
             <input
+              disabled={privilege > 2 ? true : false}
               id='priorytet'
               key={priorit}
               type='radio'
@@ -322,7 +346,15 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
               onChange={handleChange}
             />
           ))}
-          <button className='join-item btn btn-secondary'>Apply</button>
+          <button
+            className={
+              privilege > 2
+                ? `join-item btn btn-secondary hidden`
+                : `join-item btn btn-secondary`
+            }
+          >
+            Apply
+          </button>
         </div>
       </form>
     </div>
