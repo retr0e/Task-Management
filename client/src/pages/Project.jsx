@@ -50,15 +50,15 @@ const Contents = ({ projectData, privilege, states }) => {
 
             <div>
               <hr className='border-t-1 py-2 border-slate-600/75' />
-              <div className='grid grid-cols-3'>
-                <div className='colspan-2'>
+              <div className='grid grid-cols-4 '>
+                <div className='col-span-3 h-3 '>
                   <ChangeStat
                     currentValue={task}
                     states={states}
                     privilege={privilege}
                   />
                 </div>
-                <div className=''></div>
+                <div className="">
                 {privilege <= 2 ? (
                   <Modal
                     modal_ID={task["Nazwa_zadania"]}
@@ -70,8 +70,10 @@ const Contents = ({ projectData, privilege, states }) => {
                         elementId={task["ID"]}
                       />
                     }
+                
                   />
                 ) : null}
+                </div>
               </div>
             </div>
           </li>
