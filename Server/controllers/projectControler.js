@@ -6,6 +6,7 @@ import {
   getStatusAndPriorities,
   getProjectInfo,
   patchProject,
+  patchDescription,
 } from "./../model/projectModel.js";
 import dotenv from "dotenv";
 
@@ -93,5 +94,16 @@ export const changeProjectStatePriority = (req, res) => {
 };
 
 export const changeDescription = (req, res) => {
-  console.log("pomidor");
+  try {
+    patchDescription(req.body["text"], req.body["elementId"]);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      error: error,
+    });
+  }
 };

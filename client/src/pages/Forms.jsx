@@ -348,7 +348,6 @@ export const Add_Task_Form = ({ projectId }) => {
   );
 };
 
-// mode (add-0 | modify-1)
 export const Team_Form_X = () => {
   const [personData, setPersonData] = useState([]);
   const [teamData, setTeamData] = useState([]);
@@ -452,8 +451,6 @@ export const Team_Form_X = () => {
     setPersonData(data["people"]);
   };
 
-  console.log(personData);
-
   return (
     <>
       <div className='card bg-slate-600/70'>
@@ -536,18 +533,16 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let res;
-
     if (forWhat === "project") {
-      res = await fetch(`/api/v1/projects/${elementId}`, {
+      await fetch(`/api/v1/projects/${elementId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text, elementId }),
       });
     } else {
-      res = await fetch(`/api/v1/task/${elementId}`, {
+      await fetch(`/api/v1/task/${elementId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -555,8 +550,6 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
         body: JSON.stringify({ text }),
       });
     }
-
-    // const responseData = await res.json();
   };
 
   return (
