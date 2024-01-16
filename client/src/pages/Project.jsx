@@ -8,21 +8,29 @@ const Contents = ({ projectData, privilege, states }) => {
   //console.log(peopleWorking)
   return (
     <div className='bg-base-400 p-3   gap-2'>
-      <div className="flex gap-2">
-      <div className='card card-body bg-slate-200/80 text-slate-600 w-3/4  h-auto'>
-        <span className="text-xl font-bold text-slate-900/70">Documentation</span>
-        <hr className="border-t-1 py-2 border-slate-600/75"/>
-        {projectData["info"]["Opis"]}
-      </div>
-      <div className="card card-body bg-slate-200/80 text-slate-600  h-auto">
-        <p className="text-center text-slate-900 font-bold text-xl">Team {peopleWorking[0]['Nr_zespolu']}</p>
-        <hr className="border-t-1 py-2 border-slate-600/75"/>
-        <ul >
-          {peopleWorking.map((padawan) =>(
-            <li><p className="text-right">{padawan['Imie']} {padawan['Nazwisko']} </p></li>
-          ))}
-        </ul>
-      </div>
+      <div className='flex gap-2'>
+        <div className='card card-body bg-slate-200/80 text-slate-600 w-3/4  h-auto'>
+          <span className='text-xl font-bold text-slate-900/70'>
+            Documentation
+          </span>
+          <hr className='border-t-1 py-2 border-slate-600/75' />
+          {projectData["info"]["Opis"]}
+        </div>
+        <div className='card card-body bg-slate-200/80 text-slate-600  h-auto'>
+          <p className='text-center text-slate-900 font-bold text-xl'>
+            Team {peopleWorking[0]["Nr_zespolu"]}
+          </p>
+          <hr className='border-t-1 py-2 border-slate-600/75' />
+          <ul>
+            {peopleWorking.map((padawan) => (
+              <li>
+                <p className='text-right'>
+                  {padawan["Imie"]} {padawan["Nazwisko"]}{" "}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <ul className='flex  gap-2  '>
         {projectTasks.map((task, index) => (
@@ -31,16 +39,17 @@ const Contents = ({ projectData, privilege, states }) => {
             className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3 w-1/3 shadow-sm rounded my-2 '
           >
             <p className='font-bold text-xl'>{task["Nazwa_zadania"]}</p>
-            
-              <span className='text-right '>{task["Imie"]} {task["Nazwisko"]}</span>
-              <hr className="border-t-1 py-2 border-slate-600/75"/>
-              <div className="px-2 py-2 h-48">
-                <span className="">{task["Opis"]}</span>
-              </div>
-              
+
+            <span className='text-right '>
+              {task["Imie"]} {task["Nazwisko"]}
+            </span>
+            <hr className='border-t-1 py-2 border-slate-600/75' />
+            <div className='px-2 py-2 h-48'>
+              <span className=''>{task["Opis"]}</span>
+            </div>
 
             <div>
-            <hr className="border-t-1 py-2 border-slate-600/75"/>
+              <hr className='border-t-1 py-2 border-slate-600/75' />
               <ChangeStat currentValue={task} states={states} />
             </div>
           </li>
@@ -58,12 +67,9 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
     <div className='navbar bg-slate-500/70'>
       <div className='navbar-start w-1/4'>
         <div className='font-bold text-xl px-4'>
-          
           {projectData["info"]["Projekt"]}
         </div>
-        <div className='px-2'>
-          
-        </div>
+        <div className='px-2'></div>
       </div>
       <div>
         <ChangeStatProject
@@ -77,13 +83,18 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
           btn_Style={"btn btn-secondary join-item"}
-          modal_ID={'taskform'}
+          modal_ID={"taskform"}
         />
         <Modal
-          element={<DesChangeForm/>}
+          element={
+            <DesChangeForm
+              forWhat={"project"}
+              elementId={params["project_id"]}
+            />
+          }
           btn_Name={"Edit Description"}
           btn_Style={"btn btn-secondary join-item"}
-          modal_ID={'decriptionform'}
+          modal_ID={"decriptionform"}
         />
       </div>
     </div>
@@ -216,8 +227,6 @@ const ChangeStat = ({ currentValue, states }) => {
           ))}
           <button className='btn btn-secondary join-item'>Apply</button>
         </div>
-
-        
       </form>
     </div>
   );
@@ -268,7 +277,7 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
   }, []);
   console.log(states);
   return (
-    <div className="">
+    <div className=''>
       <form onSubmit={handleSubmit} className='gap-3'>
         <div className='join join-horizontal px-1'>
           {states["states"].map((state) => (
@@ -301,8 +310,6 @@ const ChangeStatProject = ({ currentValue, states, priorities }) => {
           ))}
           <button className='join-item btn btn-secondary'>Apply</button>
         </div>
-
-        
       </form>
     </div>
   );
