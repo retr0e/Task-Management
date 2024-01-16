@@ -87,6 +87,7 @@ export const getAllEmployees = async () => {
     `SELECT Id, Imie, Nazwisko, Stanowisko FROM Pracownicy;`
   );
 
+  // ADD TEAM CHECK IF PERSON IS PRESENT IN TEAM THE VALUE SHOULD BE
   const employeesWithChecked = employees[0].map((person) => ({
     ...person,
     isChecked: false,

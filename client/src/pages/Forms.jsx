@@ -315,14 +315,12 @@ export const Add_Task_Form = ({ projectId }) => {
 
           {/*<===================Task-Description=================>*/}
           <div>
-            
             <textarea
               id='description'
               className='textarea textarea-bordered w-full max-w-xs'
               placeholder='Decriprion'
               onChange={handleChange}
             />
-            
           </div>
           <div className='grid grid-cols-2 gap-1 '>
             {/*<===================Task-Start-Date==================>*/}
@@ -524,33 +522,58 @@ export const Team_Form_X = () => {
   );
 };
 
-export const DesChangeForm = ({ forWhat}) =>{
-  const [text, setText] = useState('');
+export const DesChangeForm = ({ forWhat, elementId }) => {
+  const [text, setText] = useState("");
 
   const countCharacters = () => {
-
-    return text.length ;
+    return text.length;
   };
 
   const handleTextAreaChange = (event) => {
     setText(event.target.value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let res;
+
+    if (forWhat === "project") {
+      res = await fetch(`/api/v1/projects/${elementId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+    } else {
+      res = await fetch(`/api/v1/task/${elementId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+    }
+
+    // const responseData = await res.json();
+  };
+
   return (
     <div className='strokeme2'>
       <form className='' onSubmit={handleSubmit}>
-        <label className="form-control">
+        <label className='form-control'>
           <h2 className='text-center font-bold text-lg'>Edit description</h2>
-          <hr className='py-2 border-none'/>
-          <textarea 
-            className="textarea textarea-bordered h-24" 
-            placeholder="Bio"
+          <hr className='py-2 border-none' />
+          <textarea
+            className='textarea textarea-bordered h-24'
+            placeholder='Bio'
             value={text}
             onChange={handleTextAreaChange}
           ></textarea>
-          <div className="label">
-            <span className="label-text-alt"></span>
-            <span className="label-text-alt strokeme2">
+          <div className='label'>
+            <span className='label-text-alt'></span>
+            <span className='label-text-alt strokeme2'>
               {countCharacters()}/400
             </span>
           </div>
@@ -558,7 +581,7 @@ export const DesChangeForm = ({ forWhat}) =>{
         <button className='btn btn-secondary w-full'>jh</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default Add_Project_Form;

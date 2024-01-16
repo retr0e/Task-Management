@@ -52,3 +52,7 @@ export const editTask = async (req, res) => {
     });
   }
 };
+
+export const changeDescription = (req, res) => {
+  console.log("pomidor");
+};
