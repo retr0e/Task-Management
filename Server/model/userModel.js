@@ -87,3 +87,23 @@ export const getAllEmployees = async () => {
   `);
   return employees[0];
 };
+
+export const getTeams = async (accountId) => {
+  let userId = await pool.query(
+    `SELECT Id_pracownika FROM Konta WHERE Id_konta='${accountId}'`
+  );
+
+  userId = userId[0][0]["Id_pracownika"];
+
+  const teams = await pool.query(
+    `SELECT DISTINCT Nr_zespolu FROM Zespoly WHERE Czlonek='${userId}'`
+  );
+
+  let result = [];
+
+  for (const obj of teams[0]) {
+    result.push(obj["Nr_zespolu"]);
+  }
+
+  return result;
+};
