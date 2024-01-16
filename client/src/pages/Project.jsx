@@ -16,14 +16,14 @@ const Contents = ({ projectData, privilege, states }) => {
           <hr className='border-t-1 py-2 border-slate-600/75' />
           {projectData["info"]["Opis"]}
         </div>
-        <div className='card card-body bg-slate-200/80 text-slate-600  h-auto'>
+        <div className='card card-body bg-slate-200/80 text-slate-600 h-60 '>
           <p className='text-center text-slate-900 font-bold text-xl'>
             Team {peopleWorking[0]["Nr_zespolu"]}
           </p>
           <hr className='border-t-1 py-2 border-slate-600/75' />
-          <ul>
+          <ul className="overflow-hidden hover:overflow-auto snap-y ">
             {peopleWorking.map((padawan) => (
-              <li>
+              <li className="snap-start">
                 <p className='text-right'>
                   {padawan["Imie"]} {padawan["Nazwisko"]}{" "}
                 </p>

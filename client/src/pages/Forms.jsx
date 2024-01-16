@@ -453,7 +453,7 @@ export const Team_Form_X = () => {
 
   return (
     <>
-      <div className='card bg-slate-600/70'>
+      <div className='card'>
         <form
           className='p-3 max-w-lg mx-auto'
           action=''
@@ -479,7 +479,7 @@ export const Team_Form_X = () => {
           </select>
           <hr className='py-2 border-none' />
 
-          <table className='table'>
+          <table className='table '>
             {/*Kolumny tytulowe*/}
             <tr>
               <th>
@@ -495,7 +495,7 @@ export const Team_Form_X = () => {
             </tr>
             {/*Rzedy*/}
             {Object.values(personData).map((person) => (
-              <tr key={person.Id}>
+              <tr key={person.Id} className="even:bg-gray-500/20">
                 <td>
                   <input
                     id={person["Id"]}
@@ -512,7 +512,7 @@ export const Team_Form_X = () => {
               </tr>
             ))}
           </table>
-          <button className='btn btn-primary'>Name apply</button>
+          <button className='btn btn-primary w-full'>Name apply</button>
         </form>
       </div>
     </>
