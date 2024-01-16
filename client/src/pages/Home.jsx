@@ -158,7 +158,7 @@ const Home = ({ acLvl }) => {
 
       {/*Displays modal only when acces level is 2 or lower*/}
       {acLvl <= 2 &&(
-      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} />
+      <Modal element={<Add_Project_Form />} btn_Name={<AddProject />} modal_ID={'add project'}/>
       )}
     </div>
   );

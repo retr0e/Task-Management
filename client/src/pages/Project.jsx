@@ -41,7 +41,19 @@ const Contents = ({ projectData, privilege, states }) => {
 
             <div>
             <hr className="border-t-1 py-2 border-slate-600/75"/>
+            <div className="grid grid-cols-3">  
+            <div className="colspan-2">
               <ChangeStat currentValue={task} states={states} />
+              </div>   
+            <div className=""></div>      
+                
+                <Modal 
+                  modal_ID={task["Nazwa_zadania"]} 
+                  btn_Name={'Edit Description'} 
+                  btn_Style={'item-join btn btn-secondary'}
+                  element={<DesChangeForm/>}/>
+              
+                </div>
             </div>
           </li>
         ))}
