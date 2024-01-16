@@ -21,12 +21,7 @@ export default {
     themes: [
    
       'business',
-      'retro',
-      'valentine',
-      'lofi',
-      'dark',
-      'emerald',
-      'fantasy',
+
       
     ],
   },

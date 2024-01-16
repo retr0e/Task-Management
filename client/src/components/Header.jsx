@@ -25,11 +25,13 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                   <span className='text-color1'>Home</span>
                 </li>
               </Link>
+              {privilege <=3 &&(
               <Link to='/project'>
                 <li className=''>
                   <span className='text-color1'>Projects</span>
                 </li>
               </Link>
+              )}
               {privilege === 1 && ( // Check if privilege is 1
                 <>
                 <Link to='/sign-up'>
@@ -44,7 +46,7 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
               </Link>
               </>
               )}
-              {privilege >= 2 &&(
+              {privilege <= 2 &&(
                 
                 <Modal
                   element={<Team_Form_X/>}
@@ -54,7 +56,7 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                 />
                 
               )}
-              <Link to='/account'>
+              <Link to='/profile'>
                 <li className=''>
                   <span className='text-color1'>Profile</span>
                 </li>

@@ -89,9 +89,12 @@ export default function App() {
         {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
 
         <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
+          
           <Route 
-            path='/profile/:profile_id' 
-            element={<Profile />} /> 
+            path='/profile' 
+            element={<Profile privilege={whichPrivilege}/>} /> 
+          { whichPrivilege <= 3 && (
+            <>
           <Route
             path='/projects/:project_id'
             element={<Project privilege={whichPrivilege} />}
@@ -100,6 +103,8 @@ export default function App() {
             path='/project'
             element={<ProjectList />}
           />
+          </>
+          )}
         </Route>
 
         {/*Catch all failed links */}

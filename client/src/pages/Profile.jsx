@@ -2,9 +2,9 @@ import React, { useState , useEffect } from "react";
 import { Form, useParams, Link } from "react-router-dom";
 
 
-export default function Profile({ handleLogout }) {
+export default function Profile({privilege}) {
   const [ profile_info, setProfileInfo] = useState([]);
-
+  console.log(privilege);
   
   useEffect(() => {
     // Fetch data from the server
@@ -13,7 +13,7 @@ export default function Profile({ handleLogout }) {
         const response = await fetch("/api/v1/profile/profile_info");
         const data = await response.json();
         setProfileInfo(data.info);
-        console.log(data);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -21,24 +21,66 @@ export default function Profile({ handleLogout }) {
 
     fetchData();
   }, []);
-  
+  console.log(profile_info);
+  const {
+    Imie,
+    Nazwisko,
+    Stanowisko,
+    Nazwa,
+    Login,
+  }  = profile_info
   const params = useParams();
   return (
     <>
-      <div className='max-w-xs mx-auto'>
-        <div className='card card-body bg-slate-300/70'>
+      <div className='max-w-xl mx-auto'>
+        <div className='modal-box bg-slate-300/70'>
           <p className='text-3xl font-semibold text-center text-black'>Profile data</p>
           <hr className="border-t-1 py-2 border-slate-600/75"/>
-          <div className='grid grid-cols-2 grid-rows-7 gap-2'>
-            <div className='col-span-2 flex gap-2'>
-
+          <div className="  grid grid-cols-4 gap-2 text-slate-800 text-base font-semibold ">
+            <div className="col-span-2 ">
+              <p className="text-center">Imie</p>
             </div>
-            <div className='col-span-2 flex gap-2'>
-
+            <div className="col-span-2 ">
+              <p className="text-center">{Imie}</p>
             </div>
-
-            <button></button>
-
+            <div className="col-span-2 ">
+              <p className="text-center">Nazwisko</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">{Nazwisko}</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">Stanowisko</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">{Stanowisko}</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">Acces Level</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">{privilege}</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">Email</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">{Nazwa}</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">Login</p>
+            </div>
+            <div className="col-span-2 ">
+              <p className="text-center">{Login}</p>
+            </div>
+            <div className=" grid grid-cols-subgrid">
+              <form action="">
+                <div className="join">
+                  <input className="input input-bordered join-item" placeholder="New Password"/>
+                  <button className="btn join-item">Change Password</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
         
