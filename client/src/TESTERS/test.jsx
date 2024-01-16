@@ -4,35 +4,40 @@ import { Value } from 'sass';
 
 
 export default function Test({name , mode}) {
+  const [text, setText] = useState('');
+
+  const countCharacters = () => {
+
+    return text.length ;
+  };
+
+  const handleTextAreaChange = (event) => {
+    setText(event.target.value);
+  };
+
   return (
-    <>
-    <div className='card bg-slate-600/70'>
-      <form className='p-3 max-w-lg mx-auto' action="">
-        <p className='text-3xl text-center font-semibold my-7'>Form Name</p>
-      <table className='table'>
-        {/*tytuły kolumn*/}
-        <tr>
-          <th>
-            <input type="checkbox" className="toggle" />
-          </th>
-          <th>Pracownik</th>
-          <th>Stanowisko</th>
-        </tr>
-        {/*Pierwszy rząd*/}
-        <tr>
-          <td>
-            <input type="checkbox" className="toggle" />
-          </td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-        </tr>
-      </table>
-      <button className='btn btn-primary'>Name apply</button>
+    <div className='strokeme2'>
+      <form className='' onSubmit={handleSubmit}>
+        <label className="form-control">
+          <h2 className='text-center font-bold text-lg'>Edit description</h2>
+          <hr className='py-2 border-none'/>
+          <textarea 
+            className="textarea textarea-bordered h-24" 
+            placeholder="Bio"
+            value={text}
+            onChange={handleTextAreaChange}
+          ></textarea>
+          <div className="label">
+            <span className="label-text-alt"></span>
+            <span className="label-text-alt strokeme2">
+              {countCharacters()}/400
+            </span>
+          </div>
+        </label>
+        <button className='btn btn-secondary w-full'>jh</button>
       </form>
     </div>
-      
-    </>
-  )
+  );
 }
 
 

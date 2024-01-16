@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Modal from "./modal";
+import { DesChangeForm, Team_Form_X } from "../pages/Forms";
 
 const Header = ({ isAuthenticated, handleLogout, privilege }) => {
   return (
@@ -42,6 +44,16 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
               </Link>
               </>
               )}
+              {privilege >= 2 &&(
+                
+                <Modal
+                  element={<Team_Form_X/>}
+                  btn_Name={'Manage Teams'}
+                  modal_ID={'Manage Teams'}
+                  btn_Style={'text-color1'}
+                />
+                
+              )}
               <Link to='/account'>
                 <li className=''>
                   <span className='text-color1'>Profile</span>
@@ -67,13 +79,13 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
 export const Footer = () => {
   return(
     <div className="p-1">
-      <div className="badge bg-green-600"></div>
-      <div className="badge bg-yellow-500"></div>
-      <div className="badge bg-red-600"></div>
-      <div className="badge bg-sky-500"></div>
-      <div className="badge bg-gray-500"></div>
-      <div className="badge bg-blue-700"></div>
-      <div className="badge bg-pink-700"></div>
+      <div  value="business"   className="checkbox theme-controller badge bg-green-600"> </div>
+      <div  value="retro"      className="checkbox theme-controller badge bg-yellow-500"></div>
+      <div  value="valentine"  className="checkbox theme-controller badge bg-red-600">   </div>
+      <div  value="lofi"       className="checkbox theme-controller badge bg-sky-500">   </div>
+      <div  value="dark"       className="checkbox theme-controller badge bg-gray-500">  </div>
+      <div  value="emerald"    className="checkbox theme-controller badge bg-blue-700">  </div>
+      <div  value="fantasy"    className="checkbox theme-controller badge bg-pink-700">  </div>
     </div>
   );
 }

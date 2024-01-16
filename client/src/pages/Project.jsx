@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Form, useParams } from "react-router-dom";
-import { Add_Task_Form } from "./Forms";
+import { Add_Task_Form, DesChangeForm } from "./Forms";
 import Modal from "../components/modal";
 
 const Contents = ({ projectData, privilege, states }) => {
@@ -72,11 +72,18 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
           priorities={priorities}
         />
       </div>
-      <div className='navbar-end w-1/4'>
+      <div className='navbar-end w-1/4 join'>
         <Modal
           element={<Add_Task_Form projectId={params["project_id"]} />}
           btn_Name={"Dodaj Zadanie"}
-          btn_Style={"btn btn-secondary "}
+          btn_Style={"btn btn-secondary join-item"}
+          modal_ID={'taskform'}
+        />
+        <Modal
+          element={<DesChangeForm/>}
+          btn_Name={"Edit Description"}
+          btn_Style={"btn btn-secondary join-item"}
+          modal_ID={'decriptionform'}
         />
       </div>
     </div>
