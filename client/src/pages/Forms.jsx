@@ -315,16 +315,19 @@ export const Add_Task_Form = ({ projectId }) => {
           <hr className='py-2 border-none' />
 
           {/*<===================Task-Description=================>*/}
-          <textarea
-            id='description'
-            className='textarea textarea-bordered w-full max-w-xs'
-            placeholder='Decriprion'
-            onChange={handleChange}
-          />
-
-          <div className='grid grid-cols-2 gap-1'>
+          <div>
+            
+            <textarea
+              id='description'
+              className='textarea textarea-bordered w-full max-w-xs'
+              placeholder='Decriprion'
+              onChange={handleChange}
+            />
+            
+          </div>
+          <div className='grid grid-cols-2 gap-1 '>
             {/*<===================Task-Start-Date==================>*/}
-            <p>Start Date</p>
+            <p cla>Start Date</p>
             <input
               type='date'
               id='startDate'
@@ -518,5 +521,42 @@ export const Team_Form_X = () => {
     </>
   );
 };
+
+export const DesChangeForm = ({ forWhat}) =>{
+  const [text, setText] = useState('');
+
+  const countCharacters = () => {
+
+    return text.length ;
+  };
+
+  const handleTextAreaChange = (event) => {
+    setText(event.target.value);
+  };
+
+  return (
+    <div className='strokeme2'>
+      <form className='' onSubmit={handleSubmit}>
+        <label className="form-control">
+          <h2 className='text-center font-bold text-lg'>Edit description</h2>
+          <hr className='py-2 border-none'/>
+          <textarea 
+            className="textarea textarea-bordered h-24" 
+            placeholder="Bio"
+            value={text}
+            onChange={handleTextAreaChange}
+          ></textarea>
+          <div className="label">
+            <span className="label-text-alt"></span>
+            <span className="label-text-alt strokeme2">
+              {countCharacters()}/400
+            </span>
+          </div>
+        </label>
+        <button className='btn btn-secondary w-full'>jh</button>
+      </form>
+    </div>
+  )
+}
 
 export default Add_Project_Form;

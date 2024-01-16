@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Footer } from "../components/Header";
 
 
 export default function About() {
   return (
+    <>
     <div className="hero min-h-screen bg-meme">
       <div className="hero-content text-center strokeme2 bg-gray-800 card bg-opacity-50">
         <div className="max-w-md">
@@ -19,6 +21,9 @@ export default function About() {
             </Link>
         </div>
       </div>
+      
     </div>
+    <Footer/>
+    </>
   );
 }

@@ -24,7 +24,7 @@ const Card = ({ project }) => {
     <div className=''>
       <Link to={`/projects/${ID}`}>
         <div className='p-1'>
-          <div className='card w-96 bg-gray-500/70 shadow-xl '>
+          <div className='card w-96 bg-slate-200/80 text-slate-900/70 shadow-xl '>
             <div className='card-body'>
               <h2 className='card-title'>{ProjectName}</h2>
               <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function Header({ isAuthenticated, handleLogout, privilege }) {
+const Header = ({ isAuthenticated, handleLogout, privilege }) => {
   return (
     <header className='navbar bg-color4 bg-opacity-80 shadow-lg'>
       <div className='navbar-start'>
@@ -63,3 +63,18 @@ export default function Header({ isAuthenticated, handleLogout, privilege }) {
     </header>
   );
 }
+
+export const Footer = () => {
+  return(
+    <div className="p-1">
+      <div className="badge bg-green-600"></div>
+      <div className="badge bg-yellow-500"></div>
+      <div className="badge bg-red-600"></div>
+      <div className="badge bg-sky-500"></div>
+      <div className="badge bg-gray-500"></div>
+      <div className="badge bg-blue-700"></div>
+      <div className="badge bg-pink-700"></div>
+    </div>
+  );
+}
+export default Header;
