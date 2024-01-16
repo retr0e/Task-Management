@@ -362,6 +362,7 @@ export const Team_Form_X = () => {
       try {
         const data = await fetchDataFromApis(0);
         setPersonData(data["employess"]);
+        data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
         setTeamData(data["teams"]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
@@ -468,9 +469,11 @@ export const Team_Form_X = () => {
             <option disabled selected>
               Select Team
             </option>
-            {teamData.map((team) => (
+            {teamData.map((team, index) => (
               <option key={team} value={team}>
-                Team {team}
+                {index === teamData.length - 1
+                  ? `New Team ${team}`
+                  : `Team ${team}`}
               </option>
             ))}
           </select>

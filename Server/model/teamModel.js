@@ -66,7 +66,7 @@ export const checkPresence = async (people, teamId) => {
       // If person is new to the team
       if (people[i]["isChecked"]) {
         await pool.query(
-          `INSERT INTO Zespoly (Nr_zespolu, Id_projektu, Czlonek) VALUES (${teamId}, ${teamId}, ${people[i]["Id"]} )`
+          `INSERT INTO Zespoly (Nr_zespolu, Czlonek) VALUES (${teamId}, ${people[i]["Id"]} )`
         );
         // people[i]["isChecked"] = true;
       }
