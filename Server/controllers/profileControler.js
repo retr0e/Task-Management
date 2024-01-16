@@ -87,7 +87,7 @@ export const profileInfo = async (req, res) => {
       process.env.JWT_SECRET
     ).id;
 
-    const userInfo = getProfileInfo(userId);
+    const userInfo = await getProfileInfo(userId);
     res.status(200).json({
       status: "success",
       info: userInfo,
