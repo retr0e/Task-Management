@@ -1,7 +1,24 @@
-import { checkPeopleInTeam } from "./../model/teamModel.js";
+import { checkPeopleInTeam, checkPresence } from "./../model/teamModel.js";
 
-export const addPeopleToTeam = (req, res) => {
-  console.log(req.body);
+export const addPeopleToTeam = async (req, res) => {
+  try {
+    const updatedPersonsData = await checkPresence(
+      req.body["people"],
+      Number(req.body["teamId"])
+    );
+
+    // console.log(updatedPersonsData);
+    res.status(200).json({
+      status: "success",
+      people: updatedPersonsData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      error: error,
+    });
+  }
 };
 
 export const selectTeamForPeople = async (req, res) => {

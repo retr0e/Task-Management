@@ -383,10 +383,10 @@ export const Team_Form_X = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const selected = personData.filter((person) => person.isChecked);
+      // const selected = personData.filter((person) => person.isChecked);
 
       const peopleForSave = {
-        people: selected,
+        people: personData,
         teamId: selectedTeam,
       };
 
@@ -399,6 +399,8 @@ export const Team_Form_X = () => {
       });
 
       const data = await res.json();
+      setPersonData(data["people"]);
+
       if (data.success === false) {
         setError(data.message);
       } else {

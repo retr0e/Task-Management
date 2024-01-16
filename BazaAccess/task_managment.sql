@@ -110,6 +110,8 @@ INSERT INTO `Zespoly` (Nr_zespolu, Czlonek) VALUES
 (2, 8),
 (3, 9);
 
+INSERT INTO Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia) VALUES (NULL, 'Admin', 'admin.admin@gmail.com', '$2a$10$0pyG5jI3tg/MQb60Nb4RHe7zfuxApLIifyzyiIpPNAQm//bUBynNS', 1);
+
 -- Dodaj rekordy do tabeli Pracownicy
 INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, PESEL) VALUES
 ('Jan', 'Kowalski', 'Programista', '12345674563'),
@@ -133,25 +135,25 @@ INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_s
 ('Projekt A', 1, 1, 1, '', '2023-01-01', '2023-03-31'),
 ('Projekt B', 2, 2, 2, '', '2023-02-01', '2023-04-30'),
 ('Projekt C', 3, 3, 3, '', '2023-03-01', '2023-05-31'),
-('Projekt D', 4, 1, 1, '', '2023-04-01', '2023-06-30'),
-('Projekt E', 5, 2, 2, '', '2023-05-01', '2023-07-31'),
-('Projekt F', 6, 3, 3, '', '2023-06-01', '2023-08-31'),
-('Projekt G', 7, 1, 1, '', '2023-07-01', '2023-09-30'),
-('Projekt H', 8, 2, 2, '', '2023-08-01', '2023-10-31'),
-('Projekt I', 9, 3, 3, '', '2023-09-01', '2023-11-30');
+('Projekt D', 1, 1, 1, '', '2023-04-01', '2023-06-30'),
+('Projekt E', 2, 2, 2, '', '2023-05-01', '2023-07-31'),
+('Projekt F', 3, 3, 3, '', '2023-06-01', '2023-08-31'),
+('Projekt G', 1, 1, 1, '', '2023-07-01', '2023-09-30'),
+('Projekt H', 2, 2, 2, '', '2023-08-01', '2023-10-31'),
+('Projekt I', 3, 3, 3, '', '2023-09-01', '2023-11-30');
 
 INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `Description`, `Data_start`, `Data_koniec`) VALUES
-('Zadanie 1', 1, 2, 3, 'cokolwiek', '2024-01-15', '2024-01-20'),
-('Zadanie 2', 1, 1, 2, 'cokolwiek', '2024-02-01', '2024-02-10'),
-('Zadanie 3', 2, 3, 1, 'cokolwiek', '2024-03-10', '2024-03-20'),
-('Zadanie 4', 2, 2, 3, 'cokolwiek', '2024-04-05', '2024-04-15'),
-('Zadanie 5', 3, 1, 2, 'cokolwiek', '2024-05-15', '2024-05-25');
+('Zadanie 1', 1, 1, 1, 'cokolwiek', '2024-01-15', '2024-01-20'),
+('Zadanie 2', 1, 1, 4, 'cokolwiek', '2024-02-01', '2024-02-10'),
+('Zadanie 3', 2, 2, 2, 'cokolwiek', '2024-03-10', '2024-03-20'),
+('Zadanie 4', 2, 2, 6, 'cokolwiek', '2024-04-05', '2024-04-15'),
+('Zadanie 5', 3, 3, 3, 'cokolwiek', '2024-05-15', '2024-05-25');
 
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status` (`Id`);
-ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_zespolu`) REFERENCES `Zespoly` (`Id`);
+ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Nr_zespolu`) REFERENCES `Projekty` (`ID`);
 ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy` (`Id`); 
 ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
