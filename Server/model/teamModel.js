@@ -1,5 +1,6 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
+import { getAllTeams } from "./overallModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -29,6 +30,23 @@ export const checkPeopleInTeam = async (people, teamId) => {
 };
 
 export const checkPresence = async (people, teamId) => {
+  const existingTeams = await getAllTeams();
+  let allUnchecked = true;
+
+  for (const obj in people) {
+    if (obj["isChecked"] == true) {
+      allUnchecked = false;
+      break;
+    }
+  }
+
+  // Below will be handle situation where nobody is toggled
+  if (allUnchecked) {
+    if (!existingTeams.includes(teamId)) {
+      return people;
+    }
+  }
+
   for (let i = 0; i < people.length; i++) {
     const presence = await pool.query(
       `SELECT Zespoly.Nr_zespolu FROM Zespoly WHERE Czlonek='${people[i]["Id"]}' AND Nr_zespolu='${teamId}'`
@@ -68,7 +86,6 @@ export const checkPresence = async (people, teamId) => {
         await pool.query(
           `INSERT INTO Zespoly (Nr_zespolu, Czlonek) VALUES (${teamId}, ${people[i]["Id"]} )`
         );
-        // people[i]["isChecked"] = true;
       }
     }
   }

@@ -62,15 +62,11 @@ const Add_Project_Form = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "team") {
-      setSelectedTeam(e.target.value);
-    } else if (e.target.id === "priority") {
-      setSelectedPriority(e.target.value);
-    }
-
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
+      team: e.target.id == "team" ? e.target.value : selectedTeam,
+      priority: e.target.id == "priority" ? e.target.value : selectedPriority,
     });
   };
 
@@ -105,12 +101,15 @@ const Add_Project_Form = () => {
     const fetchData = async () => {
       try {
         const data = await fetchDataFromApis(0);
+        data.teams.unshift(0);
         setTeamsData(data.teams);
         data.priorities.pop();
         setPriData(data.priorities);
+
+        setSelectedTeam(data.teams[0]);
+        setSelectedPriority(data.priorities[0]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
-        // Handle the error, show a message, etc.
       }
     };
 
@@ -148,7 +147,7 @@ const Add_Project_Form = () => {
             </option>
             {teamsData.map((team) => (
               <option key={team} value={team}>
-                {team}
+                {team == 0 ? "Nieprzypisany" : `Team ${team}`}
               </option>
             ))}
           </select>
@@ -366,6 +365,9 @@ export const Team_Form_X = () => {
         const data = await fetchDataFromApis(0);
         setPersonData(data["employess"]);
         data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
+        if (data["teams"].includes(0)) {
+          data["teams"].shift();
+        }
         setTeamData(data["teams"]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
