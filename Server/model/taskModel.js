@@ -46,3 +46,9 @@ export const patchTask = async (newValues) => {
     `UPDATE Zadania SET Id_statusu=${stateCode[0][0]["Id"]} WHERE Id=${newValues["id"]}`
   );
 };
+
+export const putDescription = async (description, taskId) => {
+  await pool.query(
+    `UPDATE Zadania SET Description='${description}' WHERE Id='${taskId}'`
+  );
+};

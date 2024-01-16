@@ -547,7 +547,7 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text, elementId }),
       });
     }
   };

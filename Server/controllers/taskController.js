@@ -3,6 +3,7 @@ import {
   getTaskName,
   insertTask,
   patchTask,
+  putDescription,
 } from "../model/taskModel.js";
 import dotenv from "dotenv";
 
@@ -31,6 +32,9 @@ export const addTask = async (req, res) => {
   };
 
   insertTask(task);
+  res.status(200).json({
+    status: "success",
+  });
 };
 
 export const editTask = async (req, res) => {
@@ -54,5 +58,18 @@ export const editTask = async (req, res) => {
 };
 
 export const changeDescription = (req, res) => {
-  console.log("pomidor");
+  console.log(req.body);
+  try {
+    putDescription(req.body["text"], req.body["elementId"]);
+    res.status(200).json({
+      status: "success",
+      message: "Description correctly changed",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      message: "Task not modified. Server failed to perform this request",
+    });
+  }
 };
