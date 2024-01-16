@@ -150,13 +150,19 @@ INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `D
 ('Zadanie 5', 3, 3, 3, 'cokolwiek', '2024-05-15', '2024-05-25');
 
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
+
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
 ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status` (`Id`);
+
 ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Nr_zespolu`) REFERENCES `Projekty` (`ID`);
 ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy` (`Id`); 
+
 ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
+
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
 ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
+
 ALTER TABLE `Priorytety` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
 ALTER TABLE `Status` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
+
