@@ -91,3 +91,7 @@ export const changeProjectStatePriority = (req, res) => {
     });
   }
 };
+
+export const changeDescription = (req, res) => {
+  console.log("pomidor");
+};
