@@ -1,28 +1,43 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { Form, useParams, Link } from "react-router-dom";
 
 
 export default function Profile({ handleLogout }) {
+  const [ profile_info, setProfileInfo] = useState([]);
+
+  
+  useEffect(() => {
+    // Fetch data from the server
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/v1/profile/profile_info");
+        const data = await response.json();
+        setProfileInfo(data.info);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   const params = useParams();
   return (
     <>
       <div className='max-w-xs mx-auto'>
         <div className='card card-body bg-slate-300/70'>
-          <p className='text-3xl font-semibold text-center'>Profile data</p>
+          <p className='text-3xl font-semibold text-center text-black'>Profile data</p>
           <hr className="border-t-1 py-2 border-slate-600/75"/>
           <div className='grid grid-cols-2 grid-rows-7 gap-2'>
             <div className='col-span-2 flex gap-2'>
-              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Name'/>
-              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Surname'/>
+
             </div>
             <div className='col-span-2 flex gap-2'>
-              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Position'/>
-              <input className='input input-bordered w-1/2 max-w-base'  placeholder='User Access Level'/>
+
             </div>
-            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Login'/>
-            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Email'/>
-            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Password'/>
-            <input className='col-span-2 input input-bordered w-full max-w-base'  placeholder='User Confirm Password'/>
+
+            <button></button>
 
           </div>
         </div>

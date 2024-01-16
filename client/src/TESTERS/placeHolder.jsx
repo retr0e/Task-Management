@@ -8,6 +8,6 @@ import Modal from "../components/modal";
 
 const Component = () => {
  
-  return <Modal element={<DesChangeForm/>} btn_Name={'Name'}/>;
+  return <Profile/>;
 };
 export default Component;
