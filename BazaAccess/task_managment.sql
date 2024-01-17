@@ -98,56 +98,15 @@ INSERT INTO `PoziomDostepu` (`Uprawnienia`) VALUES
 ("Pracownik"),
 ("Obserwujacy");
 
--- Dodaj rekordy do tabeli Zespoly
-INSERT INTO `Zespoly` (Nr_zespolu, Czlonek) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(1, 4),
-(2, 5),
-(3, 6),
-(1, 7),
-(2, 8),
-(3, 9);
-
-INSERT INTO Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia) VALUES (NULL, 'Admin', 'admin.admin@gmail.com', '$2a$10$0pyG5jI3tg/MQb60Nb4RHe7zfuxApLIifyzyiIpPNAQm//bUBynNS', 1);
-
--- Dodaj rekordy do tabeli Pracownicy
-INSERT INTO `Pracownicy` (Imie, Nazwisko, Stanowisko, PESEL) VALUES
-('Jan', 'Kowalski', 'Programista', '12345674563'),
-('Anna', 'Nowak', 'Analityk', '52341351352'),
-('Piotr', 'Wiśniewski', 'Tester', '93758463720'),
-('Alicja', 'Dąbrowska', 'Programista', '10275948372'),
-('Mateusz', 'Lewandowski', 'Analityk', '74928374651'),
-('Karolina', 'Kowalczyk', 'Tester', '91023421234'),
-('Marcin', 'Jankowski', 'Programista', '12361245321'),
-('Katarzyna', 'Szymańska', 'Analityk', '75840395748'),
-('Michał', 'Woźniak', 'Tester', '87584321239');
+-- Haslo admin
+INSERT INTO Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia) VALUES (1, 'Admin', 'admin.admin@gmail.com', '$2a$10$0pyG5jI3tg/MQb60Nb4RHe7zfuxApLIifyzyiIpPNAQm//bUBynNS', 1);
+INSERT INTO Pracownicy (Imie, Nazwisko, Stanowisko, PESEL) VALUES ('Patryk', 'Szymura', 'Admin', '90124576121');
 
 -- Dodaj rekordy do tabeli Status
 INSERT INTO Status (Nazwa, Id_colorCode) VALUES
 ('Nowy', 5),
 ('W trakcie', 6),
 ('Zakończony', 7);
-
--- Dodaj rekordy do tabeli Projekty
-INSERT INTO Projekty (Nazwa, Id_zespolu, Id_priorytetu, Id_statusu, Opis, Data_start, Data_koniec) VALUES
-('Projekt A', 1, 1, 1, '', '2023-01-01', '2023-03-31'),
-('Projekt B', 2, 2, 2, '', '2023-02-01', '2023-04-30'),
-('Projekt C', 3, 3, 3, '', '2023-03-01', '2023-05-31'),
-('Projekt D', 1, 1, 1, '', '2023-04-01', '2023-06-30'),
-('Projekt E', 2, 2, 2, '', '2023-05-01', '2023-07-31'),
-('Projekt F', 3, 3, 3, '', '2023-06-01', '2023-08-31'),
-('Projekt G', 1, 1, 1, '', '2023-07-01', '2023-09-30'),
-('Projekt H', 2, 2, 2, '', '2023-08-01', '2023-10-31'),
-('Projekt I', 3, 3, 3, '', '2023-09-01', '2023-11-30');
-
-INSERT INTO `Zadania` (`Nazwa`, `Id_projektu`, `Id_statusu`, `Id_pracownika`, `Description`, `Data_start`, `Data_koniec`) VALUES
-('Zadanie 1', 1, 1, 1, 'cokolwiek', '2024-01-15', '2024-01-20'),
-('Zadanie 2', 1, 1, 4, 'cokolwiek', '2024-02-01', '2024-02-10'),
-('Zadanie 3', 2, 2, 2, 'cokolwiek', '2024-03-10', '2024-03-20'),
-('Zadanie 4', 2, 2, 6, 'cokolwiek', '2024-04-05', '2024-04-15'),
-('Zadanie 5', 3, 3, 3, 'cokolwiek', '2024-05-15', '2024-05-25');
 
 ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
 
