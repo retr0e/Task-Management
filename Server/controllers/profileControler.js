@@ -3,7 +3,12 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bcryptjs from "bcryptjs";
-import { getProfileInfo, changePassword } from "../model/profileModel.js";
+import {
+  getProfileInfo,
+  changePassword,
+  fetchActiveAccounts,
+  deactivateAccount,
+} from "../model/profileModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -45,42 +50,6 @@ export const changeProfileName = async (req, res, next) => {
   }
 };
 
-// NOT TESTED!
-export const deleteUser = async (req, res, next) => {
-  const userId = jwt.verify(
-    req.cookies["access_token"],
-    process.env.JWT_SECRET
-  ).id;
-  const priv = jwt.verify(
-    req.cookies["privilege"],
-    process.env.JWT_SECRET
-  ).privilege;
-
-  // Admin can not delete himself
-  if (priv == 1) {
-    res.status(500).json({
-      success: false,
-      message: "Delete account can not be performed on admin!",
-    });
-    next();
-  }
-
-  try {
-    await pool.query(`DELETE FROM Konta WHERE Id_konta=${userId};`);
-    res.clearCookie("access_token");
-    res.status(204).json({
-      success: true,
-      message: "Deletion succesful",
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Delete account can not be performed!",
-    });
-    next(err);
-  }
-};
-
 export const profileInfo = async (req, res) => {
   try {
     const userId = jwt.verify(
@@ -102,7 +71,6 @@ export const profileInfo = async (req, res) => {
 };
 
 export const changeUserPassword = (req, res) => {
-  console.log(req.body);
   try {
     const userId = jwt.verify(
       req.cookies["access_token"],
@@ -118,6 +86,37 @@ export const changeUserPassword = (req, res) => {
     res.status(500).json({
       status: "failed",
       message: "Cannot perform a user password modification",
+    });
+  }
+};
+
+export const checkActive = async (req, res) => {
+  try {
+    const people = await fetchActiveAccounts(req.body["persons"]);
+    res.status(200).json({
+      status: "success",
+      people: people,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      message: "Cannot check accounts due to server error",
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    deactivateAccount(req.body["persons"]);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      message: "Cannot update accounts due to server error",
     });
   }
 };

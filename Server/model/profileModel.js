@@ -33,3 +33,31 @@ export const changePassword = async (hashed, userId) => {
     `UPDATE Konta SET Haslo='${hashed}' WHERE Id_konta='${userId}';`
   );
 };
+
+export const fetchActiveAccounts = async (people) => {
+  for (let i = 0; i < people.length; i++) {
+    let checkActivation = await pool.query(
+      `SELECT Aktywny FROM Konta WHERE Id_pracownika='${people[i]["Id"]}'`
+    );
+    checkActivation = checkActivation[0][0]["Aktywny"];
+
+    if (checkActivation == 1) {
+      people[i]["isActive"] = true;
+    } else {
+      people[i]["isActive"] = false;
+    }
+  }
+
+  return people;
+};
+
+export const deactivateAccount = async (people) => {
+  for (let i = 0; i < people.length; i++) {
+    console.log(people[i]["isActive"]);
+    if (!people[i]["isActive"]) {
+      await pool.query(
+        `UPDATE Konta SET Aktywny='0' WHERE Id_pracownika=${people[i]["Id"]}`
+      );
+    }
+  }
+};

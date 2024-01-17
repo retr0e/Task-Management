@@ -350,16 +350,11 @@ export const Team_Form_X = () => {
         const data = await fetchDataFromApis(0);
         setPersonData(data["employess"]);
 
-        console.log("Przed");
-        console.log(data["teams"]);
         if (data["teams"].length == 0) {
           data["teams"].push(1);
         } else {
           data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
         }
-        console.log("Po");
-        console.log(data["teams"]);
-        setTeamData(data["teams"]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
       }
@@ -519,9 +514,7 @@ export const Team_Form_X = () => {
 
 export const EditUsers = () => {
   const [personData, setPersonData] = useState([]);
-  const [teamData, setTeamData] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState();
-  const [allChecked, setAllChecked] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -529,55 +522,45 @@ export const EditUsers = () => {
     const fetchData = async () => {
       try {
         const data = await fetchDataFromApis(0);
-        setPersonData(data["employess"]);
-        data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
-        if (data["teams"].includes(0)) {
-          data["teams"].shift();
-        }
-        setTeamData(data["teams"]);
+        const employees = data["employess"].map((person) => ({
+          ...person,
+          isActive: isActive,
+        }));
+        setPersonData(employees);
       } catch (error) {
         console.error("Error fetching teams data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [isActive]);
 
   useEffect(() => {
     setPersonData((prevData) =>
-      prevData.map((person) => ({ ...person, isChecked: allChecked }))
+      prevData.map((person) => ({ ...person, isActive: isActive }))
     );
-  }, [allChecked]);
+  }, [isActive]);
 
   // useEffect(() => {}, [selectedTeam]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const objSend = {
+      persons: personData,
+      action: e.target.value,
+    };
+
+    await fetch("/api/v1/profile/delete_account", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(objSend),
+    });
+
     try {
       setLoading(true);
-      // const selected = personData.filter((person) => person.isChecked);
-
-      const peopleForSave = {
-        people: personData,
-        teamId: selectedTeam,
-      };
-
-      const res = await fetch("/api/v1/team/add_to_team", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(peopleForSave),
-      });
-
-      const data = await res.json();
-      setPersonData(data["people"]);
-
-      if (data.success === false) {
-        setError(data.message);
-      } else {
-        setError(null);
-      }
     } catch (error) {
       setError(error.message);
     } finally {
@@ -590,24 +573,18 @@ export const EditUsers = () => {
     setPersonData((prevData) =>
       prevData.map((person) =>
         person.Id == updatedId
-          ? { ...person, isChecked: !person.isChecked }
+          ? { ...person, isActive: !person.isActive }
           : person
       )
     );
   };
 
-  const handleChangeAll = (e) => {
-    setAllChecked(!allChecked);
-  };
-
   const handleSelect = async (e) => {
-    setSelectedTeam(e.target.value);
-
     const objSend = {
       persons: personData,
-      teamId: e.target.value,
+      action: e.target.value,
     };
-    const res = await fetch("/api/v1/team/check_presence", {
+    const res = await fetch("/api/v1/profile/delete_account", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -620,28 +597,26 @@ export const EditUsers = () => {
     setPersonData(data["people"]);
   };
 
-  return(
+  return (
     <>
       <div className=''>
-        <form
-          className=''
-          action=''
-          onSubmit={handleSubmit}
-        >
-          <p className='text-3xl text-center font-semibold my-7'>Manage Teams</p>
-          <div className="grid grid-cols-2">
-            
-          
-          <select
-            id='person'
-            className='select select-bordered col-span-2'
-            onChange={handleSelect}
-          >
-            <option disabled selected>Active Accounts</option>
-            <option>Disabled Accounts</option>
-            <option>All Accounts</option>
-
-          </select>
+        <form className='' action='' onSubmit={handleSubmit}>
+          <p className='text-3xl text-center font-semibold my-7'>
+            Manage Accounts
+          </p>
+          <div className='grid grid-cols-2'>
+            <select
+              id='person'
+              className='select select-bordered col-span-2'
+              onChange={handleSelect}
+            >
+              <option disabled selected>
+                Select type of Account
+              </option>
+              <option>All Accounts</option>
+              <option>Disabled Accounts</option>
+              <option>Active Accounts</option>
+            </select>
           </div>
           <hr className='py-2 border-none' />
 
@@ -653,44 +628,51 @@ export const EditUsers = () => {
                 <th>Stanowisko</th>
                 <th>
                   <p>Account Off/On</p>
-                  <input
-                    type='checkbox'
-                    className='toggle'
-                    onChange={handleChangeAll}
-                    checked={allChecked}
-                  />
                 </th>
               </tr>
             </thead>
-            <tbody className="overflow-y-scroll">
-            {/*Rzedy*/}
-            {Object.values(personData).map((person) => (
-              <tr key={person.Id} className='odd:bg-gray-500/20'>
+            <tbody className='overflow-y-scroll'>
+              {/* Rzedy */}
+              {Object.values(personData).map((person) => {
+                // Check the selected option
+                const selectedOption = document.getElementById("person").value;
 
-                <td>
-                  {person["Imie"]} {person["Nazwisko"]}
-                </td>
-                <td>{person["Stanowisko"]}</td>
-                <td>
-                  <input
-                    id={person["Id"]}
-                    type='checkbox'
-                    className='toggle'
-                    onChange={handleChange}
-                    checked={person.isChecked || false}
-                  />
-                </td>
-              </tr>
-            ))}
+                // Conditionally render persons based on the selected option
+                if (
+                  (selectedOption === "Disabled Accounts" &&
+                    !person.isActive) ||
+                  selectedOption === "All Accounts" ||
+                  (selectedOption === "Active Accounts" && person.isActive)
+                ) {
+                  return (
+                    <tr key={person.Id} className='odd:bg-gray-500/20'>
+                      <td>
+                        {person["Imie"]} {person["Nazwisko"]}
+                      </td>
+                      <td>{person["Stanowisko"]}</td>
+                      <td>
+                        <input
+                          id={person["Id"]}
+                          type='checkbox'
+                          className='toggle'
+                          onChange={handleChange}
+                          checked={person.isActive || false}
+                        />
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </tbody>
           </table>
-          <button className='btn btn-accent w-full'>Confirn Changes</button>
+          <button className='btn btn-accent w-full'>Confirm changes</button>
         </form>
       </div>
     </>
   );
 };
-
 
 export const DesChangeForm = ({ forWhat, elementId }) => {
   const [text, setText] = useState("");
