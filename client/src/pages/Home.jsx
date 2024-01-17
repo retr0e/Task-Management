@@ -155,7 +155,7 @@ const Home = ({ acLvl }) => {
 
   return (
     <div className='flex flex-wrap '>
-      {/*Displays modal only when acces level is 2 or lower*/}
+      {/* Displays modal only when access level is 2 or lower */}
       {acLvl <= 2 ? (
         <>
           <Modal
@@ -168,6 +168,8 @@ const Home = ({ acLvl }) => {
             <Card key={project.ID} project={project} />
           ))}
         </>
+      ) : acLvl === 4 ? (
+        projects.map((project) => <Card key={project.ID} project={project} />)
       ) : (
         <>
           {projects
