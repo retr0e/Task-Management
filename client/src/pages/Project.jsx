@@ -58,7 +58,7 @@ const Contents = ({ projectData, privilege, states }) => {
                     privilege={privilege}
                   />
                 </div>
-                <div className="">
+                <div className="text-white">
                 {privilege <= 2 ? (
                   <Modal
                     modal_ID={task["Nazwa_zadania"]}

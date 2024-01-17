@@ -5,7 +5,7 @@ import { DesChangeForm, Team_Form_X } from "../pages/Forms";
 
 const Header = ({ isAuthenticated, handleLogout, privilege }) => {
   return (
-    <header className='navbar bg-color4 bg-opacity-80 shadow-lg'>
+    <header className='navbar bg-color4 bg-opacity-80 shadow-lg h-16'>
       <div className='navbar-start'>
         {/*<======================Project-Name=====================>*/}
         <Link to='/'>

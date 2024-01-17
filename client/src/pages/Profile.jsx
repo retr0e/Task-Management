@@ -44,7 +44,7 @@ export default function Profile({privilege}) {
             ))}
             <Modal
               btn_Name={"Edit Profile"}
-              btn_Style={"btn btn-warning col-span-2"}
+              btn_Style={"btn btn-secondary col-span-2"}
               element={<EditProfile />}
               modal_ID={'Edit_Profile'}
             />
@@ -66,11 +66,13 @@ const EditProfile = () => {
   return(
     <div className="grid gap-y-5 p-5">
       <div className="card-bordered border-gray-300/25 p-2">
-        <p className="text-center text-slate-100 strokeme2">Change Name</p>
+        <h2 className='text-center font-bold text-lg'>Change Name</h2>
+        <hr className='py-2 border-none' />
         <ChangeName/>
       </div>
       <div className="card-bordered border-gray-300/25 p-2">
-        <p className="text-center text-slate-100 strokeme2">Change Password</p>
+        <h2 className='text-center font-bold text-lg'>Change Password</h2>
+        <hr className='py-2 border-none' />
         <ChangePassword/>
       </div>
     </div>

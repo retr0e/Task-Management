@@ -117,28 +117,29 @@ const Add_Project_Form = () => {
   }, []);
 
   return (
-    <div className='main card card-bordered  max-w-xs mx-auto'>
-      <div className='card-body'>
-        <p className='card-title'>Dodawanie Projektu</p>
+    <div className=''>
+      <div className=''>
+        <h2 className='text-center font-bold text-lg'>Add New Project</h2>
+        <hr className='py-2 border-none' />
 
-        <hr className='py-2' />
+        
         {/* Form-Main */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2">
           {/* Project-Name */}
           <input
             type='text'
             id='projectName'
             placeholder='ProjectName'
-            className='input input-bordered w-full max-w-xs'
+            className='input input-bordered col-span-4'
             required
             onChange={handleChange}
           />
-          <hr className='py-2 border-none' />
+          
 
           {/* Project-Team-Select */}
           <select
             id='team'
-            className='select select-bordered w-full max-w-xs'
+            className='select select-bordered col-span-2'
             value={selectedTeam}
             onChange={handleChange}
           >
@@ -151,12 +152,12 @@ const Add_Project_Form = () => {
               </option>
             ))}
           </select>
-          <hr className='py-2 border-none' />
+          
 
           {/* Project-Priority-Select */}
           <select
             id='priority'
-            className='select select-bordered w-full max-w-xs'
+            className='select select-bordered col-span-2'
             value={selectedPriority}
             onChange={handleChange}
           >
@@ -169,22 +170,23 @@ const Add_Project_Form = () => {
               </option>
             ))}
           </select>
-          <hr className='py-2 border-none' />
+          
 
           {/* Project-Text-Area */}
           <textarea
             id='description'
-            className='textarea textarea-bordered w-full max-w-xs'
+            className='textarea textarea-bordered col-span-4'
             placeholder='Decriprion'
             onChange={handleChange}
           />
 
-          <div className='grid grid-cols-2 gap-1'>
+          
             {/* Project-Date-Start */}
-            <p>Start Date</p>
+            <p className="text-right py-3">Start Date</p>
             <input
               id='startDate'
               type='date'
+              className="input input-bordered"
               max={maxDate}
               value={minDate}
               placeholder='Start Date'
@@ -193,9 +195,10 @@ const Add_Project_Form = () => {
             />
 
             {/* Project-Date-End */}
-            <p>End date</p>
+            <p className="text-right py-3">End date</p>
             <input
               id='endDate'
+              className="input input-bordered"
               type='date'
               placeholder='End Date'
               min={minDate}
@@ -203,13 +206,13 @@ const Add_Project_Form = () => {
               required
               onChange={handleMaxDateChange}
             />
-            <br />
-          </div>
+            
+          
 
           {/* Project-Submit */}
           <button
             type='submit'
-            className='btn btn-secondary  w-full max-w-xs text-slate-100'
+            className='btn btn-accent  col-span-4'
           >
             {loading ? "Loading..." : "Dodaj Projekt"}
           </button>
@@ -278,28 +281,26 @@ export const Add_Task_Form = ({ projectId }) => {
   }, []);
 
   return (
-    <div className='main card card-bordered  max-w-xs mx-auto'>
-      <div className='card-body'>
-        <p className='card-title'>Dodawanie Zadania</p>
-
-        <hr className='py-2' />
+    <div className=''>
+      <div >
+      <h2 className='text-center font-bold text-lg'>Add New Task</h2>
+      <hr className="py-2 border-none"/>
         {/*<======================Form-Main=====================>*/}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-2'>
           {/*<======================Task-Name=====================>*/}
           <input
             id='taskName'
             type='text'
             placeholder='Project Task'
-            className='input input-bordered w-full max-w-xs'
+            className='input input-bordered col-span-2'
             required
             onChange={handleChange}
           />
-          <hr className='py-2 border-none' />
 
           {/*<==================Task-Person-Select================>*/}
           <select
             id='person'
-            className='select select-bordered w-full max-w-xs'
+            className='select select-bordered col-span-2'
             onChange={handleChange}
           >
             <option disabled selected>
@@ -311,34 +312,34 @@ export const Add_Task_Form = ({ projectId }) => {
               </option>
             ))}
           </select>
-          <hr className='py-2 border-none' />
 
           {/*<===================Task-Description=================>*/}
-          <div>
+          
             <textarea
               id='description'
-              className='textarea textarea-bordered w-full max-w-xs'
+              className='textarea textarea-bordered col-span-2'
               placeholder='Decriprion'
               onChange={handleChange}
             />
-          </div>
-          <div className='grid grid-cols-2 gap-1 '>
+          
+          
             {/*<===================Task-Start-Date==================>*/}
-            <p cla>Start Date</p>
+            <p className="py-2">Start Date</p>
             <input
               type='date'
               id='startDate'
+              className="input input-bordered"
               placeholder='Start Date'
               required
               onChange={handleChange}
             />
-          </div>
-          <hr className='py-2 border-none' />
+          
+          
 
           {/*<===================Project-Submit===================>*/}
           <button
             type='submit'
-            className='btn btn-secondary  w-full max-w-xs text-slate-100'
+            className='btn btn-accent col-span-2 text-slate-100'
           >
             Dodaj Zadanie
           </button>
@@ -453,17 +454,19 @@ export const Team_Form_X = () => {
 
   return (
     <>
-      <div className='card'>
+      <div className=''>
         <form
-          className='p-3 max-w-lg mx-auto'
+          className=''
           action=''
           onSubmit={handleSubmit}
         >
-          <p className='text-3xl text-center font-semibold my-7'>Form Name</p>
-
+          <p className='text-3xl text-center font-semibold my-7'>Manage Teams</p>
+          <div className="grid grid-cols-2">
+            
+          
           <select
             id='person'
-            className='select select-bordered w-full max-w-xs'
+            className='select select-bordered col-span-2'
             onChange={handleSelect}
           >
             <option disabled selected>
@@ -477,25 +480,29 @@ export const Team_Form_X = () => {
               </option>
             ))}
           </select>
+          </div>
           <hr className='py-2 border-none' />
 
-          <table className='table '>
+          <table className='table overflow-hidden'>
             {/*Kolumny tytulowe*/}
-            <tr>
-              <th>
-                <input
-                  type='checkbox'
-                  className='toggle'
-                  onChange={handleChangeAll}
-                  checked={allChecked}
-                />
-              </th>
-              <th>Pracownik</th>
-              <th>Stanowisko</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>
+                  <input
+                    type='checkbox'
+                    className='toggle'
+                    onChange={handleChangeAll}
+                    checked={allChecked}
+                  />
+                </th>
+                <th>Pracownik</th>
+                <th>Stanowisko</th>
+              </tr>
+            </thead>
+            <tbody className="">
             {/*Rzedy*/}
             {Object.values(personData).map((person) => (
-              <tr key={person.Id} className='even:bg-gray-500/20'>
+              <tr key={person.Id} className='odd:bg-gray-500/20'>
                 <td>
                   <input
                     id={person["Id"]}
@@ -511,8 +518,9 @@ export const Team_Form_X = () => {
                 <td>{person["Stanowisko"]}</td>
               </tr>
             ))}
+            </tbody>
           </table>
-          <button className='btn btn-primary w-full'>Name apply</button>
+          <button className='btn btn-accent w-full'>Confirn Changes</button>
         </form>
       </div>
     </>
@@ -624,43 +632,56 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
   return (
     <div className='strokeme2'>
       <div className=''>
-        <form action='teams' onSubmit={handleTeamSubmit}>
-          <select id='team' onChange={handleTeamChange}>
-            <option value='tak' disabled>
-              Choose team
-            </option>
-            {teamsData.map((team) => (
-              <option key={team} value={team}>
-                {`Team ${team}`}
-              </option>
-            ))}
-          </select>
-          <button className='btn btn-accent'>apply</button>
-        </form>
+        {forWhat === 'project' ? (
+          <div className="">
+            <h2 className='text-center font-bold text-lg'>Edit description</h2>
+            <hr className='py-2 border-none' />
+            <form action='teams' onSubmit={handleTeamSubmit} className="grid grid-cols-4 join">
+              <select id='team' onChange={handleTeamChange} className="join-item col-span-3">
+                <option value='' disabled>
+                  Choose team
+                </option>
+                {teamsData.map((team) => (
+                  <option key={team} value={team}>
+                    {`Team ${team}`}
+                  </option>
+                ))}
+              </select>
+              <button className='btn btn-accent join-item'>apply</button>
+            </form>
+          </div>
+        ):(
+          <>
+            <h2 className='text-center font-bold text-lg'>Edit description</h2>
+            <hr className='py-2 border-none' />
+            <form action='slave' onSubmit={handlePersonSubmit} className="grid grid-cols-4 join">
+              <select name='' id='person' onChange={handlePersonChange} className="join-item col-span-3">
+                <option value='choose' disabled>
+                  choose Person
+                </option>
+                {personData.map((person) => (
+                  <option key={person} value={person}>
+                    {person}
+                  </option>
+                ))}
+              </select>
+              <button className='btn btn-accent join-item'>apply</button>
+            </form>
+          </>
+        )}
+
         <hr className='p-3 border-none' />
 
-        <form action='slave' onSubmit={handlePersonSubmit}>
-          <select name='' id='person' onChange={handlePersonChange}>
-            <option value='choose' disabled>
-              choose Person
-            </option>
-            {personData.map((person) => (
-              <option key={person} value={person}>
-                {person}
-              </option>
-            ))}
-          </select>
-          <button className='btn btn-accent'>apply</button>
-        </form>
+
       </div>
 
-      <form className='hidden' onSubmit={handleSubmit}>
+      <form className='' onSubmit={handleSubmit}>
         <label className='form-control'>
           <h2 className='text-center font-bold text-lg'>Edit description</h2>
           <hr className='py-2 border-none' />
           <textarea
             className='textarea textarea-bordered h-24'
-            placeholder='Bio'
+            placeholder='New Description'
             value={text}
             onChange={handleTextAreaChange}
           ></textarea>
@@ -671,7 +692,7 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
             </span>
           </div>
         </label>
-        <button className='btn btn-secondary w-full'>jh</button>
+        <button className='btn btn-accent w-full'>Apply</button>
       </form>
     </div>
   );
