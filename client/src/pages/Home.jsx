@@ -74,7 +74,7 @@ const ListElement = ({ project }) => {
 export const AddProject = () => {
   return (
     <div className='p-1'>
-      <div className='card w-96 skeleton shadow-xl '>
+      <div className='card w-full skeleton shadow-xl '>
         <div className='card-body'>
           <h2 className='card-title   badge badge-lg w-72 h-6'></h2>
           <p className=' badge badge-lg w-24 h-6'></p>
