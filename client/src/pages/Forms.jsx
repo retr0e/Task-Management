@@ -355,6 +355,8 @@ export const Team_Form_X = () => {
         } else {
           data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
         }
+
+        setTeamData(data["teams"]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
       }
