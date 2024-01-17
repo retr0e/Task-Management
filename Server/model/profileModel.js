@@ -23,8 +23,7 @@ export const getProfileInfo = async (employeeId) => {
         Konta.Uprawnienia 
     FROM Pracownicy 
     INNER JOIN Konta on Konta.Id_pracownika = Pracownicy.Id
-    ;`);
+    WHERE Konta.Id_konta='${employeeId}';`);
 
-  console.log(profileInfo[0][0]);
   return profileInfo[0][0];
 };
