@@ -45,7 +45,7 @@ export default function Profile({privilege}) {
             <Modal
               btn_Name={"Edit Profile"}
               btn_Style={"btn btn-secondary col-span-2"}
-              element={<EditProfile />}
+              element={<EditProfileSelf />}
               modal_ID={'Edit_Profile'}
             />
           </div>
@@ -57,12 +57,12 @@ export default function Profile({privilege}) {
 
 const Stars = ({ count }) => {
   const jsxArray = Array.from({ length: count }, (_, index) => (
-    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black '></div>
+    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black'></div>
   ));
   return <>{jsxArray}</>;
 };
 
-const EditProfile = () => {
+const EditProfileSelf = () => {
   return(
     <div className="grid gap-y-5 p-5">
       <div className="card-bordered  p-2">

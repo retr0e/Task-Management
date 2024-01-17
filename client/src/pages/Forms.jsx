@@ -474,7 +474,7 @@ export const Team_Form_X = () => {
           </div>
           <hr className='py-2 border-none' />
 
-          <table className='table overflow-hidden'>
+          <table className='table '>
             {/*Kolumny tytulowe*/}
             <thead>
               <tr>
@@ -490,7 +490,7 @@ export const Team_Form_X = () => {
                 <th>Stanowisko</th>
               </tr>
             </thead>
-            <tbody className="">
+            <tbody className="overflow-y-scroll">
             {/*Rzedy*/}
             {Object.values(personData).map((person) => (
               <tr key={person.Id} className='odd:bg-gray-500/20'>

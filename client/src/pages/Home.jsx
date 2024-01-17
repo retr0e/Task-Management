@@ -24,7 +24,7 @@ const Card = ({ project, privilege }) => {
     <div className=''>
       <Link to={`/projects/${ID}`}>
         <div className='p-1'>
-          <div className='card w-96 bg-slate-200/80 text-slate-900/70 shadow-xl '>
+          <div className='card w-96 bg-gray-500/70 shadow-xl '>
             <div className='card-body'>
               <h2 className='card-title'>{ProjectName}</h2>
               <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>
@@ -55,7 +55,7 @@ const ListElement = ({ project }) => {
   return (
     <Link to={`/projects/${ID}`}>
       <li>
-        <div className='bg-slate-200/75 hover:bg-slate-300/75 text-black py-2 px-3  shadow-sm rounded my-2 '>
+        <div className='bg-zinc-500/75 hover:bg-zinc-600/75  py-2 px-3  shadow-sm rounded my-2 '>
           <div className=''>
             <table>
               <tr className='flex flex-wrap gap-2'>
@@ -112,10 +112,10 @@ export const ProjectList = () => {
     fetchData();
   }, []);
   return (
-    <div className='centerMe max-w-xl mx-auto '>
-      <div className='modal-box bg-slate-200/80 text-slate-600'>
+    <div className='centerMe hero '>
+      <div className='modal-box bg-zinc-700/75 '>
         <h1 className='text-center text-bold text-2xl'>All Projects List</h1>
-        <hr className='border-t-1 py-2 border-slate-600/75' />
+        <hr className='border-t-1 py-2 ' />
 
         <ul className='grid grid-cols-1 gap-1'>
           {projects.map((project) => (

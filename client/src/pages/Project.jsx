@@ -5,16 +5,18 @@ import Modal from "../components/modal";
 
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
-  //console.log(peopleWorking)
+  
+  console.log(projectTasks)
   return (
-    <div className='bg-base-400 p-3   gap-2'>
-      <div className='flex gap-2'>
-        <div className='card card-body bg-zinc-500/75  w-3/4  h-auto'>
+    <div className='bg-base-400 p-3'>
+      <div className='flex gap-2 '>
+        <div className='card card-body bg-zinc-500/75  w-3/4  h-60'>
           <span className='text-xl font-bold '>
             Documentation
           </span>
           <hr className='border-t-1 py-2 ' />
-          {projectData["info"]["Opis"]}
+          <div className="overflow-auto">{projectData["info"]["Opis"]}</div>
+          
         </div>
         <div className='card card-body bg-zinc-600/75  h-60 '>
           <p className='text-center  font-bold text-xl'>
@@ -32,19 +34,19 @@ const Contents = ({ projectData, privilege, states }) => {
           </ul>
         </div>
       </div>
-      <ul className='flex  gap-2  '>
+      <div className='grid grid-cols-3 gap-2 gap-y-0'>
         {projectTasks.map((task, index) => (
           <li
             key={index}
-            className='even:bg-zinc-500/75 odd:bg-zinc-600/75 py-2 px-3 w-1/3 shadow-sm rounded my-2 '
+            className='even:bg-zinc-500/75 odd:bg-zinc-600/75 py-2 px-3 w-1/3 shadow-sm card my-2 h-auto min-w-fit'
           >
             <p className='font-bold text-xl'>{task["Nazwa_zadania"]}</p>
 
-            <span className='text-right '>
+            <span className='text-left '>
               {task["Imie"]} {task["Nazwisko"]}
             </span>
             <hr className='border-t-1 py-2 ' />
-            <div className='px-2 py-2 h-48'>
+            <div className='px-2 py-2 h-48 overflow-hidden hover:overflow-y-scroll '>
               <span className=''>{task["Opis"]}</span>
             </div>
 
@@ -78,7 +80,7 @@ const Contents = ({ projectData, privilege, states }) => {
             </div>
           </li>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

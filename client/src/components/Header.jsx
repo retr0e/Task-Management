@@ -5,13 +5,13 @@ import { DesChangeForm, Team_Form_X } from "../pages/Forms";
 
 const Header = ({ isAuthenticated, handleLogout, privilege }) => {
   return (
-    <header className='navbar bg-color4 bg-opacity-80 shadow-lg h-16'>
+    <header className='navbar bg-gray-600/70 bg-opacity-80 shadow-lg h-16'>
       <div className='navbar-start'>
         {/*<======================Project-Name=====================>*/}
         <Link to='/'>
           <h1 className='font-bold text-2xl sm:text-3xl menu menu-horizontal'>
             <span className='text-color1'>Task</span>
-            <span className='text-orange'>Menager</span>
+            <span className=' text-orange'>Menager</span>
           </h1>
         </Link>
       </div>
@@ -22,13 +22,13 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
             <>
               <Link to='/'>
                 <li className=''>
-                  <span className='text-color1'>Home</span>
+                  <span className=''>Home</span>
                 </li>
               </Link>
               {privilege <=3 &&(
               <Link to='/project'>
                 <li className=''>
-                  <span className='text-color1'>Projects</span>
+                  <span className=''>Projects</span>
                 </li>
               </Link>
               )}
@@ -36,12 +36,12 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                 <>
                 <Link to='/sign-up'>
                   <li className=''>
-                    <span className='text-color1'>Add User</span>
+                    <span className=''>Add User</span>
                   </li>
                 </Link>
                 <Link to='/tester'>
                 <li className=''>
-                  <span className='text-color1'>Tester</span>
+                  <span className=''>Tester</span>
                 </li>
               </Link>
               </>
@@ -52,23 +52,23 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                   element={<Team_Form_X/>}
                   btn_Name={'Manage Teams'}
                   modal_ID={'Manage Teams'}
-                  btn_Style={'text-color1'}
+                  btn_Style={''}
                 />
                 
               )}
               <Link to='/profile'>
                 <li className=''>
-                  <span className='text-color1'>Profile</span>
+                  <span className=''>Profile</span>
                 </li>
               </Link>
               <li className='' onClick={handleLogout}>
-                <span className='text-color1 hover:underline'>Log Out</span>
+                <span className=' hover:underline'>Log Out</span>
               </li>
             </>
           ) : (
             <Link to='/sign-in'>
               <li className=''>
-                <span className='text-color1'>Sign In</span>
+                <span className=''>Sign In</span>
               </li>
             </Link>
           )}
