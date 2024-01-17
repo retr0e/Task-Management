@@ -29,7 +29,6 @@ export default function Profile({privilege}) {
           <div className="grid grid-cols-2 gap-x-0 gap-y-2 text-slate-100 ">
             {Object.entries(profile_info).map(([key, value]) => (
               <>
-                
                 {key === 'Uprawnienia' ?(
                   <>
                     <p key={'Key: '+key} className="font-bold text-black">{key}</p>
@@ -58,7 +57,7 @@ export default function Profile({privilege}) {
 
 const Stars = ({ count }) => {
   const jsxArray = Array.from({ length: count }, (_, index) => (
-    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black'>x</div>
+    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black'></div>
   ));
   return <>{jsxArray}</>;
 };
@@ -68,17 +67,11 @@ const EditProfile = () => {
     <div className="grid gap-y-5 p-5">
       <div className="card-bordered border-gray-300/25 p-2">
         <p className="text-center text-slate-100 strokeme2">Change Name</p>
-        <form className=" grid grid-cols-4 join">
-          <input type="text" className="input input-bordered join-item col-span-3" />
-          <button className="btn btn-accent join-item">Confirm</button>
-        </form>
+        <ChangeName/>
       </div>
       <div className="card-bordered border-gray-300/25 p-2">
         <p className="text-center text-slate-100 strokeme2">Change Password</p>
-        <form className=" grid grid-cols-4 join">
-          <input type="text" className="input input-bordered join-item col-span-3" />
-          <button className="btn btn-accent join-item">Confirm</button>
-        </form>
+        <ChangePassword/>
       </div>
     </div>
   )
@@ -119,19 +112,19 @@ export function ChangeName() {
   };
 
   return (
-    <form onSubmit={handleSubmit} NameName='flex flex-col gap-4 '>
+    <form onSubmit={handleSubmit} className='grid grid-cols-4 join'>
       <input
         type='text'
         placeholder='New Account Name'
-        className='border p-3 rounded-lg'
+        className='input input-bordered col-span-3 join-item'
         id='name'
         onChange={handleChange}
       />
       <button
         disabled={loading}
-        className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+        className='btn btn-accent join-item'
       >
-        {loading ? "Loading..." : "Change Account Name"}
+        {loading ? "Loading..." : "Confirm"}
       </button>
     </form>
   );
@@ -139,18 +132,18 @@ export function ChangeName() {
 
 export function ChangeEmail(){
   return(
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 join'>
       <input
         type='text'
         placeholder='New Email'
-        className='border p-3 rounded-lg'
+        className='border p-3 rounded-lg join-item'
         id='email'
         onChange={handleChange}
       />
       <input
         type='text'
         placeholder='Confirm New Email'
-        className='border p-3 rounded-lg'
+        className='border p-3 rounded-lg join-item'
         id='email'
         onChange={handleChange}
       />
@@ -165,30 +158,36 @@ export function ChangeEmail(){
 
 }
 
-
 export function ChangePassword(){
+  const handleSubmit = (e) => {};
+  const handleChange = (e) => {};
+  const loading = false;
   return(
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
+    <form onSubmit={handleSubmit} className='grid grid-cols-4 grid-rows-2 gap-y-2  join'>
     <input
       type='text'
       placeholder='New Password'
-      className='border p-3 rounded-lg'
+      className='input input-bordered col-span-3 join-item'
       id='password'
       onChange={handleChange}
     />
+    <div className="row-span-2">
+      <button
+        disabled={loading}
+        className='btn btn-accent w-full h-full join-item'
+      >
+        {loading ? "Loading..." : "Confirm"}
+      </button>
+    </div>
     <input
       type='text'
-      placeholder='Confirm New Email'
-      className='border p-3 rounded-lg'
+      placeholder='Confirm New Password'
+      className='input input-bordered col-span-3 join-item'
       id='password'
       onChange={handleChange}
     />
-    <button
-      disabled={loading}
-      className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-    >
-      {loading ? "Loading..." : "Change Password"}
-    </button>
+
+
   </form>
   )
 }
