@@ -4,6 +4,7 @@ import {
   insertTask,
   patchTask,
   putDescription,
+  patchAssignedEmployee,
 } from "../model/taskModel.js";
 import dotenv from "dotenv";
 
@@ -20,7 +21,6 @@ export const deleteTask = async (req, res) => {
 };
 
 export const addTask = async (req, res) => {
-  console.log(req.body);
   const employeeName = req.body["person"].split(" ")[3];
 
   const task = {
@@ -58,7 +58,6 @@ export const editTask = async (req, res) => {
 };
 
 export const changeDescription = (req, res) => {
-  console.log(req.body);
   try {
     putDescription(req.body["text"], req.body["elementId"]);
     res.status(200).json({
@@ -75,5 +74,18 @@ export const changeDescription = (req, res) => {
 };
 
 export const reassignPerson = (req, res) => {
-  console.log(req.body);
+  try {
+    const person = req.body["data"].split(" ");
+    patchAssignedEmployee(person[3], req.body["elementId"]);
+    res.status(200).json({
+      status: "success",
+      message: "Person correctly reassigned",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      message: "Task not modified. Server failed to perform this request",
+    });
+  }
 };

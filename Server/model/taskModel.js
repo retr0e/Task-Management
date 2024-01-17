@@ -52,3 +52,9 @@ export const putDescription = async (description, taskId) => {
     `UPDATE Zadania SET Description='${description}' WHERE Id='${taskId}'`
   );
 };
+
+export const patchAssignedEmployee = async (newPerson, taskId) => {
+  await pool.query(
+    `UPDATE Zadania SET Id_pracownika='${newPerson}' WHERE Id='${taskId}'`
+  );
+};

@@ -131,7 +131,7 @@ export const getUserTeams = async (req, res) => {
       req.cookies["access_token"],
       process.env.JWT_SECRET
     );
-    console.log(decoded);
+
     const teams = await getTeams(decoded["id"]);
 
     res.status(200).json({
