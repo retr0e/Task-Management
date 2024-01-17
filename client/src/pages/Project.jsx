@@ -272,18 +272,12 @@ const ChangeStat = ({ currentValue, states, privilege }) => {
 
 const ChangeStatProject = ({ currentValue, states, priorities, privilege }) => {
   const [formData, setFormData] = useState({});
-  const [usedState, setUsedState] = useState({});
-  const [usedPriority, setUsedPriority] = useState({});
+  const [usedState, setUsedState] = useState(currentValue["Status"]);
+  const [usedPriority, setUsedPriority] = useState(currentValue["Priorytet"]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setFormData({
-        ...formData,
-        status: usedState,
-        priorytet: usedPriority,
-      });
-
       const res = await fetch(
         `/api/v1/projects/get_project/${currentValue["Id"]}`,
         {
@@ -302,20 +296,40 @@ const ChangeStatProject = ({ currentValue, states, priorities, privilege }) => {
   const handleChange = (e) => {
     if (e.target.id === "status") {
       setUsedState(e.target.value);
+      setFormData({
+        ...formData,
+        projectId: currentValue["Id"],
+        status: e.target.value,
+      });
+      return;
     } else if (e.target.id === "priorytet") {
       setUsedPriority(e.target.value);
+      setFormData({
+        ...formData,
+        projectId: currentValue["Id"],
+        priorytet: e.target.value,
+      });
+      return;
     }
 
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
       projectId: currentValue["Id"],
+      status: usedState,
+      priorytet: usedPriority,
     });
   };
 
   useEffect(() => {
     setUsedState(currentValue["Status"]);
     setUsedPriority(currentValue["Priorytet"]);
+    setFormData({
+      ...formData,
+      projectId: currentValue["Id"],
+      status: currentValue["Status"],
+      priorytet: currentValue["Priorytet"],
+    });
   }, []);
 
   return (

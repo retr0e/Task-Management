@@ -191,7 +191,7 @@ export function ChangePassword() {
       className='grid grid-cols-4 grid-rows-2 gap-y-2  join'
     >
       <input
-        type='text'
+        type='password'
         placeholder='New Password'
         className='input input-bordered col-span-3 join-item'
         id='password'
@@ -206,7 +206,7 @@ export function ChangePassword() {
         </button>
       </div>
       <input
-        type='text'
+        type='password'
         placeholder='Confirm New Password'
         className='input input-bordered col-span-3 join-item'
         id='passwordConfirmation'

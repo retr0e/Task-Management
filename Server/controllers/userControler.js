@@ -36,7 +36,7 @@ export const signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const validUserData = await pool.query(
-      `SELECT Id_konta,Login,Haslo,Uprawnienia FROM Konta WHERE login = ?`,
+      `SELECT Id_konta,Login,Haslo,Uprawnienia,Aktywny FROM Konta WHERE login = ?`,
       [email]
     );
     const validUser = validUserData[0][0];
@@ -44,6 +44,8 @@ export const signin = async (req, res, next) => {
     if (!validUser) return next(errorHandler(404, "User not found!"));
     const validPassword = bcryptjs.compareSync(password, validUser.Haslo);
     if (!validPassword) return next(errorHandler(401, "Wrong credentials! "));
+    if (!validUser.Aktywny)
+      return next(errorHandler(400, "Account not active"));
 
     // Creating necesarry cookies
     // Login token

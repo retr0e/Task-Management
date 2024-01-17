@@ -1,4 +1,4 @@
-DROP DATABASE PBD;
+DROP DATABASE IF EXISTS PBD;
 CREATE DATABASE PBD;
 
 USE PBD;
@@ -6,7 +6,7 @@ USE PBD;
 CREATE TABLE `Projekty` (
   `ID` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Nazwa` VARCHAR(255) NOT NULL,
-  `Id_zespolu` INT NOT NULL,
+  `Id_zespolu` INT,
   `Id_priorytetu` INT NOT NULL,
   `Id_statusu` INT NOT NULL,
   `Opis` VARCHAR(400),
@@ -53,7 +53,8 @@ CREATE TABLE `Status` (
 CREATE TABLE `Zespoly` (
   `Id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `Nr_zespolu` INT NOT NULL,
-  `Czlonek` INT
+  `Czlonek` INT,
+  INDEX (`Nr_zespolu`)
 );
 
 CREATE TABLE `Historia_Aktywnosci` (
@@ -74,7 +75,8 @@ CREATE TABLE `Konta` (
   `Nazwa` VARCHAR(255) NOT NULL,
   `Login` VARCHAR(255) NOT NULL,
   `Haslo` VARCHAR(255) NOT NULL,
-  `Uprawnienia` INT NOT NULL
+  `Uprawnienia` INT NOT NULL,
+  `Aktywny` BOOLEAN NOT NULL
 );
 
 INSERT INTO `color_code` (`hex`) VALUES
@@ -98,30 +100,36 @@ INSERT INTO `PoziomDostepu` (`Uprawnienia`) VALUES
 ("Pracownik"),
 ("Obserwujacy");
 
--- Haslo admin
-INSERT INTO Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia) VALUES (1, 'Admin', 'admin.admin@gmail.com', '$2a$10$0pyG5jI3tg/MQb60Nb4RHe7zfuxApLIifyzyiIpPNAQm//bUBynNS', 1);
-INSERT INTO Pracownicy (Imie, Nazwisko, Stanowisko, PESEL) VALUES ('Patryk', 'Szymura', 'Admin', '90124576121');
-
--- Dodaj rekordy do tabeli Status
 INSERT INTO Status (Nazwa, Id_colorCode) VALUES
 ('Nowy', 5),
 ('W trakcie', 6),
 ('Zakończony', 7);
 
-ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety` (`Id`);
-
-ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty` (`ID`);
-ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
-ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status` (`Id`);
-
-ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Nr_zespolu`) REFERENCES `Projekty` (`ID`);
-ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy` (`Id`); 
-
-ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
-
-ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu` (`Id`);
-ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy` (`Id`);
+-- Haslo admin
+INSERT INTO Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia, Aktywny) VALUES (1, 'Admin', 'admin.admin@gmail.com', '$2a$10$0pyG5jI3tg/MQb60Nb4RHe7zfuxApLIifyzyiIpPNAQm//bUBynNS', 1, TRUE);
+INSERT INTO Pracownicy (Imie, Nazwisko, Stanowisko, PESEL) VALUES ('Patryk', 'Szymura', 'Admin', '90124576121');
 
 ALTER TABLE `Priorytety` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
 ALTER TABLE `Status` ADD FOREIGN KEY (`Id_colorCode`) REFERENCES `Color_Code`(`Id`);
+
+
+ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_priorytetu`) REFERENCES `Priorytety`(`Id`);
+ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status`(`Id`);
+
+
+ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_projektu`) REFERENCES `Projekty`(`ID`);
+ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy`(`Id`);
+ALTER TABLE `Zadania` ADD FOREIGN KEY (`Id_statusu`) REFERENCES `Status`(`Id`);
+
+
+ALTER TABLE `Projekty` ADD FOREIGN KEY (`Id_zespolu`) REFERENCES `Zespoly`(`Nr_zespolu`);
+ALTER TABLE `Zespoly` ADD FOREIGN KEY (`Czlonek`) REFERENCES `Pracownicy`(`Id`);
+
+
+ALTER TABLE `Historia_Aktywnosci` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy`(`Id`);
+
+
+ALTER TABLE `Konta` ADD FOREIGN KEY (`Uprawnienia`) REFERENCES `PoziomDostepu`(`Id`);
+ALTER TABLE `Konta` ADD FOREIGN KEY (`Id_pracownika`) REFERENCES `Pracownicy`(`Id`);
+
 

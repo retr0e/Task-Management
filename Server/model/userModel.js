@@ -64,13 +64,14 @@ export const addAccountAndEmployee = async (data) => {
 
       await pool.query(`
       INSERT INTO 
-          Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia) 
+          Konta (Id_pracownika, Nazwa, Login, Haslo, Uprawnienia, Aktywny) 
       VALUES (
           ${employeeId},
           '${username}',
           '${email}',
           '${hashedPassword}',
-          ${parseInt(privilegeLevel)}
+          ${parseInt(privilegeLevel)},
+          '${1}'
       )`);
     }
   } catch (error) {

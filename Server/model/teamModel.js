@@ -33,7 +33,8 @@ export const checkPresence = async (people, teamId) => {
   const existingTeams = await getAllTeams();
   let allUnchecked = true;
 
-  for (const obj in people) {
+  console.log(people);
+  for (const obj of people) {
     if (obj["isChecked"] == true) {
       allUnchecked = false;
       break;

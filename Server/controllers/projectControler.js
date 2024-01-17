@@ -72,6 +72,7 @@ export const addProject = async (req, res, next) => {
 
 export const changeProjectStatePriority = (req, res) => {
   try {
+    console.log(req.body);
     const newData = {
       id: req.body["projectId"],
       state: req.body["status"],

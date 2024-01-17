@@ -101,7 +101,7 @@ const Add_Project_Form = () => {
     const fetchData = async () => {
       try {
         const data = await fetchDataFromApis(0);
-        data.teams.unshift(0);
+
         setTeamsData(data.teams);
         data.priorities.pop();
         setPriData(data.priorities);
@@ -117,98 +117,97 @@ const Add_Project_Form = () => {
   }, []);
 
   return (
-      <div className='main'>
-        <h2 className='text-center font-bold text-lg'>Add New Project</h2>
-        <hr className='py-2 border-none' />
+    <div className='main'>
+      <h2 className='text-center font-bold text-lg'>Add New Project</h2>
+      <hr className='py-2 border-none' />
 
-        {/* Form-Main */}
-        <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-2">
-          {/* Project-Name */}
-          <input
-            type='text'
-            id='projectName'
-            placeholder='ProjectName'
-            className='input input-bordered col-span-6'
-            required
-            onChange={handleChange}
-          />
-          
-          {/* Project-Team-Select */}
-          <select
-            id='team'
-            className='select select-bordered col-span-3'
-            value={selectedTeam}
-            onChange={handleChange}
-          >
-            <option disabled selected>
-              Select Team
+      {/* Form-Main */}
+      <form onSubmit={handleSubmit} className='grid grid-cols-6 gap-2'>
+        {/* Project-Name */}
+        <input
+          type='text'
+          id='projectName'
+          placeholder='ProjectName'
+          className='input input-bordered col-span-6'
+          required
+          onChange={handleChange}
+        />
+
+        {/* Project-Team-Select */}
+        <select
+          id='team'
+          className='select select-bordered col-span-3'
+          value={selectedTeam}
+          onChange={handleChange}
+          required
+        >
+          <option disabled selected>
+            Select Team
+          </option>
+          {teamsData.map((team) => (
+            <option key={team} value={team}>
+              {team == 0 ? "Nieprzypisany" : `Team ${team}`}
             </option>
-            {teamsData.map((team) => (
-              <option key={team} value={team}>
-                {team == 0 ? "Nieprzypisany" : `Team ${team}`}
-              </option>
-            ))}
-          </select>
+          ))}
+        </select>
 
-          {/* Project-Priority-Select */}
-          <select
-            id='priority'
-            className='select select-bordered col-span-3'
-            value={selectedPriority}
-            onChange={handleChange}
-          >
-            <option disabled selected>
-              Select Priority
+        {/* Project-Priority-Select */}
+        <select
+          id='priority'
+          className='select select-bordered col-span-3'
+          value={selectedPriority}
+          onChange={handleChange}
+          required
+        >
+          <option disabled selected>
+            Select Priority
+          </option>
+          {priData.map((pri) => (
+            <option key={pri} value={pri}>
+              {pri}
             </option>
-            {priData.map((pri) => (
-              <option key={pri} value={pri}>
-                {pri}
-              </option>
-            ))}
-          </select>
+          ))}
+        </select>
 
-          {/* Project-Text-Area */}
-          <textarea
-            id='description'
-            className='textarea textarea-bordered col-span-6'
-            placeholder='Decriprion'
-            onChange={handleChange}
-          />
-          
-            {/* Project-Date-Start */}
-            <p className="text-right py-3">Start Date</p>
-            <input
-              id='startDate'
-              type='date'
-              className="input input-bordered col-span-2"
-              max={maxDate}
-              value={minDate}
-              placeholder='Start Date'
-              required
-              onChange={handleMinDateChange}
-            />
+        {/* Project-Text-Area */}
+        <textarea
+          id='description'
+          className='textarea textarea-bordered col-span-6'
+          placeholder='Decriprion'
+          onChange={handleChange}
+        />
 
-            {/* Project-Date-End */}
-            <p className="text-right py-3">End date</p>
-            <input
-              id='endDate'
-              className="input input-bordered col-span-2"
-              type='date'
-              placeholder='End Date'
-              min={minDate}
-              value={maxDate}
-              required
-              onChange={handleMaxDateChange}
-            />
+        {/* Project-Date-Start */}
+        <p className='text-right py-3'>Start Date</p>
+        <input
+          id='startDate'
+          type='date'
+          className='input input-bordered col-span-2'
+          max={maxDate}
+          value={minDate}
+          placeholder='Start Date'
+          required
+          onChange={handleMinDateChange}
+        />
 
-          {/* Project-Submit */}
-          <button
-            type='submit'
-            className='btn btn-accent  col-span-6'
-          >
-            {loading ? "Loading..." : "Dodaj Projekt"}
-          </button>
-        </form>
+        {/* Project-Date-End */}
+        <p className='text-right py-3'>End date</p>
+        <input
+          id='endDate'
+          className='input input-bordered col-span-2'
+          type='date'
+          placeholder='End Date'
+          min={minDate}
+          value={maxDate}
+          required
+          onChange={handleMaxDateChange}
+        />
+
+        {/* Project-Submit */}
+        <button type='submit' className='btn btn-accent  col-span-6'>
+          {loading ? "Loading..." : "Dodaj Projekt"}
+        </button>
+      </form>
     </div>
   );
 };
@@ -273,9 +272,9 @@ export const Add_Task_Form = ({ projectId }) => {
 
   return (
     <div className=''>
-      <div >
-      <h2 className='text-center font-bold text-lg'>Add New Task</h2>
-      <hr className="py-2 border-none"/>
+      <div>
+        <h2 className='text-center font-bold text-lg'>Add New Task</h2>
+        <hr className='py-2 border-none' />
         {/*<======================Form-Main=====================>*/}
         <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-2'>
           {/*<======================Task-Name=====================>*/}
@@ -305,27 +304,24 @@ export const Add_Task_Form = ({ projectId }) => {
           </select>
 
           {/*<===================Task-Description=================>*/}
-          
-            <textarea
-              id='description'
-              className='textarea textarea-bordered col-span-2'
-              placeholder='Decriprion'
-              onChange={handleChange}
-            />
-          
-          
-            {/*<===================Task-Start-Date==================>*/}
-            <p className="py-2">Start Date</p>
-            <input
-              type='date'
-              id='startDate'
-              className="input input-bordered"
-              placeholder='Start Date'
-              required
-              onChange={handleChange}
-            />
-          
-          
+
+          <textarea
+            id='description'
+            className='textarea textarea-bordered col-span-2'
+            placeholder='Decriprion'
+            onChange={handleChange}
+          />
+
+          {/*<===================Task-Start-Date==================>*/}
+          <p className='py-2'>Start Date</p>
+          <input
+            type='date'
+            id='startDate'
+            className='input input-bordered'
+            placeholder='Start Date'
+            required
+            onChange={handleChange}
+          />
 
           {/*<===================Project-Submit===================>*/}
           <button
@@ -353,10 +349,16 @@ export const Team_Form_X = () => {
       try {
         const data = await fetchDataFromApis(0);
         setPersonData(data["employess"]);
-        data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
-        if (data["teams"].includes(0)) {
-          data["teams"].shift();
+
+        console.log("Przed");
+        console.log(data["teams"]);
+        if (data["teams"].length == 0) {
+          data["teams"].push(1);
+        } else {
+          data["teams"].push(data["teams"][data["teams"].length - 1] + 1);
         }
+        console.log("Po");
+        console.log(data["teams"]);
         setTeamData(data["teams"]);
       } catch (error) {
         console.error("Error fetching teams data:", error);
@@ -446,31 +448,28 @@ export const Team_Form_X = () => {
   return (
     <>
       <div className=''>
-        <form
-          className=''
-          action=''
-          onSubmit={handleSubmit}
-        >
-          <p className='text-3xl text-center font-semibold my-7'>Manage Teams</p>
-          <div className="grid grid-cols-2">
-            
-          
-          <select
-            id='person'
-            className='select select-bordered col-span-2'
-            onChange={handleSelect}
-          >
-            <option disabled selected>
-              Select Team
-            </option>
-            {teamData.map((team, index) => (
-              <option key={team} value={team}>
-                {index === teamData.length - 1
-                  ? `New Team ${team}`
-                  : `Team ${team}`}
+        <form className='' action='' onSubmit={handleSubmit}>
+          <p className='text-3xl text-center font-semibold my-7'>
+            Manage Teams
+          </p>
+          <div className='grid grid-cols-2'>
+            <select
+              id='person'
+              className='select select-bordered col-span-2'
+              onChange={handleSelect}
+              required
+            >
+              <option disabled selected>
+                Select Team
               </option>
-            ))}
-          </select>
+              {teamData.map((team, index) => (
+                <option key={team} value={team}>
+                  {index === teamData.length - 1
+                    ? `New Team ${team}`
+                    : `Team ${team}`}
+                </option>
+              ))}
+            </select>
           </div>
           <hr className='py-2 border-none' />
 
@@ -490,25 +489,25 @@ export const Team_Form_X = () => {
                 <th>Stanowisko</th>
               </tr>
             </thead>
-            <tbody className="overflow-y-scroll">
-            {/*Rzedy*/}
-            {Object.values(personData).map((person) => (
-              <tr key={person.Id} className='odd:bg-gray-500/20'>
-                <td>
-                  <input
-                    id={person["Id"]}
-                    type='checkbox'
-                    className='toggle'
-                    onChange={handleChange}
-                    checked={person.isChecked || false}
-                  />
-                </td>
-                <td>
-                  {person["Imie"]} {person["Nazwisko"]}
-                </td>
-                <td>{person["Stanowisko"]}</td>
-              </tr>
-            ))}
+            <tbody className='overflow-y-scroll'>
+              {/*Rzedy*/}
+              {Object.values(personData).map((person) => (
+                <tr key={person.Id} className='odd:bg-gray-500/20'>
+                  <td>
+                    <input
+                      id={person["Id"]}
+                      type='checkbox'
+                      className='toggle'
+                      onChange={handleChange}
+                      checked={person.isChecked || false}
+                    />
+                  </td>
+                  <td>
+                    {person["Imie"]} {person["Nazwisko"]}
+                  </td>
+                  <td>{person["Stanowisko"]}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <button className='btn btn-accent w-full'>Confirn Changes</button>
@@ -623,12 +622,20 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
   return (
     <div className=''>
       <div className=''>
-        {forWhat === 'project' ? (
-          <div className="">
+        {forWhat === "project" ? (
+          <div className=''>
             <h2 className='text-center font-bold text-lg'>Edit description</h2>
             <hr className='py-2 border-none' />
-            <form action='teams' onSubmit={handleTeamSubmit} className="grid grid-cols-4 join">
-              <select id='team' onChange={handleTeamChange} className="select select-bordered join-item col-span-3">
+            <form
+              action='teams'
+              onSubmit={handleTeamSubmit}
+              className='grid grid-cols-4 join'
+            >
+              <select
+                id='team'
+                onChange={handleTeamChange}
+                className='select select-bordered join-item col-span-3'
+              >
                 <option value='' disabled>
                   Choose team
                 </option>
@@ -641,12 +648,21 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
               <button className='btn btn-accent join-item'>apply</button>
             </form>
           </div>
-        ):(
+        ) : (
           <>
             <h2 className='text-center font-bold text-lg'>Edit description</h2>
             <hr className='py-2 border-none' />
-            <form action='slave' onSubmit={handlePersonSubmit} className="grid grid-cols-4 join">
-              <select name='' id='person' onChange={handlePersonChange} className="select select-bordered join-item col-span-3">
+            <form
+              action='slave'
+              onSubmit={handlePersonSubmit}
+              className='grid grid-cols-4 join'
+            >
+              <select
+                name=''
+                id='person'
+                onChange={handlePersonChange}
+                className='select select-bordered join-item col-span-3'
+              >
                 <option value='choose' disabled>
                   choose Person
                 </option>
@@ -662,8 +678,6 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
         )}
 
         <hr className='p-3 border-none' />
-
-
       </div>
 
       <form className='' onSubmit={handleSubmit}>
@@ -678,9 +692,7 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
           ></textarea>
           <div className='label'>
             <span className='label-text-alt'></span>
-            <span className='label-text-alt '>
-              {countCharacters()}/400
-            </span>
+            <span className='label-text-alt '>{countCharacters()}/400</span>
           </div>
         </label>
         <button className='btn btn-accent w-full'>Apply</button>
