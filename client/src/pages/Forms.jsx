@@ -520,30 +520,37 @@ export const EditUsers = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchInitialData = async () => {
+    try {
+      const data = await fetchDataFromApis(0);
+      const employees = data["employess"].map((person) => ({
+        ...person,
+        isActive: isActive,
+      }));
+      setPersonData(employees);
+
+      const objSend = {
+        persons: employees,
+        action: "All Accounts", // You might need to adjust this value
+      };
+      const res = await fetch("/api/v1/profile/delete_account", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(objSend),
+      });
+
+      const responseData = await res.json();
+      setPersonData(responseData["people"]);
+    } catch (error) {
+      console.error("Error fetching initial data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchDataFromApis(0);
-        const employees = data["employess"].map((person) => ({
-          ...person,
-          isActive: isActive,
-        }));
-        setPersonData(employees);
-      } catch (error) {
-        console.error("Error fetching teams data:", error);
-      }
-    };
-
-    fetchData();
-  }, [isActive]);
-
-  useEffect(() => {
-    setPersonData((prevData) =>
-      prevData.map((person) => ({ ...person, isActive: isActive }))
-    );
-  }, [isActive]);
-
-  // useEffect(() => {}, [selectedTeam]);
+    fetchInitialData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -553,7 +560,7 @@ export const EditUsers = () => {
       action: e.target.value,
     };
 
-    await fetch("/api/v1/profile/delete_account", {
+    const res = await fetch("/api/v1/profile/delete_account", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -561,6 +568,10 @@ export const EditUsers = () => {
       body: JSON.stringify(objSend),
     });
 
+    const data = await res.json();
+    setPersonData(data["people"]);
+
+    console.log(personData);
     try {
       setLoading(true);
     } catch (error) {
@@ -595,7 +606,6 @@ export const EditUsers = () => {
     });
 
     const data = await res.json();
-
     setPersonData(data["people"]);
   };
 
@@ -606,21 +616,6 @@ export const EditUsers = () => {
           <p className='text-3xl text-center font-semibold my-7'>
             Manage Accounts
           </p>
-          <div className='grid grid-cols-2'>
-            <select
-              id='person'
-              className='select select-bordered col-span-2'
-              onChange={handleSelect}
-            >
-              <option disabled selected>
-                Select type of Account
-              </option>
-              <option>All Accounts</option>
-              <option>Disabled Accounts</option>
-              <option>Active Accounts</option>
-            </select>
-          </div>
-          <hr className='py-2 border-none' />
 
           <table className='table '>
             {/*Kolumny tytulowe*/}
@@ -637,35 +632,24 @@ export const EditUsers = () => {
               {/* Rzedy */}
               {Object.values(personData).map((person) => {
                 // Check the selected option
-                const selectedOption = document.getElementById("person").value;
 
-                // Conditionally render persons based on the selected option
-                if (
-                  (selectedOption === "Disabled Accounts" &&
-                    !person.isActive) ||
-                  selectedOption === "All Accounts" ||
-                  (selectedOption === "Active Accounts" && person.isActive)
-                ) {
-                  return (
-                    <tr key={person.Id} className='odd:bg-gray-500/20'>
-                      <td>
-                        {person["Imie"]} {person["Nazwisko"]}
-                      </td>
-                      <td>{person["Stanowisko"]}</td>
-                      <td>
-                        <input
-                          id={person["Id"]}
-                          type='checkbox'
-                          className='toggle'
-                          onChange={handleChange}
-                          checked={person.isActive || false}
-                        />
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
+                return (
+                  <tr key={person.Id} className='odd:bg-gray-500/20'>
+                    <td>
+                      {person["Imie"]} {person["Nazwisko"]}
+                    </td>
+                    <td>{person["Stanowisko"]}</td>
+                    <td>
+                      <input
+                        id={person["Id"]}
+                        type='checkbox'
+                        className='toggle'
+                        onChange={handleChange}
+                        checked={person.isActive || false}
+                      />
+                    </td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>

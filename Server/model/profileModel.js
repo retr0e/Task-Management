@@ -53,11 +53,22 @@ export const fetchActiveAccounts = async (people) => {
 
 export const deactivateAccount = async (people) => {
   for (let i = 0; i < people.length; i++) {
-    console.log(people[i]["isActive"]);
     if (!people[i]["isActive"]) {
+      const privilegeLevel = await pool.query(
+        `SELECT Uprawnienia FROM Konta WHERE Id_pracownika='${people[i]["Id"]}'`
+      );
+
+      // CANNOT DEACTIVATE ADMIN!
+      if (privilegeLevel[0][0]["Uprawnienia"] == 1) {
+        people[i]["isActive"] = true;
+        continue;
+      }
+
       await pool.query(
         `UPDATE Konta SET Aktywny='0' WHERE Id_pracownika=${people[i]["Id"]}`
       );
     }
   }
+
+  return people;
 };

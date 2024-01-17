@@ -108,9 +108,10 @@ export const checkActive = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    deactivateAccount(req.body["persons"]);
+    const people = await deactivateAccount(req.body["persons"]);
     res.status(200).json({
       status: "success",
+      people: people,
     });
   } catch (error) {
     console.log(error);
