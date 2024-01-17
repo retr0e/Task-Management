@@ -61,7 +61,6 @@ export default function App() {
   };
 
   checkPrivilege();
-  // console.log(whichPrivilege);
   return (
     <BrowserRouter>
       {/*<==================Always-Displayed-Element======================>*/}

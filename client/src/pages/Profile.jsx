@@ -138,33 +138,6 @@ export function ChangeName() {
   );
 }
 
-export function ChangeEmail() {
-  return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4 join'>
-      <input
-        type='text'
-        placeholder='New Email'
-        className='border p-3 rounded-lg join-item'
-        id='email'
-        onChange={handleChange}
-      />
-      <input
-        type='text'
-        placeholder='Confirm New Email'
-        className='border p-3 rounded-lg join-item'
-        id='email'
-        onChange={handleChange}
-      />
-      <button
-        disabled={loading}
-        className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-      >
-        {loading ? "Loading..." : "Change Email"}
-      </button>
-    </form>
-  );
-}
-
 export function ChangePassword() {
   const [formData, setFormData] = useState();
 
