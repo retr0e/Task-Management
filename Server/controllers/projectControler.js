@@ -78,6 +78,7 @@ export const changeProjectStatePriority = (req, res) => {
       priority: req.body["priorytet"],
     };
 
+    console.log(newData);
     patchProject(newData);
     res.status(200).json({
       status: "success",

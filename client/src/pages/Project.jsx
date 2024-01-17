@@ -5,27 +5,24 @@ import Modal from "../components/modal";
 
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
-  
-  console.log(projectTasks)
+
+  console.log(projectTasks);
   return (
     <div className='bg-base-400 p-3'>
       <div className='flex gap-2 '>
         <div className='card card-body bg-zinc-500/75  w-3/4  h-60'>
-          <span className='text-xl font-bold '>
-            Documentation
-          </span>
+          <span className='text-xl font-bold '>Documentation</span>
           <hr className='border-t-1 py-2 ' />
-          <div className="overflow-auto">{projectData["info"]["Opis"]}</div>
-          
+          <div className='overflow-auto'>{projectData["info"]["Opis"]}</div>
         </div>
         <div className='card p-7 bg-zinc-600/75  h-60 '>
           <p className='text-center  font-bold text-xl h-10'>
             Team {peopleWorking[0]["Nr_zespolu"]}
           </p>
           <hr className='border-t-1 py-2 ' />
-          <ul className="overflow-hidden hover:overflow-auto snap-y ">
+          <ul className='overflow-hidden hover:overflow-auto snap-y '>
             {peopleWorking.map((padawan) => (
-              <li className="snap-start">
+              <li className='snap-start'>
                 <p className='text-right'>
                   {padawan["Imie"]} {padawan["Nazwisko"]}{" "}
                 </p>
@@ -60,21 +57,20 @@ const Contents = ({ projectData, privilege, states }) => {
                     privilege={privilege}
                   />
                 </div>
-                <div className="">
-                {privilege <= 2 ? (
-                  <Modal
-                    modal_ID={task["Nazwa_zadania"]}
-                    btn_Name={"Edit Description"}
-                    btn_Style={" btn btn-secondary"}
-                    element={
-                      <DesChangeForm
-                        forWhat={"zadanie"}
-                        elementId={task["ID"]}
-                      />
-                    }
-                
-                  />
-                ) : null}
+                <div className=''>
+                  {privilege <= 2 ? (
+                    <Modal
+                      modal_ID={task["Nazwa_zadania"]}
+                      btn_Name={"Edit Description"}
+                      btn_Style={" btn btn-secondary"}
+                      element={
+                        <DesChangeForm
+                          forWhat={"zadanie"}
+                          elementId={task["ID"]}
+                        />
+                      }
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -282,6 +278,12 @@ const ChangeStatProject = ({ currentValue, states, priorities, privilege }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setFormData({
+        ...formData,
+        status: usedState,
+        priorytet: usedPriority,
+      });
+
       const res = await fetch(
         `/api/v1/projects/get_project/${currentValue["Id"]}`,
         {
@@ -342,7 +344,7 @@ const ChangeStatProject = ({ currentValue, states, priorities, privilege }) => {
               id='priorytet'
               key={priorit}
               type='radio'
-              name='priority'
+              name='priorytet'
               className='btn theme-controller join-item '
               aria-label={priorit}
               value={priorit}
