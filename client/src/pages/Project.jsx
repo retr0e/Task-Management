@@ -18,8 +18,8 @@ const Contents = ({ projectData, privilege, states }) => {
           <div className="overflow-auto">{projectData["info"]["Opis"]}</div>
           
         </div>
-        <div className='card card-body bg-zinc-600/75  h-60 '>
-          <p className='text-center  font-bold text-xl'>
+        <div className='card p-7 bg-zinc-600/75  h-60 '>
+          <p className='text-center  font-bold text-xl h-10'>
             Team {peopleWorking[0]["Nr_zespolu"]}
           </p>
           <hr className='border-t-1 py-2 ' />

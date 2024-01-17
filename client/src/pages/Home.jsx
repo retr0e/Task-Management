@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Navigate, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Modal, { AccessBlock } from "../components/modal";
+import Modal from "../components/modal";
 import Add_Project_Form from "./Forms";
 
 // Użycie funkcji w komponencie Card
