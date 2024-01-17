@@ -1,10 +1,10 @@
 import React, { useState , useEffect } from "react";
 import { Form, useParams, Link } from "react-router-dom";
+import Modal from "../components/modal";
 
 
 export default function Profile({privilege}) {
   const [ profile_info, setProfileInfo] = useState([]);
-  console.log(privilege);
   
   useEffect(() => {
     // Fetch data from the server
@@ -21,73 +21,67 @@ export default function Profile({privilege}) {
 
     fetchData();
   }, []);
-  console.log(profile_info);
-  const {
-    Imie,
-    Nazwisko,
-    Stanowisko,
-    Nazwa,
-    Login,
-  }  = profile_info
-  const params = useParams();
+
   return (
     <>
-      <div className='max-w-xl mx-auto'>
-        <div className='modal-box bg-slate-300/70'>
-          <p className='text-3xl font-semibold text-center text-black'>Profile data</p>
-          <hr className="border-t-1 py-2 border-slate-600/75"/>
-          <div className="  grid grid-cols-4 gap-2 text-slate-800 text-base font-semibold ">
-            <div className="col-span-2 ">
-              <p className="text-center">Imie</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{Imie}</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">Nazwisko</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{Nazwisko}</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">Stanowisko</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{Stanowisko}</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">Acces Level</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{privilege}</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">Email</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{Nazwa}</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">Login</p>
-            </div>
-            <div className="col-span-2 ">
-              <p className="text-center">{Login}</p>
-            </div>
-            <div className=" grid grid-cols-subgrid">
-              <form action="">
-                <div className="join">
-                  <input className="input input-bordered join-item" placeholder="New Password"/>
-                  <button className="btn join-item">Change Password</button>
-                </div>
-              </form>
-            </div>
+      <div className="hero">
+        <div className="modal-box bg-slate-200/75">
+          <div className="grid grid-cols-2 gap-x-0 gap-y-2 text-slate-100 ">
+            {Object.entries(profile_info).map(([key, value]) => (
+              <>
+                
+                {key === 'Uprawnienia' ?(
+                  <>
+                    <p key={'Key: '+key} className="font-bold text-black">{key}</p>
+                    <p className="flex"><Stars count={5-value}/></p>
+                  </>
+                ):(
+                  <>
+                    <p key={'Key: '+key} className="font-bold text-black">{key}</p>
+                    <p key={'Value: '+key} className="text-black">{value}</p>
+                  </>
+                )}
+              </>
+            ))}
+            <Modal
+              btn_Name={"Edit Profile"}
+              btn_Style={"btn btn-warning col-span-2"}
+              element={<EditProfile />}
+              modal_ID={'Edit_Profile'}
+            />
           </div>
         </div>
-        
-        
       </div>
     </>
   );
+}
+
+const Stars = ({ count }) => {
+  const jsxArray = Array.from({ length: count }, (_, index) => (
+    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black'>x</div>
+  ));
+  return <>{jsxArray}</>;
+};
+
+const EditProfile = () => {
+  return(
+    <div className="grid gap-y-5 p-5">
+      <div className="card-bordered border-gray-300/25 p-2">
+        <p className="text-center text-slate-100 strokeme2">Change Name</p>
+        <form className=" grid grid-cols-4 join">
+          <input type="text" className="input input-bordered join-item col-span-3" />
+          <button className="btn btn-accent join-item">Confirm</button>
+        </form>
+      </div>
+      <div className="card-bordered border-gray-300/25 p-2">
+        <p className="text-center text-slate-100 strokeme2">Change Password</p>
+        <form className=" grid grid-cols-4 join">
+          <input type="text" className="input input-bordered join-item col-span-3" />
+          <button className="btn btn-accent join-item">Confirm</button>
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export function ChangeName() {

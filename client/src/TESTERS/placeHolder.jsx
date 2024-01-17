@@ -8,6 +8,6 @@ import Modal from "../components/modal";
 
 const Component = () => {
  
-  return <Profile/>;
+  return <Test/>;
 };
 export default Component;

@@ -556,19 +556,20 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
     <div className='strokeme2'>
       <div className="">
       <form action="teams">
-        <select>
+        <select className="select select-bordered join-item">
           <option value="tak" disabled>Choose team</option>
         </select>
         <button className="btn btn-accent">apply</button>
       </form>
       <hr className="p-3 border-none"/>
       <form action="slave">
-        <select name="" id="">
+        <select className="select select-bordered join-item">
           <option value="choose" disabled>choose Slave</option>
         </select>
         <button className="btn btn-accent">apply</button>
       </form>
       </div>
+
       <form className='hidden' onSubmit={handleSubmit}>
         <label className='form-control'>
           <h2 className='text-center font-bold text-lg'>Edit description</h2>
