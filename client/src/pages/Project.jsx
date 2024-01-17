@@ -6,7 +6,6 @@ import Modal from "../components/modal";
 const Contents = ({ projectData, privilege, states }) => {
   const { peopleWorking, projectTasks } = projectData;
 
-  console.log(projectTasks);
   return (
     <div className='bg-base-400 p-3'>
       <div className='flex gap-2 '>

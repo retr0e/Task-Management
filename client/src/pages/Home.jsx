@@ -24,7 +24,7 @@ const Card = ({ project, privilege }) => {
     <div className=''>
       <Link to={`/projects/${ID}`}>
         <div className='p-1'>
-          <div className='card w-96 bg-gray-500/70 shadow-xl '>
+          <div className='card w-full bg-gray-500/70 shadow-xl '>
             <div className='card-body'>
               <h2 className='card-title'>{ProjectName}</h2>
               <p className=''>{`Przypisany zespół: ${Id_zespolu}`}</p>
@@ -96,7 +96,7 @@ export const AddProject = () => {
 export const ProjectList = () => {
   const [projects, setProjects] = useState([]);
 
-  // console.log(projects);
+  
   useEffect(() => {
     // Fetch data from the server
     const fetchData = async () => {
@@ -117,22 +117,24 @@ export const ProjectList = () => {
         <h1 className='text-center text-bold text-2xl'>All Projects List</h1>
         <hr className='border-t-1 py-2 ' />
 
-        <ul className='grid grid-cols-1 gap-1'>
+
+        <ul className=' grid grid-cols-1 gap-1'>
           {projects.map((project) => (
             <ListElement key={project.ID} project={project} />
           ))}
         </ul>
+
       </div>
     </div>
   );
 };
 
 const Home = ({ acLvl }) => {
-  console.log(acLvl);
+  
   const [projects, setProjects] = useState([]);
   const [teams, setTeams] = useState([]);
 
-  // console.log(projects);
+  
   useEffect(() => {
     // Fetch data from the server
     const fetchData = async () => {
@@ -142,7 +144,7 @@ const Home = ({ acLvl }) => {
 
         const userData = await userTeamsResponse.json();
         const projectData = await projectResponse.json();
-        console.log(projectData);
+        
         setProjects(projectData.result);
         setTeams(userData["teams"]);
       } catch (error) {
@@ -154,35 +156,37 @@ const Home = ({ acLvl }) => {
   }, []);
 
   return (
-    <div className='flex flex-wrap '>
-      {/* Displays modal only when access level is 2 or lower */}
-      {acLvl <= 2 ? (
-        <>
-          <Modal
-            element={<Add_Project_Form />}
-            btn_Name={<AddProject />}
-            modal_ID={"add project"}
-          />
+    <div className="">
+      <div className='grid grid-cols-4 gap-2 p-2'>
+        {/* Displays modal only when access level is 2 or lower */}
+        {acLvl <= 2 ? (
+          <>
+            <Modal
+              element={<Add_Project_Form />}
+              btn_Name={<AddProject />}
+              modal_ID={"add project"}
+            />
 
-          {projects.map((project) => (
-            <Card key={project.ID} project={project} />
-          ))}
-        </>
-      ) : acLvl === 4 ? (
-        projects.map((project) => <Card key={project.ID} project={project} />)
-      ) : (
-        <>
-          {projects
-            .filter(
-              (project) =>
-                !(project.StatusName === "Zakończony" && acLvl > 2) &&
-                teams.includes(project.Id_zespolu)
-            )
-            .map((project) => (
+            {projects.map((project) => (
               <Card key={project.ID} project={project} />
             ))}
-        </>
-      )}
+          </>
+        ) : acLvl === 4 ? (
+          projects.map((project) => <Card key={project.ID} project={project} />)
+        ) : (
+          <>
+            {projects
+              .filter(
+                (project) =>
+                  !(project.StatusName === "Zakończony" && acLvl > 2) &&
+                  teams.includes(project.Id_zespolu)
+              )
+              .map((project) => (
+                <Card key={project.ID} project={project} />
+              ))}
+          </>
+        )}
+      </div>
     </div>
   );
 };
