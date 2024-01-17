@@ -117,29 +117,26 @@ const Add_Project_Form = () => {
   }, []);
 
   return (
-    <div className=''>
-      <div className=''>
+      <div className='main'>
         <h2 className='text-center font-bold text-lg'>Add New Project</h2>
         <hr className='py-2 border-none' />
 
-        
         {/* Form-Main */}
-        <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2">
+        <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-2">
           {/* Project-Name */}
           <input
             type='text'
             id='projectName'
             placeholder='ProjectName'
-            className='input input-bordered col-span-4'
+            className='input input-bordered col-span-6'
             required
             onChange={handleChange}
           />
           
-
           {/* Project-Team-Select */}
           <select
             id='team'
-            className='select select-bordered col-span-2'
+            className='select select-bordered col-span-3'
             value={selectedTeam}
             onChange={handleChange}
           >
@@ -152,12 +149,11 @@ const Add_Project_Form = () => {
               </option>
             ))}
           </select>
-          
 
           {/* Project-Priority-Select */}
           <select
             id='priority'
-            className='select select-bordered col-span-2'
+            className='select select-bordered col-span-3'
             value={selectedPriority}
             onChange={handleChange}
           >
@@ -170,23 +166,21 @@ const Add_Project_Form = () => {
               </option>
             ))}
           </select>
-          
 
           {/* Project-Text-Area */}
           <textarea
             id='description'
-            className='textarea textarea-bordered col-span-4'
+            className='textarea textarea-bordered col-span-6'
             placeholder='Decriprion'
             onChange={handleChange}
           />
-
           
             {/* Project-Date-Start */}
             <p className="text-right py-3">Start Date</p>
             <input
               id='startDate'
               type='date'
-              className="input input-bordered"
+              className="input input-bordered col-span-2"
               max={maxDate}
               value={minDate}
               placeholder='Start Date'
@@ -198,7 +192,7 @@ const Add_Project_Form = () => {
             <p className="text-right py-3">End date</p>
             <input
               id='endDate'
-              className="input input-bordered"
+              className="input input-bordered col-span-2"
               type='date'
               placeholder='End Date'
               min={minDate}
@@ -206,18 +200,15 @@ const Add_Project_Form = () => {
               required
               onChange={handleMaxDateChange}
             />
-            
-          
 
           {/* Project-Submit */}
           <button
             type='submit'
-            className='btn btn-accent  col-span-4'
+            className='btn btn-accent  col-span-6'
           >
             {loading ? "Loading..." : "Dodaj Projekt"}
           </button>
         </form>
-      </div>
     </div>
   );
 };
@@ -630,14 +621,14 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
   }, []);
 
   return (
-    <div className='strokeme2'>
+    <div className=''>
       <div className=''>
         {forWhat === 'project' ? (
           <div className="">
             <h2 className='text-center font-bold text-lg'>Edit description</h2>
             <hr className='py-2 border-none' />
             <form action='teams' onSubmit={handleTeamSubmit} className="grid grid-cols-4 join">
-              <select id='team' onChange={handleTeamChange} className="join-item col-span-3">
+              <select id='team' onChange={handleTeamChange} className="select select-bordered join-item col-span-3">
                 <option value='' disabled>
                   Choose team
                 </option>
@@ -655,7 +646,7 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
             <h2 className='text-center font-bold text-lg'>Edit description</h2>
             <hr className='py-2 border-none' />
             <form action='slave' onSubmit={handlePersonSubmit} className="grid grid-cols-4 join">
-              <select name='' id='person' onChange={handlePersonChange} className="join-item col-span-3">
+              <select name='' id='person' onChange={handlePersonChange} className="select select-bordered join-item col-span-3">
                 <option value='choose' disabled>
                   choose Person
                 </option>
@@ -687,7 +678,7 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
           ></textarea>
           <div className='label'>
             <span className='label-text-alt'></span>
-            <span className='label-text-alt strokeme2'>
+            <span className='label-text-alt '>
               {countCharacters()}/400
             </span>
           </div>

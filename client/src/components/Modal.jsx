@@ -1,6 +1,4 @@
 import React from "react";
-import Add_Project_Form from "../pages/Forms";
-import { Outlet } from "react-router-dom";
 
 const Modal = ({ element, btn_Name, btn_Style , modal_ID}) => {
   return (

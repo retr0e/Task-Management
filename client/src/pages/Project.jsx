@@ -9,18 +9,18 @@ const Contents = ({ projectData, privilege, states }) => {
   return (
     <div className='bg-base-400 p-3   gap-2'>
       <div className='flex gap-2'>
-        <div className='card card-body bg-slate-200/80 text-slate-600 w-3/4  h-auto'>
-          <span className='text-xl font-bold text-slate-900/70'>
+        <div className='card card-body bg-zinc-500/75  w-3/4  h-auto'>
+          <span className='text-xl font-bold '>
             Documentation
           </span>
-          <hr className='border-t-1 py-2 border-slate-600/75' />
+          <hr className='border-t-1 py-2 ' />
           {projectData["info"]["Opis"]}
         </div>
-        <div className='card card-body bg-slate-200/80 text-slate-600 h-60 '>
-          <p className='text-center text-slate-900 font-bold text-xl'>
+        <div className='card card-body bg-zinc-600/75  h-60 '>
+          <p className='text-center  font-bold text-xl'>
             Team {peopleWorking[0]["Nr_zespolu"]}
           </p>
-          <hr className='border-t-1 py-2 border-slate-600/75' />
+          <hr className='border-t-1 py-2 ' />
           <ul className="overflow-hidden hover:overflow-auto snap-y ">
             {peopleWorking.map((padawan) => (
               <li className="snap-start">
@@ -36,20 +36,20 @@ const Contents = ({ projectData, privilege, states }) => {
         {projectTasks.map((task, index) => (
           <li
             key={index}
-            className='even:bg-slate-200/75 odd:bg-slate-300/75 text-black py-2 px-3 w-1/3 shadow-sm rounded my-2 '
+            className='even:bg-zinc-500/75 odd:bg-zinc-600/75 py-2 px-3 w-1/3 shadow-sm rounded my-2 '
           >
             <p className='font-bold text-xl'>{task["Nazwa_zadania"]}</p>
 
             <span className='text-right '>
               {task["Imie"]} {task["Nazwisko"]}
             </span>
-            <hr className='border-t-1 py-2 border-slate-600/75' />
+            <hr className='border-t-1 py-2 ' />
             <div className='px-2 py-2 h-48'>
               <span className=''>{task["Opis"]}</span>
             </div>
 
             <div>
-              <hr className='border-t-1 py-2 border-slate-600/75' />
+              <hr className='border-t-1 py-2 ' />
               <div className='grid grid-cols-4 '>
                 <div className='col-span-3 h-3 '>
                   <ChangeStat
@@ -58,12 +58,12 @@ const Contents = ({ projectData, privilege, states }) => {
                     privilege={privilege}
                   />
                 </div>
-                <div className="text-white">
+                <div className="">
                 {privilege <= 2 ? (
                   <Modal
                     modal_ID={task["Nazwa_zadania"]}
                     btn_Name={"Edit Description"}
-                    btn_Style={"item-join btn btn-secondary"}
+                    btn_Style={" btn btn-secondary"}
                     element={
                       <DesChangeForm
                         forWhat={"zadanie"}
@@ -106,11 +106,11 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
             />
           </div>
           {privilege <= 2 ? (
-            <div className='navbar-end w-1/4 join' key='navbarEnd'>
+            <div className='navbar-end w-1/4 flex gap-2' key='navbarEnd'>
               <Modal
                 element={<Add_Task_Form projectId={params["project_id"]} />}
                 btn_Name={"Dodaj Zadanie"}
-                btn_Style={"btn btn-secondary join-item"}
+                btn_Style={"btn btn-secondary "}
                 modal_ID={"taskform"}
               />
               <Modal
@@ -121,7 +121,7 @@ const DataBar = ({ projectData, privilege, params, states, priorities }) => {
                   />
                 }
                 btn_Name={"Edit Description"}
-                btn_Style={"btn btn-secondary join-item"}
+                btn_Style={"btn btn-secondary "}
                 modal_ID={"decriptionform"}
               />
             </div>

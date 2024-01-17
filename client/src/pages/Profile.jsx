@@ -25,19 +25,19 @@ export default function Profile({privilege}) {
   return (
     <>
       <div className="hero">
-        <div className="modal-box bg-slate-200/75">
-          <div className="grid grid-cols-2 gap-x-0 gap-y-2 text-slate-100 ">
+        <div className="modal-box bg-zinc-500/75">
+          <div className="grid grid-cols-2 gap-x-0 gap-y-2 ">
             {Object.entries(profile_info).map(([key, value]) => (
               <>
                 {key === 'Uprawnienia' ?(
                   <>
-                    <p key={'Key: '+key} className="font-bold text-black">{key}</p>
+                    <p key={'Key: '+key} className="font-bold ">{key}</p>
                     <p className="flex"><Stars count={5-value}/></p>
                   </>
                 ):(
                   <>
-                    <p key={'Key: '+key} className="font-bold text-black">{key}</p>
-                    <p key={'Value: '+key} className="text-black">{value}</p>
+                    <p key={'Key: '+key} className="font-bold ">{key}</p>
+                    <p key={'Value: '+key} className="">{value}</p>
                   </>
                 )}
               </>
@@ -57,7 +57,7 @@ export default function Profile({privilege}) {
 
 const Stars = ({ count }) => {
   const jsxArray = Array.from({ length: count }, (_, index) => (
-    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black'></div>
+    <div key={index} className='mask mask-star bg-black w-6 h-6 text-black '></div>
   ));
   return <>{jsxArray}</>;
 };
@@ -65,12 +65,12 @@ const Stars = ({ count }) => {
 const EditProfile = () => {
   return(
     <div className="grid gap-y-5 p-5">
-      <div className="card-bordered border-gray-300/25 p-2">
+      <div className="card-bordered  p-2">
         <h2 className='text-center font-bold text-lg'>Change Name</h2>
         <hr className='py-2 border-none' />
         <ChangeName/>
       </div>
-      <div className="card-bordered border-gray-300/25 p-2">
+      <div className="card-bordered  p-2">
         <h2 className='text-center font-bold text-lg'>Change Password</h2>
         <hr className='py-2 border-none' />
         <ChangePassword/>
