@@ -495,7 +495,7 @@ export const Team_Form_X = () => {
             </tr>
             {/*Rzedy*/}
             {Object.values(personData).map((person) => (
-              <tr key={person.Id} className="even:bg-gray-500/20">
+              <tr key={person.Id} className='even:bg-gray-500/20'>
                 <td>
                   <input
                     id={person["Id"]}
@@ -521,13 +521,18 @@ export const Team_Form_X = () => {
 
 export const DesChangeForm = ({ forWhat, elementId }) => {
   const [text, setText] = useState("");
+  const [personData, setPersonData] = useState([]);
+  const [selectedPerson, setSelectedPerson] = useState();
+  const [selectedTeam, setSelectedTeam] = useState();
+  const [teamsData, setTeamsData] = useState([]);
+  const [rawPersons, setRawPersons] = useState();
 
   const countCharacters = () => {
     return text.length;
   };
 
-  const handleTextAreaChange = (event) => {
-    setText(event.target.value);
+  const handleTextAreaChange = (e) => {
+    setText(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -552,23 +557,103 @@ export const DesChangeForm = ({ forWhat, elementId }) => {
     }
   };
 
+  const handlePersonSubmit = async (e) => {
+    e.preventDefault();
+
+    let data;
+
+    for (let i = 0; i < rawPersons.length; i++) {
+      if (rawPersons[i].includes(selectedPerson)) {
+        data = rawPersons[i];
+      }
+    }
+
+    await fetch(`/api/v1/task/executor/${elementId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data, elementId }),
+    });
+  };
+
+  const handleTeamSubmit = async (e) => {
+    e.preventDefault();
+
+    await fetch(`/api/v1/projects/get_project/${elementId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selectedTeam, elementId }),
+    });
+  };
+
+  const handlePersonChange = async (e) => {
+    setSelectedPerson(e.target.value);
+  };
+
+  const handleTeamChange = async (e) => {
+    setSelectedTeam(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const employeesData = await fetchDataFromApis(elementId);
+        const correctedPersons = employeesData["persons"].map((person) => {
+          const arrName = person.split(" ");
+          arrName.pop();
+          arrName.pop();
+          return arrName.join(" ");
+        });
+
+        setSelectedTeam(employeesData["teams"][0]);
+        setTeamsData(employeesData.teams);
+        setRawPersons(employeesData["persons"]);
+        setSelectedPerson(employeesData["persons"][0]);
+        setPersonData(correctedPersons);
+      } catch (error) {
+        console.error("Error fetching teams data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className='strokeme2'>
-      <div className="">
-      <form action="teams">
-        <select>
-          <option value="tak" disabled>Choose team</option>
-        </select>
-        <button className="btn btn-accent">apply</button>
-      </form>
-      <hr className="p-3 border-none"/>
-      <form action="slave">
-        <select name="" id="">
-          <option value="choose" disabled>choose Slave</option>
-        </select>
-        <button className="btn btn-accent">apply</button>
-      </form>
+      <div className=''>
+        <form action='teams' onSubmit={handleTeamSubmit}>
+          <select id='team' onChange={handleTeamChange}>
+            <option value='tak' disabled>
+              Choose team
+            </option>
+            {teamsData.map((team) => (
+              <option key={team} value={team}>
+                {`Team ${team}`}
+              </option>
+            ))}
+          </select>
+          <button className='btn btn-accent'>apply</button>
+        </form>
+        <hr className='p-3 border-none' />
+
+        <form action='slave' onSubmit={handlePersonSubmit}>
+          <select name='' id='person' onChange={handlePersonChange}>
+            <option value='choose' disabled>
+              choose Person
+            </option>
+            {personData.map((person) => (
+              <option key={person} value={person}>
+                {person}
+              </option>
+            ))}
+          </select>
+          <button className='btn btn-accent'>apply</button>
+        </form>
       </div>
+
       <form className='hidden' onSubmit={handleSubmit}>
         <label className='form-control'>
           <h2 className='text-center font-bold text-lg'>Edit description</h2>

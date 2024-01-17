@@ -107,3 +107,7 @@ export const changeDescription = (req, res) => {
     });
   }
 };
+
+export const reassignTeam = (req, res) => {
+  console.log(req.body);
+};

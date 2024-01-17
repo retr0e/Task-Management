@@ -73,3 +73,7 @@ export const changeDescription = (req, res) => {
     });
   }
 };
+
+export const reassignPerson = (req, res) => {
+  console.log(req.body);
+};
