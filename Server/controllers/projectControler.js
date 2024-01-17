@@ -7,6 +7,7 @@ import {
   getProjectInfo,
   patchProject,
   patchDescription,
+  patchProjectTeam,
 } from "./../model/projectModel.js";
 import dotenv from "dotenv";
 
@@ -44,8 +45,6 @@ export const getProjectInformation = async (req, res, next) => {
 };
 
 export const addProject = async (req, res, next) => {
-  console.log(req.body);
-
   const project = {
     projectName: req.body["projectName"],
     assignedTeam: req.body["team"],
@@ -57,7 +56,6 @@ export const addProject = async (req, res, next) => {
     endDate: req.body["endDate"],
   };
 
-  console.log(project);
   if (insertProject(project)) {
     res.status(200).json({
       status: "success",
@@ -109,5 +107,16 @@ export const changeDescription = (req, res) => {
 };
 
 export const reassignTeam = (req, res) => {
-  console.log(req.body);
+  try {
+    patchProjectTeam(req.body);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      error: error,
+    });
+  }
 };

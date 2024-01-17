@@ -2,7 +2,8 @@ import mysql from "mysql2";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import { getProfileInfo } from "../model/profileModel.js";
+import bcryptjs from "bcryptjs";
+import { getProfileInfo, changePassword } from "../model/profileModel.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -96,6 +97,27 @@ export const profileInfo = async (req, res) => {
     res.status(500).json({
       status: "failed",
       message: "Cannot fetch info about user",
+    });
+  }
+};
+
+export const changeUserPassword = (req, res) => {
+  console.log(req.body);
+  try {
+    const userId = jwt.verify(
+      req.cookies["access_token"],
+      process.env.JWT_SECRET
+    ).id;
+
+    if (req.body["password"] == req.body["passwordConfirmation"]) {
+      changePassword(bcryptjs.hashSync(req.body["password"], 10), userId);
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      message: "Cannot perform a user password modification",
     });
   }
 };

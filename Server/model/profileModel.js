@@ -27,3 +27,9 @@ export const getProfileInfo = async (employeeId) => {
 
   return profileInfo[0][0];
 };
+
+export const changePassword = async (hashed, userId) => {
+  await pool.query(
+    `UPDATE Konta SET Haslo='${hashed}' WHERE Id_konta='${userId}';`
+  );
+};

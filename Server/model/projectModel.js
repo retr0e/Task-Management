@@ -184,3 +184,15 @@ export const patchDescription = async (description, projectId) => {
     `UPDATE Projekty SET Opis='${description}' WHERE ID='${projectId}'`
   );
 };
+
+export const patchProjectTeam = async (newTeam) => {
+  const amountOfTasks = await pool.query(
+    `SELECT * FROM Zadania WHERE Id_projektu='${newTeam["elementId"]}'`
+  );
+
+  if (amountOfTasks[0].length == 0) {
+    await pool.query(
+      `UPDATE Projekty SET Id_zespolu='${newTeam["selectedTeam"]}' WHERE ID='${newTeam["elementId"]}'`
+    );
+  }
+};
