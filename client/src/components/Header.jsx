@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Modal from "./modal";
-import { DesChangeForm, Team_Form_X } from "../pages/Forms";
+import { DesChangeForm, EditUsers, Team_Form_X } from "../pages/Forms";
 
 const Header = ({ isAuthenticated, handleLogout, privilege }) => {
   return (
@@ -39,11 +39,12 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                     <span className=''>Add User</span>
                   </li>
                 </Link>
-                <Link to='/tester'>
-                <li className=''>
-                  <span className=''>Tester</span>
-                </li>
-              </Link>
+              <Modal
+                element={<EditUsers/>}
+                btn_Name={'Manage Accounts'}
+                modal_ID={'Manage Accounts'}
+                btn_Style={'p-2 hover:bg-gray-500/30 hover:rounded'}
+              />
               </>
               )}
               {privilege <= 2 &&(
@@ -52,7 +53,7 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
                   element={<Team_Form_X/>}
                   btn_Name={'Manage Teams'}
                   modal_ID={'Manage Teams'}
-                  btn_Style={''}
+                  btn_Style={'p-2 hover:bg-gray-500/30 hover:rounded'}
                 />
                 
               )}
@@ -81,13 +82,13 @@ const Header = ({ isAuthenticated, handleLogout, privilege }) => {
 export const Footer = () => {
   return(
     <div className="p-1">
-      <div  value="business"   className="checkbox theme-controller badge bg-green-600"> </div>
-      <div  value="retro"      className="checkbox theme-controller badge bg-yellow-500"></div>
-      <div  value="valentine"  className="checkbox theme-controller badge bg-red-600">   </div>
-      <div  value="lofi"       className="checkbox theme-controller badge bg-sky-500">   </div>
-      <div  value="dark"       className="checkbox theme-controller badge bg-gray-500">  </div>
-      <div  value="emerald"    className="checkbox theme-controller badge bg-blue-700">  </div>
-      <div  value="fantasy"    className="checkbox theme-controller badge bg-pink-700">  </div>
+      <div className="badge bg-green-600"></div>
+      <div className="badge bg-yellow-500"></div>
+      <div className="badge bg-red-600"></div>
+      <div className="badge bg-sky-500"></div>
+      <div className="badge bg-gray-500"></div>
+      <div className="badge bg-blue-700"></div>
+      <div className="badge bg-pink-700"></div>
     </div>
   );
 }

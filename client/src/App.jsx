@@ -19,10 +19,7 @@ import Overview from "./pages/Overview";
 import Project from "./pages/Project";
 
 // Components
-
 import Header from "./components/Header";
-import Taskbar from "./components/Taskbar";
-import Component from "./TESTERS/placeHolder";
 
 export default function App() {
   const [whichPrivilege, setPrivilege] = useState(4);
@@ -64,7 +61,6 @@ export default function App() {
   };
 
   checkPrivilege();
-  // console.log(whichPrivilege);
   return (
     <BrowserRouter>
       {/*<==================Always-Displayed-Element======================>*/}
@@ -79,20 +75,19 @@ export default function App() {
         {/*<=======================Public-access========================>*/}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
         <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
-        <Route path='/tester' element={<Component />} />
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
           <Route path='/' element={<Home acLvl={whichPrivilege}/>} />
         ) : (
           <Route path='/' element={<Overview />} />
         )}
-        {/* <Route path='/account' element={<Profile handleLogout={handleLogout} />}/> */}
+        
 
         <Route element={<ProtectedRoutes isAuthenticated={loggedIn} />}>
           
           <Route 
             path='/profile' 
-            element={<Profile privilege={whichPrivilege}/>} /> 
+            element={<Profile privilege={whichPrivilege} />} /> 
           { whichPrivilege <= 3 && (
             <>
           <Route
