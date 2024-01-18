@@ -74,7 +74,7 @@ export default function App() {
       <Routes>
         {/*<=======================Public-access========================>*/}
         <Route path='/sign-in' element={<SignIn onLogin={handleLogin} />} />
-        <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
+        
         {/*<======================Restricted-access=====================>*/}
         {loggedIn ? (
           <Route path='/' element={<Home acLvl={whichPrivilege}/>} />
@@ -100,6 +100,13 @@ export default function App() {
           />
           </>
           )}
+          {
+            whichPrivilege === 1 &&(
+              <>
+                <Route path='/sign-up' element={<SignUp onLogin={handleLogin} />} />
+              </>
+            )
+          }
         </Route>
 
         {/*Catch all failed links */}
