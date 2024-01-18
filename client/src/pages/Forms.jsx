@@ -313,7 +313,7 @@ export const Add_Task_Form = ({ projectId }) => {
           />
 
           {/*<===================Task-Start-Date==================>*/}
-          <p className='py-2'>Start Date</p>
+          {/* <p className='py-2'>Start Date</p>
           <input
             type='date'
             id='startDate'
@@ -321,7 +321,7 @@ export const Add_Task_Form = ({ projectId }) => {
             placeholder='Start Date'
             required
             onChange={handleChange}
-          />
+          /> */}
 
           {/*<===================Project-Submit===================>*/}
           <button

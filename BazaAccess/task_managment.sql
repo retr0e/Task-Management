@@ -32,8 +32,6 @@ CREATE TABLE `Zadania` (
   `Id_statusu` INT NOT NULL,
   `Id_pracownika` INT NOT NULL,
   `Description` VARCHAR(400) NOT NULL,
-  `Data_start` DATE NOT NULL,
-  `Data_koniec` DATE
 );
 
 CREATE TABLE `Pracownicy` (

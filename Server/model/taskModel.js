@@ -25,16 +25,16 @@ export const getTaskName = async (taskId) => {
 };
 
 export const insertTask = async (data) => {
-  await pool.query(`INSERT INTO Zadania (Nazwa, Id_projektu, Id_statusu, Id_pracownika, Description, Data_start, Data_koniec) 
-  VALUES (
-    '${data["taskName"]}',
-    ${parseInt(data["projectId"], 10)},
-    1,
-    ${parseInt(data["person"], 10)},
-    '${data["description"]}',
-    '${data["startDate"]}',
-    NULL
-  )`);
+  await pool.query(
+    `INSERT INTO Zadania (Nazwa, Id_projektu, Id_statusu, Id_pracownika, Description) 
+    VALUES (
+      '${data["taskName"]}',
+      ${parseInt(data["projectId"], 10)},
+      1,
+      ${parseInt(data["person"], 10)},
+      '${data["description"]}'
+    )`
+  );
 };
 
 export const patchTask = async (newValues) => {
