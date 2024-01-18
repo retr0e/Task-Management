@@ -58,7 +58,6 @@ export const deactivateAccount = async (people) => {
         `SELECT Uprawnienia FROM Konta WHERE Id_pracownika='${people[i]["Id"]}'`
       );
 
-      // CANNOT DEACTIVATE ADMIN!
       if (privilegeLevel[0][0]["Uprawnienia"] == 1) {
         people[i]["isActive"] = true;
         continue;
@@ -66,6 +65,10 @@ export const deactivateAccount = async (people) => {
 
       await pool.query(
         `UPDATE Konta SET Aktywny='0' WHERE Id_pracownika=${people[i]["Id"]}`
+      );
+    } else {
+      await pool.query(
+        `UPDATE Konta SET Aktywny='1' WHERE Id_pracownika=${people[i]["Id"]}`
       );
     }
   }
